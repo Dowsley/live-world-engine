@@ -1,8 +1,4 @@
-#include <iostream>
-#include <string>
-#include <algorithm>
-#include <cstring>
-#include <math.h>
+#include "../noise/FastNoiseLite.h"
 
 class Map {
 private:
@@ -10,6 +6,7 @@ private:
 	int nWidth;
 	int nTotalSize;
 	unsigned char *map;
+	FastNoiseLite noise;
 
 public:
 	Map(int nWidth, int nHeight)
@@ -34,11 +31,51 @@ public:
 	// Map behaviour
 	void GenerateMap()
 	{
+		GenerateMapOSN();
+	}
+
+	void GenerateMapRandom()
+	{
 		for (int y = 0; y < nHeight; y++) {
 			for (int x = 0; x < nWidth; x++) {
 				SetTile(x, y, rand() % 255);	
 			}
 		}
+	}
+
+	void GenerateMapOSN()
+	{
+		// Create and configure FastNoise object
+		noise.SetNoiseType(FastNoiseLite::NoiseType_OpenSimplex2);
+		// noise.SetNoiseType(FastNoiseLite::NoiseType_Cellular);
+
+		// noise.SetFrequency(0.01f);
+
+		// noise.SetFractalType(FastNoiseLite::FractalType_FBm);
+		noise.SetFractalType(FastNoiseLite::FractalType_Ridged);
+		// noise.SetFractalType(FastNoiseLite::FractalType_PingPong);
+
+		// Gather noise data
+		float *noiseData = new float[nTotalSize];
+		for (int y = 0; y < nHeight; y++) {
+			for (int x = 0; x < nWidth; x++) {
+				noiseData[y * nWidth + x] = noise.GetNoise((float)x, (float)y);
+			}
+		}
+
+		// Do something with this data...
+		float val;
+		int mapped;
+		for (int y = 0; y < nHeight; y++) {
+			for (int x = 0; x < nWidth; x++) {
+				val = noiseData[y * nWidth + x];
+				mapped = (int) (255 / 2.0f) * (val + 1.0f);
+				SetTile(x, y, mapped);
+			}
+		}
+
+		// Free data later
+		delete[] noiseData;
 	}
 };
 

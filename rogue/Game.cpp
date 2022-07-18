@@ -1,9 +1,6 @@
 #define OLC_PGE_APPLICATION
 #include "../engine/olcPixelGameEngine.h"
 #include "Map/Map.cpp"
-#include <iostream>
-#include <string>
-#include <algorithm>
 
 using namespace std;
 
@@ -25,7 +22,6 @@ class Rogue : public olc::PixelGameEngine {
 			for (int y = 0; y < ScreenHeight(); y++) {
 				for (int x = 0; x < ScreenWidth(); x++) {
 					tile = map->GetTile(x + (int)fCameraPosX, y + (int)fCameraPosY);
-					// printf("%d\n", (int)tile);
 					Draw(x, y, olc::Pixel(tile, tile, tile));
 				}
 			}
@@ -48,16 +44,12 @@ class Rogue : public olc::PixelGameEngine {
 			// Mouse Edge Map Scroll
 			float fMapScrollSpeed = 400.0f;
 
-			// if (GetMouseX() < 5)
 			if (GetKey(olc::Key::LEFT).bHeld)
 				fCameraPosX -= fMapScrollSpeed * fElapsedTime;
-			// if (GetMouseX() > ScreenWidth() - 5)
 			if (GetKey(olc::Key::RIGHT).bHeld)
 				fCameraPosX += fMapScrollSpeed * fElapsedTime;
-			// if (GetMouseY() < 5)
 			if (GetKey(olc::Key::UP).bHeld)
 				fCameraPosY -= fMapScrollSpeed * fElapsedTime;
-			// if (GetMouseY() > ScreenHeight() - 5)
 			if (GetKey(olc::Key::DOWN).bHeld)
 				fCameraPosY += fMapScrollSpeed * fElapsedTime;
 
@@ -77,9 +69,10 @@ class Rogue : public olc::PixelGameEngine {
 
 	int main(int argc, char const *argv[]) {
 		Rogue game;
-			game.Construct(256, 160, 6, 6);
-			// game.Construct(1024, 512, 1, 1);
-			game.Start();
+
+		// game.Construct(1024, 512, 1, 1); // Original size
+		game.Construct(256, 160, 6, 6); // Ideal for a map from afar
+		game.Start();
 
 		return 0;
 	}
