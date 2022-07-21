@@ -28,6 +28,13 @@ public:
 	void GetWidth(int nWidth) { this->nWidth = nWidth; }
 	void SetTile(int x, int y, unsigned char val) { map[y * nWidth + x] = val; }
 
+	// Util
+	float scale(float num,float in_min, float in_max,float out_min,float out_max)
+	{
+		return (float) (num - in_min) * (out_max - out_min) / (in_max - in_min) + out_min;
+	}
+
+
 	// Map behaviour
 	void GenerateMap()
 	{
@@ -45,14 +52,16 @@ public:
 
 	void GenerateMapOSN()
 	{
+		noise.SetSeed(rand());
+
 		// Create and configure FastNoise object
 		noise.SetNoiseType(FastNoiseLite::NoiseType_OpenSimplex2);
 		// noise.SetNoiseType(FastNoiseLite::NoiseType_Cellular);
 
 		// noise.SetFrequency(0.01f);
 
-		// noise.SetFractalType(FastNoiseLite::FractalType_FBm);
-		noise.SetFractalType(FastNoiseLite::FractalType_Ridged);
+		noise.SetFractalType(FastNoiseLite::FractalType_FBm);
+		// noise.SetFractalType(FastNoiseLite::FractalType_Ridged);
 		// noise.SetFractalType(FastNoiseLite::FractalType_PingPong);
 
 		// Gather noise data
@@ -69,7 +78,8 @@ public:
 		for (int y = 0; y < nHeight; y++) {
 			for (int x = 0; x < nWidth; x++) {
 				val = noiseData[y * nWidth + x];
-				mapped = (int) (255 / 2.0f) * (val + 1.0f);
+				// mapped = (int) (255 / 2.0f) * (val + 1.0f);
+				mapped = (unsigned char) scale((float) val, -1.0f, 1.0f, 0.0f, 4.0f);
 				SetTile(x, y, mapped);
 			}
 		}

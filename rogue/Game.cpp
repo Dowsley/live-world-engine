@@ -16,13 +16,20 @@ class Rogue : public olc::PixelGameEngine {
 		float fCameraPosX = 0.0f;
 		float fCameraPosY = 0.0f;
 
+		const olc::Pixel availableColors[4] = {
+			olc::VERY_DARK_GREY,
+			olc::DARK_GREY,
+			olc::GREY,
+			olc::WHITE,
+		};
+
 		void DrawMap()
 		{
 			unsigned char tile;
 			for (int y = 0; y < ScreenHeight(); y++) {
 				for (int x = 0; x < ScreenWidth(); x++) {
 					tile = map->GetTile(x + (int)fCameraPosX, y + (int)fCameraPosY);
-					Draw(x, y, olc::Pixel(tile, tile, tile));
+					Draw(x, y, availableColors[tile]);
 				}
 			}
 		}
