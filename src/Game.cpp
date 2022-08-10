@@ -67,7 +67,8 @@ class MarsSimulator : public olc::PixelGameEngine {
 	};
 
 
-	int main(int argc, char const *argv[]) {
+	int main(int argc, char const *argv[])
+	{
 		MarsSimulator game;
 
 		// game.Construct(1024, 512, 1, 1); // Original size

@@ -49,7 +49,7 @@ private:
     Tile *CreateState(unsigned char type)
     {
         return tileTypes[type]->create();
-    }
+    };
 
     olc::Pixel GetDefaultRepresentation(unsigned char type)
     {
@@ -68,15 +68,15 @@ public:
 			map[i].type = 0;
 			map[i].state = nullptr;
 		}
-	}
+	};
 
 	// Getters & setters
-	int GetHeight() { return nHeight; }
-	int GetWidth() { return nWidth; }
+	int GetHeight() { return nHeight; };
+	int GetWidth() { return nWidth; };
 	LazyTile *GetTile(int x, int y)
 	{
 		return &map[y * nWidth + x];
-	}
+	};
 	olc::Pixel GetTileRepresentation(int x, int y)
 	{
 		LazyTile *t = GetTile(x, y);
@@ -85,10 +85,10 @@ public:
 			p = t->state->GetRepresentation();
 		}
 		return p;
-	}
+	};
 
-	void SetHeight(int nHeight) { this->nHeight = nHeight; }
-	void SetWidth(int nWidth) { this->nWidth = nWidth; }
+	void SetHeight(int nHeight) { this->nHeight = nHeight; };
+	void SetWidth(int nWidth) { this->nWidth = nWidth; };
 	void SetTile(int x, int y, float val, float min, float max)
 	{
 		unsigned char mapped = (unsigned char) Arithmetics::scale(
@@ -99,13 +99,13 @@ public:
 			(float) NUM_OF_TYPES
 		);
 		GetTile(x, y) ->type = mapped;
-	}
+	};
 
 	// Map behaviour
 	void GenerateMap()
 	{
 		GenerateMapOSN();
-	}
+	};
 
 	void GenerateMapRandom()
 	{
@@ -114,7 +114,7 @@ public:
 				SetTile(x, y, rand() % 255, 0.0f, 255.0f);
 			}
 		}
-	}
+	};
 
 	void GenerateMapOSN()
 	{
@@ -149,5 +149,5 @@ public:
 
 		// Free data later
 		delete[] noiseData;
-	}
+	};
 };
