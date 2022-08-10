@@ -1,35 +1,28 @@
 #define OLC_PGE_APPLICATION
 #include "../engine/olcPixelGameEngine.h"
-#include "Map/Map.cpp"
+#include "map/Map.cpp"
 
 using namespace std;
 
-class Rogue : public olc::PixelGameEngine {
+class MarsSimulator : public olc::PixelGameEngine {
     public:
-		Rogue() {
-			sAppName = "Rogue";
+		MarsSimulator() {
+			sAppName = "Mars Simulator";
 		}
-		
+
     private:
-		Map *map = new Map(1024, 512); 
+		Map *map = new Map(1024, 512);
 
 		float fCameraPosX = 0.0f;
 		float fCameraPosY = 0.0f;
 
-		const olc::Pixel availableColors[4] = {
-			olc::VERY_DARK_GREY,
-			olc::DARK_GREY,
-			olc::GREY,
-			olc::WHITE,
-		};
-
 		void DrawMap()
 		{
-			unsigned char tile;
+			olc::Pixel tileRep;
 			for (int y = 0; y < ScreenHeight(); y++) {
 				for (int x = 0; x < ScreenWidth(); x++) {
-					tile = map->GetTile(x + (int)fCameraPosX, y + (int)fCameraPosY);
-					Draw(x, y, availableColors[tile]);
+					tileRep = map->GetTileRepresentation(x + (int)fCameraPosX, y + (int)fCameraPosY);
+					Draw(x, y, tileRep);
 				}
 			}
 		}
@@ -75,10 +68,12 @@ class Rogue : public olc::PixelGameEngine {
 
 
 	int main(int argc, char const *argv[]) {
-		Rogue game;
+		MarsSimulator game;
 
 		// game.Construct(1024, 512, 1, 1); // Original size
-		game.Construct(256, 160, 6, 6); // Ideal for a map from afar
+		game.Construct(256, 160, 5, 5); // Ideal for a map from afar
+		// game.Construct(256/3, 160/3, 5*3, 5*3); // Close-up
+
 		game.Start();
 
 		return 0;
