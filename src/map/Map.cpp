@@ -41,7 +41,7 @@ private:
 
 	static const unsigned char NUM_OF_TYPES = 2;
     ITileType *tileTypes[NUM_OF_TYPES] = {
-        new TileType<RedSand>(olc::Pixel(193, 68, 14, 190)), // Mars Red
+        new TileType<RedSand>(olc::Pixel(193, 68, 14)), // Mars Red
         new TileType<Rock>(olc::Pixel(69, 24, 4))       // Mars Brown
     };
 
