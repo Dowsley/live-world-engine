@@ -3,8 +3,6 @@
 class Tile {
 public:
     virtual int Update() = 0;
-    virtual olc::Pixel GetRepresentation()
-    {
-        return NULL;
-    }
+    virtual olc::Pixel GetColor() = 0;
+    virtual olc::vi2d GetRepresentation() = 0;
 };

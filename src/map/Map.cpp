@@ -1,6 +1,4 @@
-#include <typeindex>
-#include <typeinfo>
-#include <unordered_map>
+#include <string>
 
 #include "../noise/FastNoiseLite.h"
 #include "../tile/Tile.cpp"
@@ -8,30 +6,40 @@
 
 #include "../tile/types.h"
 
-typedef struct LazyTile {
-	unsigned char type;
-	Tile *state;
-} LazyTile;
-
-struct ITileType {
-    olc::Pixel defaultRepresentation;
-	virtual Tile *create() = 0;
-};
-
-template<typename T>
-struct TileType : public ITileType {
-    TileType(olc::Pixel dr)
-	{
-        defaultRepresentation = dr;
-    };
-	T *create() override
-	{
-	   return new T();
-	};
-};
-
 class Map {
 private:
+// O--------------------------------------------O
+// | TYPE DECLARATION						    |
+// O--------------------------------------------O
+	typedef struct LazyTile {
+		unsigned char colorIndex;
+		unsigned char repIndex;
+		unsigned char type;
+		Tile *state;
+	} LazyTile;
+
+	struct ITileType {
+		olc::vi2d defaultRepresentation;
+		olc::Pixel *defaultColors;
+		virtual Tile *create() = 0;
+	};
+
+	template<typename T>
+	struct TileType : public ITileType {
+		TileType(olc::vi2d i, olc::Pixel *colors)
+		{
+			defaultRepresentation = i;
+			defaultColors = colors;
+		};
+		T *create() override
+		{
+		return new T();
+		};
+	};
+
+// O--------------------------------------------O
+// | INTERNALS 								    |
+// O--------------------------------------------O
 	int nHeight;
 	int nWidth;
 	int nTotalSize;
@@ -39,19 +47,42 @@ private:
 	LazyTile *map;
 	FastNoiseLite noise;
 
-	static const unsigned char NUM_OF_TYPES = 2;
-    ITileType *tileTypes[NUM_OF_TYPES] = {
-        new TileType<RedSand>(olc::Pixel(193, 68, 14)), // Mars Red
-        new TileType<Rock>(olc::Pixel(69, 24, 4))       // Mars Brown
-    };
+	olc::vi2d TILE_SIZE = { 8, 8 };
 
-	// Individual tile behaviour
+	static const unsigned char NUM_OF_TYPES = 2;
+	ITileType *tileTypes[NUM_OF_TYPES] = {
+		new TileType<RedSand>(
+			olc::vi2d(7, 15) * TILE_SIZE,
+			new olc::Pixel[3] {
+				olc::Pixel(0xc1440eFF),
+				olc::Pixel(0x9f3a0eFF),
+				olc::Pixel(0x7a2c0bFF)
+			}
+		),
+		new TileType<Rock>(
+			olc::vi2d(11, 13) * TILE_SIZE,
+			new olc::Pixel[3] {
+				olc::Pixel(0x3c2216FF),
+				olc::Pixel(0x451804FF),
+				olc::Pixel(0x4a2515FF)
+			}
+		)
+		};
+
+	// O--------------------------------------------O
+	// | TILE BEHAVIOUR 						    |
+	// O--------------------------------------------O
     Tile *CreateState(unsigned char type)
     {
         return tileTypes[type]->create();
     };
 
-    olc::Pixel GetDefaultRepresentation(unsigned char type)
+    olc::Pixel GetDefaultTileColor(unsigned char type, unsigned char i)
+    {
+        return tileTypes[type]->defaultColors[i];
+    };
+
+    olc::vi2d GetDefaultTileRepresentation(unsigned char type)
     {
         return tileTypes[type]->defaultRepresentation;
     };
@@ -70,19 +101,31 @@ public:
 		}
 	};
 
-	// Getters & setters
+// O--------------------------------------------O
+// | BASIC GETTERS AND SETTERS    			    |
+// O--------------------------------------------O
+	olc::vi2d GetTileSize() { return TILE_SIZE; };
 	int GetHeight() { return nHeight; };
 	int GetWidth() { return nWidth; };
 	LazyTile *GetTile(int x, int y)
 	{
 		return &map[y * nWidth + x];
 	};
-	olc::Pixel GetTileRepresentation(int x, int y)
+	olc::vi2d GetTileRepresentation(int x, int y)
 	{
 		LazyTile *t = GetTile(x, y);
-		olc::Pixel p = GetDefaultRepresentation(t->type);
+		olc::vi2d p = GetDefaultTileRepresentation(t->type);
 		if (t->state) {
 			p = t->state->GetRepresentation();
+		}
+		return p;
+	};
+	olc::Pixel GetTileColor(int x, int y)
+	{
+		LazyTile *t = GetTile(x, y);
+		olc::Pixel p = GetDefaultTileColor(t->type, t->colorIndex);
+		if (t->state) {
+			p = t->state->GetColor();
 		}
 		return p;
 	};
@@ -91,29 +134,25 @@ public:
 	void SetWidth(int nWidth) { this->nWidth = nWidth; };
 	void SetTile(int x, int y, float val, float min, float max)
 	{
-		unsigned char mapped = (unsigned char) Arithmetics::scale(
+		LazyTile *t = GetTile(x,y);
+
+		t->type = (unsigned char) Arithmetics::scale(
 			val,
 			min,
 			max,
 			0.0f,
 			(float) NUM_OF_TYPES
 		);
-		GetTile(x, y) ->type = mapped;
+		t->colorIndex = (unsigned char) rand() % 3;
+		t->repIndex = (unsigned char) rand() % 3;
 	};
 
-	// Map behaviour
+// O--------------------------------------------O
+// | MAP BEHAVIOUR			    			    |
+// O--------------------------------------------O
 	void GenerateMap()
 	{
 		GenerateMapOSN();
-	};
-
-	void GenerateMapRandom()
-	{
-		for (int y = 0; y < nHeight; y++) {
-			for (int x = 0; x < nWidth; x++) {
-				SetTile(x, y, rand() % 255, 0.0f, 255.0f);
-			}
-		}
 	};
 
 	void GenerateMapOSN()

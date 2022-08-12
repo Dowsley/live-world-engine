@@ -3,6 +3,10 @@ Place the engine source code (regardless of platform) inside `engine/` at root l
 
 # Progress
 - [X] Tile system
-- [ ] ASCII Tile Representations
+- [X] ASCII Sprite Tile Representations with colors
+- [X] Color variance for same-tile
+- [ ] Third dimension
+- [ ] Tile representation variance by context
 - [ ] Player
 - [ ] Dynamics
+- [ ] Separate systems (is a refactor needed? good luck.)

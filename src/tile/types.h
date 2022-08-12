@@ -11,6 +11,16 @@ public:
     {
         return 0;
     }
+
+    olc::vi2d GetRepresentation() override
+    {
+        return olc::vi2d(13, 12);
+    }
+
+    olc::Pixel GetColor() override
+    {
+        return olc::YELLOW;
+    }
 };
 
 
@@ -24,5 +34,15 @@ public:
     int Update() override
     {
         return 0;
+    }
+
+    olc::vi2d GetRepresentation() override
+    {
+        return olc::vi2d(13, 12);
+    }
+
+    olc::Pixel GetColor() override
+    {
+        return olc::YELLOW;
     }
 };
