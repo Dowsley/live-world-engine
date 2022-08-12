@@ -19,21 +19,26 @@ private:
 	} LazyTile;
 
 	struct ITileType {
-		olc::vi2d defaultRepresentation;
+		olc::vi2d *defaultRepresentations;
 		olc::Pixel *defaultColors;
+		unsigned char nColors;
+		unsigned char nReps;
 		virtual Tile *create() = 0;
 	};
 
 	template<typename T>
 	struct TileType : public ITileType {
-		TileType(olc::vi2d i, olc::Pixel *colors)
+		TileType(olc::vi2d *reps, olc::Pixel *colors, int nReps, int nColors)
 		{
-			defaultRepresentation = i;
-			defaultColors = colors;
+			this->defaultRepresentations = reps;
+			this->defaultColors = colors;
+			this->nReps = (unsigned char) nReps;
+			this->nColors = (unsigned char) nColors;
+
 		};
 		T *create() override
 		{
-		return new T();
+			return new T();
 		};
 	};
 
@@ -52,20 +57,25 @@ private:
 	static const unsigned char NUM_OF_TYPES = 2;
 	ITileType *tileTypes[NUM_OF_TYPES] = {
 		new TileType<RedSand>(
-			olc::vi2d(7, 15) * TILE_SIZE,
+			new olc::vi2d[2] {
+				olc::vi2d(7, 15) * TILE_SIZE,
+				olc::vi2d(14, 7) * TILE_SIZE,
+			},
 			new olc::Pixel[3] {
 				olc::Pixel(0xc1440eFF),
 				olc::Pixel(0x9f3a0eFF),
 				olc::Pixel(0x7a2c0bFF)
-			}
+			}, 2, 3
 		),
 		new TileType<Rock>(
-			olc::vi2d(11, 13) * TILE_SIZE,
+			new olc::vi2d[1] {
+				olc::vi2d(11, 13) * TILE_SIZE
+			},
 			new olc::Pixel[3] {
 				olc::Pixel(0x3c2216FF),
 				olc::Pixel(0x451804FF),
 				olc::Pixel(0x4a2515FF)
-			}
+			}, 1, 3
 		)
 		};
 
@@ -82,9 +92,9 @@ private:
         return tileTypes[type]->defaultColors[i];
     };
 
-    olc::vi2d GetDefaultTileRepresentation(unsigned char type)
+    olc::vi2d GetDefaultTileRepresentation(unsigned char type, unsigned char i)
     {
-        return tileTypes[type]->defaultRepresentation;
+        return tileTypes[type]->defaultRepresentations[i];
     };
 
 public:
@@ -114,7 +124,7 @@ public:
 	olc::vi2d GetTileRepresentation(int x, int y)
 	{
 		LazyTile *t = GetTile(x, y);
-		olc::vi2d p = GetDefaultTileRepresentation(t->type);
+		olc::vi2d p = GetDefaultTileRepresentation(t->type, t->repIndex);
 		if (t->state) {
 			p = t->state->GetRepresentation();
 		}
@@ -143,8 +153,8 @@ public:
 			0.0f,
 			(float) NUM_OF_TYPES
 		);
-		t->colorIndex = (unsigned char) rand() % 3;
-		t->repIndex = (unsigned char) rand() % 3;
+        t->colorIndex = (unsigned char) rand() % tileTypes[t->type]->nColors;
+		t->repIndex = (unsigned char) rand() % tileTypes[t->type]->nReps;
 	};
 
 // O--------------------------------------------O
