@@ -84,8 +84,13 @@ class MarsSimulator : public olc::PixelGameEngine {
 				regen = true;
 			}
 
+			int mode = 1;
+			if (GetKey(olc::Key::Z).bHeld) {
+				mode = 4;
+			}
+
 			// Mouse Edge Map Scroll
-			float fMapScrollSpeed = 100.0f;
+			float fMapScrollSpeed = 100.0f * mode;
 
 			bool left = GetKey(olc::Key::LEFT).bHeld;
 			bool right = GetKey(olc::Key::RIGHT).bHeld;
