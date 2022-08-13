@@ -46,3 +46,26 @@ public:
         return olc::YELLOW;
     }
 };
+
+class Air : public Tile {
+public:
+    Air()
+    {
+
+    }
+
+    int Update() override
+    {
+        return 0;
+    }
+
+    olc::vi2d GetRepresentation() override
+    {
+        return olc::vi2d(13, 12);
+    }
+
+    olc::Pixel GetColor() override
+    {
+        return olc::YELLOW;
+    }
+};

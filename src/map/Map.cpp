@@ -47,6 +47,7 @@ private:
 // O--------------------------------------------O
 	int nHeight;
 	int nWidth;
+	int nDepth;
 	int nTotalSize;
 
 	LazyTile *map;
@@ -54,7 +55,7 @@ private:
 
 	olc::vi2d TILE_SIZE = { 8, 8 };
 
-	static const unsigned char NUM_OF_TYPES = 2;
+	static const unsigned char NUM_OF_TYPES = 3;
 	ITileType *tileTypes[NUM_OF_TYPES] = {
 		new TileType<RedSand>(
 			new olc::vi2d[2] {
@@ -76,8 +77,15 @@ private:
 				olc::Pixel(0x451804FF),
 				olc::Pixel(0x4a2515FF)
 			}, 1, 3
-		)
-		};
+		),
+		new TileType<Air>(
+			new olc::vi2d[1] {
+				olc::vi2d(11, 13) * TILE_SIZE
+			},
+			new olc::Pixel[1] {
+				olc::Pixel(0x000000FF),
+			}, 1, 1
+		)};
 
 	// O--------------------------------------------O
 	// | TILE BEHAVIOUR 						    |
@@ -98,11 +106,12 @@ private:
     };
 
 public:
-	Map(int nWidth, int nHeight)
+	Map(int nWidth, int nHeight, int nDepth)
 	{
 		this->nHeight = nHeight;
 		this->nWidth = nWidth;
-		this->nTotalSize = nHeight * nWidth;
+		this->nDepth = nDepth;
+		this->nTotalSize = nHeight * nWidth * nDepth;
 
 		map = (LazyTile *) malloc(sizeof(LazyTile) * nTotalSize);
 		for (int i=0; i<nTotalSize; i++) {
@@ -117,22 +126,23 @@ public:
 	olc::vi2d GetTileSize() { return TILE_SIZE; };
 	int GetHeight() { return nHeight; };
 	int GetWidth() { return nWidth; };
-	LazyTile *GetTile(int x, int y)
+	int GetDepth() { return nDepth; };
+	LazyTile *GetTile(int x, int y, int z)
 	{
-		return &map[y * nWidth + x];
+		return &map[y + nHeight * (x + nWidth * z)];
 	};
-	olc::vi2d GetTileRepresentation(int x, int y)
+	olc::vi2d GetTileRepresentation(int x, int y, int z)
 	{
-		LazyTile *t = GetTile(x, y);
+		LazyTile *t = GetTile(x, y, z);
 		olc::vi2d p = GetDefaultTileRepresentation(t->type, t->repIndex);
 		if (t->state) {
 			p = t->state->GetRepresentation();
 		}
 		return p;
 	};
-	olc::Pixel GetTileColor(int x, int y)
+	olc::Pixel GetTileColor(int x, int y, int z)
 	{
-		LazyTile *t = GetTile(x, y);
+		LazyTile *t = GetTile(x, y, z);
 		olc::Pixel p = GetDefaultTileColor(t->type, t->colorIndex);
 		if (t->state) {
 			p = t->state->GetColor();
@@ -142,18 +152,12 @@ public:
 
 	void SetHeight(int nHeight) { this->nHeight = nHeight; };
 	void SetWidth(int nWidth) { this->nWidth = nWidth; };
-	void SetTile(int x, int y, float val, float min, float max)
+	void SetTile(int x, int y, int z, int tile_type)
 	{
-		LazyTile *t = GetTile(x,y);
+		LazyTile *t = GetTile(x, y, z);
 
-		t->type = (unsigned char) Arithmetics::scale(
-			val,
-			min,
-			max,
-			0.0f,
-			(float) NUM_OF_TYPES
-		);
-        t->colorIndex = (unsigned char) rand() % tileTypes[t->type]->nColors;
+		t->type = (unsigned char) tile_type;
+		t->colorIndex = (unsigned char) rand() % tileTypes[t->type]->nColors;
 		t->repIndex = (unsigned char) rand() % tileTypes[t->type]->nReps;
 	};
 
@@ -187,12 +191,32 @@ public:
 			}
 		}
 
+
 		// Do something with this data...
-		float val;
+		int inverseDepth;
 		for (int y = 0; y < nHeight; y++) {
 			for (int x = 0; x < nWidth; x++) {
-				val = noiseData[y * nWidth + x];
-				SetTile(x, y, val, -1.0f, 1.0f);
+				inverseDepth = (int) Arithmetics::scale(
+					noiseData[y * nWidth + x],
+					-1.0f,
+					1.0,
+					0.0f,
+					(float) nDepth
+				);
+
+				for (int z = 0; z < nDepth; z++) {
+					if (z >= inverseDepth) {
+						SetTile(x, y, z, 1); // Rock
+					}
+					else {
+						if (z > 20) {
+							SetTile(x,y,z,0); // Sand (filling)
+						}
+						else {
+							SetTile(x, y, z, 2); // Air
+						}
+					}
+				}
 			}
 		}
 

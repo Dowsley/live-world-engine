@@ -1,6 +1,9 @@
 #define OLC_PGE_APPLICATION
 #include "../engine/olcPixelGameEngine.h"
 #include "map/Map.cpp"
+#include <string>
+
+#define MAX_DEPTH 50
 
 using namespace std;
 
@@ -15,19 +18,23 @@ class MarsSimulator : public olc::PixelGameEngine {
 		olc::Sprite *tileSet = new olc::Sprite("../assets/tileset/vanilla.png");
 		// olc::Sprite *tileSet = new olc::Sprite("../assets/tileset/madmonkey/20x20_text.png");
 
-		Map *map = new Map(1024, 512);
+		Map *map = new Map(1024, 512, MAX_DEPTH);
 
 		float fCameraPosX = 0.0f;
 		float fCameraPosY = 0.0f;
 
-		void DrawTile(int x, int y)
+		int currDepth = 21;
+
+		void DrawTile(int x, int y, int z)
 		{
 			olc::Pixel tileColor = map->GetTileColor(
 				x + (int)fCameraPosX,
-				y + (int)fCameraPosY);
+				y + (int)fCameraPosY,
+				z);
 			olc::vi2d tileRep = map->GetTileRepresentation(
 				x + (int)fCameraPosX,
-				y + (int)fCameraPosY);
+				y + (int)fCameraPosY,
+				z);
 
 			olc::Pixel ref;
 			olc::Pixel toDraw;
@@ -58,12 +65,14 @@ class MarsSimulator : public olc::PixelGameEngine {
 
 		void DrawMap()
 		{
-
 			for (int y = 0; y < (ScreenHeight() / nTileSize.y); y++) {
 				for (int x = 0; x < (ScreenWidth() / nTileSize.x); x++) {
-					DrawTile(x,y);
+					DrawTile(x, y, currDepth);
 				}
 			}
+			std::string str = "Layer: ";
+			str.append(std::to_string(currDepth));
+			DrawString(olc::vi2d(0,0), str, olc::WHITE, 1);
 		}
 
     protected:
@@ -78,15 +87,32 @@ class MarsSimulator : public olc::PixelGameEngine {
 		bool OnUserUpdate(float fElapsedTime) override
 		{
 			// Press 'M' key to regenerate map
-			bool regen = false;
+			bool redraw = false;
 			if (GetKey(olc::Key::M).bReleased) {
 				map->GenerateMap();
-				regen = true;
+				redraw = true;
 			}
 
+			// Hold 'Z' key to move camera faster
 			int mode = 1;
 			if (GetKey(olc::Key::Z).bHeld) {
 				mode = 4;
+			}
+
+			// Hold 'X' key to descend depth
+			if (GetKey(olc::Key::X).bReleased) {
+				if (currDepth != MAX_DEPTH - 1) {
+					redraw = true;
+					currDepth += 1;
+				}
+			}
+
+			// Hold 'C' key to ascend depth
+			if (GetKey(olc::Key::C).bReleased) {
+				if (currDepth != 0) {
+					redraw = true;
+					currDepth -= 1;
+				}
 			}
 
 			// Mouse Edge Map Scroll
@@ -116,7 +142,7 @@ class MarsSimulator : public olc::PixelGameEngine {
 			if (fCameraPosY >= map->GetHeight() - ScreenHeight())
 				fCameraPosY = map->GetHeight() - ScreenHeight();
 
-			if (regen || left || right || up || down)
+			if (redraw || left || right || up || down)
 				DrawMap();
 
 			return true;
