@@ -156,7 +156,7 @@ class MarsSimulator : public olc::PixelGameEngine {
 		MarsSimulator game;
 
 		// game.Construct(1024, 512, 1, 1); // Original size
-		game.Construct(300, 200, 4, 4); // Ideal for a map from afar
+		game.Construct(304, 200, 4, 4); // Ideal for a map from afar
 		// game.Construct(256/3, 160/3, 5*3, 5*3); // Close-up
 
 		game.Start();
