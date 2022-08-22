@@ -1,4 +1,4 @@
-engine
+graphics
 \.vscode
 Makefile
 \.DS_Store
@@ -8,3 +8,4 @@ CMakeLists.txt
 CMakeCache.txt
 cmake_install.cmake
 .DS_Store
+output.exe
