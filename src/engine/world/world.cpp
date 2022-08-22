@@ -27,10 +27,6 @@ public:
 		this->totalSize = height * width * depth;
 
 		map = (Tile *) malloc(sizeof(Tile) * totalSize);
-		// for (int i = 0; i <totalSize; i++) {
-		// 	map[i].type = 0;
-		// 	map[i].state = nullptr;
-		// }
 	};
 
 	int TransformCoords(int x, int y, int z) { return y + height * (x + width * z); };
