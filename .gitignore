@@ -9,3 +9,6 @@ CMakeCache.txt
 cmake_install.cmake
 .DS_Store
 output.exe
+tmp
+notes
+log.txt

@@ -1,5 +1,5 @@
 # Engine
-Place the engine source code (regardless of platform) inside `src/graphics` at root level.
+Place the engine source code (regardless of platform) inside `src/engine/graphics` at root level.
 
 https://github.com/MumflrFumperdink/olcPGEMac
 
@@ -14,12 +14,18 @@ https://github.com/munificent/hauberk
 - https://github.com/Trevoke/dwarlixir
 - https://docs.unity3d.com/Packages/com.unity.entities@0.51/manual/index.html
 
-# Data file inspiration
+# Scientific data
+- https://www.mars.asu.edu/data/
+- http://www.mars.asu.edu/data/mola_color/
+- https://en.wikipedia.org/wiki/Martian_soil
+- https://en.wikipedia.org/wiki/Space_suit#Requirements
+
+# Dwarf fortress inspiration
 - https://dwarffortresswiki.org/index.php/DF2014:Raw_file
 - https://dwarffortresswiki.org/index.php/DF2014:Modding
 - https://dwarffortresswiki.org/index.php/DF2014:Token
-
-
+- https://dwarffortresswiki.org/index.php/DF2014:Tile
+- https://dwarffortresswiki.org/index.php/DF2014:Inorganic_material_definition_token#SOIL
 # Progress
 - [X] Tile system
 - [X] ASCII Sprite Tile Representations with colors
@@ -28,9 +34,17 @@ https://github.com/munificent/hauberk
 - [X] Third dimension
 - [X] Rethink the current framework into separate systems
 - [X] Tile primary & secondary color
-- [ ] DATA-ORIENTED SYSTEM
+- [ ] Entities
+  - [ ] Organic and inorganic tiles
+  - [ ] Multi-block
+  - [ ] Single-block
+- [ ] Trees
+  - [ ] Variable size
 - [ ] Custom sprite class?
 - [ ] Tile sprite & color variance by context
 - [ ] Player
 - [ ] Dynamics
+- [ ] Biome and ecosystem overhaul
 
+# Idea Dump
+### Tile Size: two meters long, two meters wide, and three meters high
