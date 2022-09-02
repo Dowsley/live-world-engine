@@ -4,19 +4,11 @@
 bool Organism::_spawnInTile(World *world, TileType *type, int x, int y, int z)
 {
 	Tile *target = world->GetTile(x, y, z);
-	if (!target) {
-		// if (type->GetName() == "leaves") {
-		// 	world->LogTileType(x, y, z);
-		// }
+	if (!target) 
 		return false;
-	}
 
-	if (target->type->GetName() != "empty") {
-		// if (type->GetName() == "leaves") {
-		// 	world->LogTileType(x, y, z);
-		// }
+	if (target->type->GetName() != "empty")
 		return false;
-	}
 
 	world->SetTile(x, y, z, type, this);
 	return true;

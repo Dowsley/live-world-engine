@@ -52,12 +52,11 @@ public:
 
 
 class TileMetadata {
-private:
+public:
     Tile *parent;
     unsigned short health;
     Organism *organism;
-
-public:
+    
     TileMetadata(Tile *parent, Organism *organism);
     void SetOrganism(Organism *organism);
 };

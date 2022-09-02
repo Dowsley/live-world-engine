@@ -1,3 +1,6 @@
+# What is this?
+To be honest, I don't know. I suppose I could make it similar to No Man's Sky idea, but 2D and pixel-like.
+
 # Engine
 Place the engine source code (regardless of platform) inside `src/engine/graphics` at root level.
 
@@ -34,17 +37,22 @@ https://github.com/munificent/hauberk
 - [X] Third dimension
 - [X] Rethink the current framework into separate systems
 - [X] Tile primary & secondary color
-- [ ] Entities
-  - [ ] Organic and inorganic tiles
-  - [ ] Multi-block
-  - [ ] Single-block
-- [ ] Trees
-  - [ ] Variable size
-- [ ] Custom sprite class?
-- [ ] Tile sprite & color variance by context
+- [X] Entities
+  - [X] Organic and inorganic tiles
+  - [X] Trees
+  - [X] Creatures
+  - [ ] Small plants
+- [ ] Organize metadata system, it is COMPLETELY fucked up. Gladly not used, *yet*.
 - [ ] Player
-- [ ] Dynamics
-- [ ] Biome and ecosystem overhaul
+- [ ] Separate OLC pixel game engine classes from mine (vi2d and Pixel)
+- [ ] Color schemes (DF)
+- [ ] Tile sprite & color variance by context
+  - [ ] Slopes
+  - [ ] Multi-level view
+- [ ] Procedurally generate materials and creatures
+- [ ] Procedurally generate planets and its geology
+- [ ] Environment dynamics (weather, etc)
+- [ ] Space travel & spaceship
 
 # Idea Dump
 ### Tile Size: two meters long, two meters wide, and three meters high

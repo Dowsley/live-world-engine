@@ -62,28 +62,42 @@ void World::SetTile(int x, int y, int z, TileType *type)
 }
 void World::SwapTiles(Tile *tile1, Tile *tile2)
 {
-	Tile tmp = *tile1;
-	*tile1 = *tile2;
-	*tile2 = tmp;
-}
+	// Oh god.
+    TileType *type1 = tile1->type;
+    TileMetadata *metadata1 = tile1->metadata;
+    unsigned char defaultSpriteIndex1 = tile1->defaultSpriteIndex;
+    unsigned char defaultForeColorIndex1 = tile1->defaultForeColorIndex;
+    unsigned char defaultBackColorIndex1 = tile1->defaultBackColorIndex;
+
+    tile1->type = tile2->type;
+    tile1->defaultSpriteIndex = tile2->defaultSpriteIndex;
+    tile1->defaultForeColorIndex = tile2->defaultForeColorIndex;
+    tile1->defaultBackColorIndex = tile2->defaultBackColorIndex;
+
+    tile2->type = type1;
+    tile2->defaultSpriteIndex = defaultSpriteIndex1;
+    tile2->defaultForeColorIndex = defaultForeColorIndex1;
+    tile2->defaultBackColorIndex = defaultBackColorIndex1;
+};
+
 bool World::IsInBounds(int x, int y, int z)
 {
 	bool res = (x < width && x >= 0) && (y < height && y >= 0) && (z < depth && z >= 0);
 	return res;
-}
+};
 
 olc::vi2d World::GetTileSprite(int x, int y, int z)
 {
 	Tile *t = GetTile(x, y, z);
 	olc::vi2d res = tileManager->GetSprite(t);
 	return res;
-}
+};
 olc::Pixel World::GetTileForeColor(int x, int y, int z)
 {
 	Tile *t = GetTile(x, y, z);
 	olc::Pixel res = tileManager->GetForeColor(t);
 	return res;
-}
+};
 olc::Pixel World::GetTileBackColor(int x, int y, int z)
 {
 	Tile *t = GetTile(x, y, z);
@@ -107,18 +121,16 @@ void World::LogTileType(int x, int y, int z)
 
 void World::Update()
 {
-	// UPDATE EXISTING ORGANISMS
 	for (auto & o : organisms)
 	{
 		o->Update(this);
 	}
-	// TODO: How are new ones created?
-}
+};
 
 void World::Generate()
 {
 	GenerateTestBiome();
-}
+};
 
 void World::GenerateTestBiome()
 {
@@ -184,38 +196,40 @@ void World::GenerateTestBiome()
 	
 	// Organisms
 	HumboldtTree *t;
+	Hadespede *h;
 	float treeSpawnChance = 20;
+	float hadespedeSpawnChance = 5;
 	bool spawned;
 	for (int y = 0; y < height; y++)
 	{
 		for (int x = 0; x < width; x++)
 		{
-			if (sandLevelData[y * width + x] && (rand() % 10000) < treeSpawnChance)
+			if (sandLevelData[y * width + x])
 			{
-				t = new HumboldtTree();
-				spawned = t->Spawn(this, x, y, SAND_LAYER_DEPTH) == OrganismAction::SPAWN;
-				if (spawned) {
-					organisms.push_back(t);
-				} else {
-					free(t);
+				if ((rand() % 10000) < treeSpawnChance)
+				{
+					t = new HumboldtTree();
+					spawned = t->Spawn(this, x, y, SAND_LAYER_DEPTH) == OrganismAction::SPAWN;
+					if (spawned) {
+						organisms.push_back(t);
+					} else {
+						free(t);
+					}
+				}
+				if ((rand() % 10000) < 5)
+				{
+					h = new Hadespede();
+					spawned = h->Spawn(this, x, y, SAND_LAYER_DEPTH) == OrganismAction::SPAWN;
+					if (spawned) {
+						organisms.push_back(h);
+					} else {
+						free(h);
+					}
 				}
 			}
 		}
 	}
 
-	// for (int y = 0; y < height; y++)
-	// {
-	// 	for (int x = 0; x < width; x++)
-	// 	{
-	// 		for (int z = 0; z < depth; z++)
-	// 		{
-	// 			LogTileType(x,y,z);
-	// 		}
-	// 	}
-	// }
-
 	delete[] noiseData;
 	delete[] sandLevelData;
-
-
-}
+};

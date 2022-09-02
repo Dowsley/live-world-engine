@@ -1,6 +1,5 @@
-#pragma once
-
-#include <random>
+#ifndef HUMBOLDT_TREE_H
+#define HUMBOLDT_TREE_H
 
 #include "../organism.h"
 #include "../../tiles/tile.h"
@@ -24,32 +23,4 @@ public:
 	OrganismAction Update(World *world) override;
 };
 
-// // ANIMAL: Red centipede, the size of a small dog. Likes to crawl next to tree roots.
-// class Hadespede : public Organism
-// {
-// private:
-// 	TileType *boneRose = BuildTileType("tumble raptor", 200)
-// 		->AddDefaultSprite(olc::vi2d(2, 2))
-// 		->AddDefaultForeColor(0x000AA0FF)
-// 		->AddDefaultBackColor(0x00000000);
-
-// public:
-// 	OrganismAction Spawn(World *world, int x, int y, int z) override;
-// 	OrganismAction Update(World *world) override;
-// };
-
-// // SMALL PLANT: Grows where tree roots are prevalent.
-// class BoneRose : public Organism
-// {
-// private:
-// 	TileType *boneRose = BuildTileType("bone rose", 10)
-// 		->AddDefaultSprite(olc::vi2d(2, 2))
-// 		->AddDefaultForeColor(0x000AA0FF)
-// 		->AddDefaultForeColor(0x0AA000FF)
-// 		->AddDefaultForeColor(0xAA0AAAFF)
-// 		->AddDefaultBackColor(0x00000000);
-
-// public:
-// 	OrganismAction Spawn(World *world, int x, int y, int z) override;
-// 	OrganismAction Update(World *world) override;
-// };
+#endif
