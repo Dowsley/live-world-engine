@@ -1,5 +1,9 @@
 # What is this?
-To be honest, I don't know. I suppose I could make it similar to No Man's Sky idea, but 2D and pixel-like.
+To be honest, I don't know. I want it to be alive, and breathe, and have almost unlimited replayability. But still be cool. I don't care about graphics though.
+
+I suppose I could make it similar to No Man's Sky idea, but 2D.
+
+Or a high-fantasy dragon-slayer game.
 
 # Engine
 Place the engine source code (regardless of platform) inside `src/engine/graphics` at root level.
