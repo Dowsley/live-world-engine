@@ -197,8 +197,10 @@ void World::GenerateTestBiome()
 	// Organisms
 	HumboldtTree *t;
 	Hadespede *h;
+	BoneRose *b;
 	float treeSpawnChance = 20;
 	float hadespedeSpawnChance = 5;
+	float boneRoseSpawnChance = 20;
 	bool spawned;
 	for (int y = 0; y < height; y++)
 	{
@@ -216,7 +218,7 @@ void World::GenerateTestBiome()
 						free(t);
 					}
 				}
-				if ((rand() % 10000) < 5)
+				if ((rand() % 10000) < hadespedeSpawnChance)
 				{
 					h = new Hadespede();
 					spawned = h->Spawn(this, x, y, SAND_LAYER_DEPTH) == OrganismAction::SPAWN;
@@ -224,6 +226,16 @@ void World::GenerateTestBiome()
 						organisms.push_back(h);
 					} else {
 						free(h);
+					}
+				}
+				if ((rand() % 10000) < boneRoseSpawnChance)
+				{
+					b = new BoneRose();
+					spawned = b->Spawn(this, x, y, SAND_LAYER_DEPTH) == OrganismAction::SPAWN;
+					if (spawned) {
+						organisms.push_back(b);
+					} else {
+						free(b);
 					}
 				}
 			}

@@ -8,12 +8,12 @@
 class BoneRose : public Organism
 {
 private:
+	int xPos, yPos, zPos;
 	TileType *boneRose = BuildTileType("bone rose", 10)
-		->AddDefaultSprite(olc::vi2d(2, 2))
-		->AddDefaultForeColor(0x000AA0FF)
-		->AddDefaultForeColor(0x0AA000FF)
-		->AddDefaultForeColor(0xAA0AAAFF)
-		->AddDefaultBackColor(0x00000000);
+		->AddDefaultSprite(olc::vi2d(7, 14))
+		->AddDefaultForeColor(249, 246, 238)
+		->AddDefaultForeColor(260, 246, 230)
+		->AddDefaultBackColor(0, 0, 0);
 
 public:
 	OrganismAction Spawn(World *world, int x, int y, int z) override;

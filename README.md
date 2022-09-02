@@ -45,9 +45,12 @@ https://github.com/munificent/hauberk
   - [X] Organic and inorganic tiles
   - [X] Trees
   - [X] Creatures
-  - [ ] Small plants
-- [ ] Organize metadata system, it is COMPLETELY fucked up. Gladly not used, *yet*.
-- [ ] Player
+  - [X] Small plants
+- [ ] Player (Astronaut)
+- [ ] Create a better tile/organism system
+  - [ ] Organize metadata system, it is COMPLETELY fucked up. Gladly not used, *yet*.
+  - [ ] Tiles can have two things: What's its surface, and whats on top of it. Like DF.
+- [ ] Create grass!
 - [ ] Separate OLC pixel game engine classes from mine (vi2d and Pixel)
 - [ ] Color schemes (DF)
 - [ ] Tile sprite & color variance by context
