@@ -1,4 +1,5 @@
-#pragma once
+#ifndef TILE_MANAGER_H
+#define TILE_MANAGER_H
 
 #include <string>
 #include <map>
@@ -24,7 +25,4 @@ public:
     TileType *GetNaturalTileType(std::string name);
 };
 
-
-
-
-
+#endif

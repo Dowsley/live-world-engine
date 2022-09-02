@@ -1,4 +1,5 @@
-#pragma once
+#ifndef TILE_H
+#define TILE_H
 
 #include <string>
 #include <vector>
@@ -60,3 +61,5 @@ public:
     TileMetadata(Tile *parent, Organism *organism);
     void SetOrganism(Organism *organism);
 };
+
+#endif
