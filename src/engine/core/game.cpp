@@ -40,9 +40,25 @@ private:
 
 	void DrawWorld()
 	{
+		Clear(olc::BLACK);
+
+		int trueX, trueY;
+
+		bool isCurrTileEmpty;
+		bool isLowerTileEmpty;
+		bool isLowerTileSurface;
 		for (int y = 0; y < (ScreenHeight() / tileSize.y); y++) {
 			for (int x = 0; x < (ScreenWidth() / tileSize.x); x++) {
+				trueX = x + (int) cameraPosX;
+				trueY = y + (int) cameraPosY;
+
 				DrawTile(x, y, currDepth);
+				isCurrTileEmpty = world->GetTileTypeName(trueX, trueY, currDepth) == "empty";
+				isLowerTileEmpty = world->GetTileTypeName(trueX, trueY, currDepth+1) == "empty";
+				isLowerTileSurface = world->GetTileType(trueX, trueY, currDepth+1)->isSurface;
+				if (isCurrTileEmpty && !isLowerTileEmpty && isLowerTileSurface) {
+						DrawTile(x, y, currDepth+1);
+				}
 			}
 		}
 		std::string str = "Layer: ";

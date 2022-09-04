@@ -52,6 +52,8 @@ public:
 	olc::vi2d GetTileSprite(int x, int y, int z);
 	olc::Pixel GetTileForeColor(int x, int y, int z);
 	olc::Pixel GetTileBackColor(int x, int y, int z);
+	TileType *GetTileType(int x, int y, int z);
+	std::string GetTileTypeName(int x, int y, int z);
 	void LogTileType(int x, int y, int z);
 
 	void Update();

@@ -1,4 +1,7 @@
-all:
-	g++ -g -o output src/engine/core/game.cpp -lX11 -lGL -lpthread -lpng -lstdc++fs -std=c++17
+all: compile run
+
 run:
 	.\output
+
+compile:
+	g++ -g -o output src/engine/core/game.cpp -lX11 -lGL -lpthread -lpng -lstdc++fs -std=c++17

@@ -104,6 +104,22 @@ olc::Pixel World::GetTileBackColor(int x, int y, int z)
 	olc::Pixel res = tileManager->GetBackColor(t);
 	return res;
 };
+TileType *World::GetTileType(int x, int y, int z)
+{
+	Tile *t = GetTile(x, y, z);
+	if (!t) {
+		return nullptr;
+	}
+	return t->type;
+};
+std::string World::GetTileTypeName(int x, int y, int z)
+{
+	Tile *t = GetTile(x, y, z);
+	if (!t) {
+		return "";
+	}
+	return t->type->GetName();
+};
 
 void World::LogTileType(int x, int y, int z)
 {

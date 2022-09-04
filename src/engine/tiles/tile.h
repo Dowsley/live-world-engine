@@ -23,11 +23,13 @@ private:
 
 public:
     static TileType *UNINITIALIZED;
+    bool isSurface = false;
     TileType(std::string name, unsigned short maxHealth);
 
     TileType *AddDefaultSprite(olc::vi2d newDefaultSprite);
     TileType *AddDefaultForeColor(int r, int g, int b);
     TileType *AddDefaultBackColor(int r, int g, int b);
+    TileType *SetSurface();
 
     std::string GetName();
     unsigned short GetMaxHealth();

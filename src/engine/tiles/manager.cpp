@@ -4,15 +4,16 @@ TileManager::TileManager()
 {
     AddNaturalTileType("empty", 0)
         ->AddDefaultSprite(olc::vi2d(11, 13))
-        ->AddDefaultForeColor(0, 0, 0)
-        ->AddDefaultBackColor(0, 0, 0);
+        ->AddDefaultForeColor(0, 0, 128)
+        ->AddDefaultBackColor(0, 0, 128);
 
     AddNaturalTileType("rock", 1000)
         ->AddDefaultSprite(olc::vi2d(11, 13))
         ->AddDefaultForeColor(60, 5, 8)
         ->AddDefaultForeColor(69, 1, 6)
         ->AddDefaultForeColor(74, 6, 11)
-        ->AddDefaultBackColor(0, 0 ,0);
+        ->AddDefaultBackColor(0, 0 ,0)
+        ->SetSurface();
 
     AddNaturalTileType("soil", 1000)
         ->AddDefaultSprite(olc::vi2d(7, 15))
@@ -20,8 +21,8 @@ TileManager::TileManager()
         ->AddDefaultForeColor(122, 5, 21)
         ->AddDefaultForeColor(159, 9, 36)
         ->AddDefaultForeColor(193, 11, 51)
-        ->AddDefaultBackColor(0, 0, 0);
-
+        ->AddDefaultBackColor(0, 0, 0)
+        ->SetSurface();
 };
 
 olc::vi2d TileManager::GetSprite(Tile *tile)

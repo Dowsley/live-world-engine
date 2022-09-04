@@ -21,6 +21,11 @@ TileType *TileType::AddDefaultBackColor(int r, int g, int b)
     this->defaultBackColors.push_back(olc::Pixel(r,g,b));
     return this;
 };
+TileType *TileType::SetSurface()
+{
+    this->isSurface = true;
+    return this;
+};
 
 std::string TileType::GetName() { return name; };
 unsigned short TileType::GetMaxHealth() { return maxHealth; };
