@@ -1,5 +1,11 @@
 #define OLC_PGE_APPLICATION
 
+#if _WIN32
+	#define REL_PATH_FOR_OS "assets\\tileset\\vanilla.png"
+#else
+	#define REL_PATH_FOR_OS "assets/tileset/vanilla.png"
+#endif
+
 #include <string>
 
 #include "../graphics/olcPixelGameEngine.h"
@@ -22,7 +28,7 @@ public:
 
 private:
 	olc::vi2d tileSize = { 8, 8 };
-	olc::Sprite *tileSet = new olc::Sprite("assets\\tileset\\vanilla.png"); // IF THE GAME IS BLACK, YOU MESSED THE PATH
+	olc::Sprite *tileSet = new olc::Sprite(REL_PATH_FOR_OS); // IF THE GAME IS BLACK, YOU MESSED THE PATH
 	olc::Pixel forePlaceholder = olc::WHITE;
 	olc::Pixel backPlaceholder = olc::BLACK;
 
