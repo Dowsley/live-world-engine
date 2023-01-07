@@ -21,18 +21,19 @@ https://github.com/munificent/hauberk
 - https://github.com/Trevoke/dwarlixir
 - https://docs.unity3d.com/Packages/com.unity.entities@0.51/manual/index.html
 
-# Scientific data
-- https://www.mars.asu.edu/data/
-- http://www.mars.asu.edu/data/mola_color/
-- https://en.wikipedia.org/wiki/Martian_soil
-- https://en.wikipedia.org/wiki/Space_suit#Requirements
-
 # Dwarf fortress inspiration
 - https://dwarffortresswiki.org/index.php/DF2014:Raw_file
 - https://dwarffortresswiki.org/index.php/DF2014:Modding
 - https://dwarffortresswiki.org/index.php/DF2014:Token
 - https://dwarffortresswiki.org/index.php/DF2014:Tile
 - https://dwarffortresswiki.org/index.php/DF2014:Inorganic_material_definition_token#SOIL
+
+# Scientific data
+- https://www.mars.asu.edu/data/
+- http://www.mars.asu.edu/data/mola_color/
+- https://en.wikipedia.org/wiki/Martian_soil
+- https://en.wikipedia.org/wiki/Space_suit#Requirements
+
 # Progress
 - [X] Tile system
 - [X] ASCII Sprite Tile Representations with colors
@@ -50,7 +51,7 @@ https://github.com/munificent/hauberk
 - [ ] Create a better tile/organism system
   - [ ] Organize metadata system, it is COMPLETELY fucked up. Gladly not used, *yet*.
   - [ ] Tiles can have two things: What's its surface, and whats on top of it. Like DF.
-  - [ ] Player (Astronaut)
+- [ ] Player (Astronaut)
     - [ ] View mode (K)
 - [ ] Create grass!
 - [ ] Occlusion
@@ -63,6 +64,7 @@ https://github.com/munificent/hauberk
 - [ ] Procedurally generate planets and its geology
 - [ ] Environment dynamics (weather, etc)
 - [ ] Space travel & spaceship
+- [ ] Octotrees
 
 # Idea Dump
 ### Tile Size: two meters long, two meters wide, and three meters high
