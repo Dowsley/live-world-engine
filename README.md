@@ -5,6 +5,8 @@ I suppose I could make it similar to No Man's Sky idea, but 2D.
 
 Or a high-fantasy dragon-slayer game.
 
+Or a flesh pit national park roguelike?
+
 # Engine
 Place the engine source code (regardless of platform) inside `src/engine/graphics` at root level.
 
@@ -50,6 +52,7 @@ https://github.com/munificent/hauberk
 - [X] Multilevel view
 - [ ] Create a better tile/organism system
   - [ ] Organize metadata system, it is COMPLETELY fucked up. Gladly not used, *yet*.
+  - [ ] Track organisms outside of the grid
   - [ ] Tiles can have two things: What's its surface, and whats on top of it. Like DF.
 - [ ] Player (Astronaut)
     - [ ] View mode (K)
