@@ -19,11 +19,11 @@
 
 using namespace std;
 
-class MarsSimulator : public olc::PixelGameEngine
+class LiveWorldEngine : public olc::PixelGameEngine
 {
 public:
-	MarsSimulator() {
-		sAppName = "Mars Simulator";
+	LiveWorldEngine() {
+		sAppName = "Live World Engine";
 	}
 
 private:
@@ -186,7 +186,7 @@ protected:
 
 int main(int argc, char const *argv[])
 {
-	MarsSimulator game;
+	LiveWorldEngine game;
 
 	game.Construct(304, 200, 4, 4);
 	game.Start();
