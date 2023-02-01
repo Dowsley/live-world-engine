@@ -47,6 +47,10 @@ https://github.com/munificent/hauberk
   - [X] Creatures
   - [X] Small plants
 - [X] Multilevel view
+- [ ] Change tileset to something prettier
+- [ ] Approach for different biomes
+- [ ] **Maintain goal of creating a **realistic** biome, then re-structure system from there.
+  - [ ] Inheritance-based approach isn't that bad for now. Leave ECS for later.
 - [ ] Create a better tile/organism system
   - [ ] Organize metadata system, it is COMPLETELY fucked up. Gladly not used, *yet*.
   - [ ] Tiles can have two things: What's its surface, and whats on top of it. Like DF.
