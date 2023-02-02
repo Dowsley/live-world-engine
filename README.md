@@ -41,6 +41,11 @@ https://github.com/munificent/hauberk
 - https://en.wikipedia.org/wiki/Martian_soil
 - https://en.wikipedia.org/wiki/Space_suit#Requirements
 
+# Tilesets
+https://vurmux.itch.io/urizen-onebit-tilesets  
+https://v3x3d.itch.io/bountiful-bits  
+https://lightcone-games.itch.io/the-1-bit-space-pack  
+
 # Progress
 - [X] Tile system
 - [X] ASCII Sprite Tile Representations with colors
