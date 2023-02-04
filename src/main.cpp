@@ -8,12 +8,12 @@
 
 #include <string>
 
-#include "../graphics/olcPixelGameEngine.h"
+#include "graphics/olcPixelGameEngine.h"
 
-#include "../world/index.cpp"
-#include "../tiles/index.cpp"
-#include "../organisms/index.cpp"
-#include "../../util/arithmetics.cpp"
+#include "core/index.h"
+#include "tiles/index.h"
+#include "organisms/index.h"
+#include "util/index.h"
 
 #define MAX_DEPTH 50
 
@@ -28,20 +28,20 @@ public:
 
 private:
 	olc::vi2d tileSize = { 8, 8 };
-	olc::Sprite *tileSet = new olc::Sprite(REL_PATH_FOR_OS); // IF THE GAME IS BLACK, YOU MESSED THE PATH
+	olc::Sprite tileSet = olc::Sprite(REL_PATH_FOR_OS); // IF THE GAME IS BLACK, YOU MESSED THE PATH
 	olc::Pixel forePlaceholder = olc::WHITE;
 	olc::Pixel backPlaceholder = olc::BLACK;
 
-	World *world = new World(512, 512, MAX_DEPTH);
+	World world = World(512, 512, MAX_DEPTH);
 
 	float cameraPosX = 0.0f;
 	float cameraPosY = 0.0f;
 
 	int currDepth = MAX_DEPTH / 2;
 
-	void LogColor(olc::Pixel *p)
+	void LogColor(const olc::Pixel &p)
 	{
-		printf("R: %d, G: %d, B:%d\n", p->r, p->g, p->b);
+		printf("R: %d, G: %d, B:%d\n", p.r, p.g, p.b);
 	}
 
 	void DrawWorld()
@@ -59,9 +59,9 @@ private:
 				trueY = y + (int) cameraPosY;
 
 				DrawTile(x, y, currDepth);
-				isCurrTileEmpty = world->GetTileTypeName(trueX, trueY, currDepth) == "empty";
-				isLowerTileEmpty = world->GetTileTypeName(trueX, trueY, currDepth+1) == "empty";
-				isLowerTileSurface = world->GetTileType(trueX, trueY, currDepth+1)->isSurface;
+				isCurrTileEmpty = world.GetTileTypeName(trueX, trueY, currDepth) == "empty";
+				isLowerTileEmpty = world.GetTileTypeName(trueX, trueY, currDepth+1) == "empty";
+				isLowerTileSurface = world.GetTileType(trueX, trueY, currDepth+1)->isSurface;
 				if (isCurrTileEmpty && !isLowerTileEmpty && isLowerTileSurface) {
 						DrawTile(x, y, currDepth+1);
 				}
@@ -74,15 +74,15 @@ private:
 
 	void DrawTile(int x, int y, int z)
 	{
-		olc::Pixel foreColor = world->GetTileForeColor(
+		olc::Pixel foreColor = world.GetTileForeColor(
 			x + (int)cameraPosX,
 			y + (int)cameraPosY,
 			z);
-		olc::Pixel backColor = world->GetTileBackColor(
+		olc::Pixel backColor = world.GetTileBackColor(
 			x + (int)cameraPosX,
 			y + (int)cameraPosY,
 			z);
-		olc::vi2d spritePos = world->GetTileSprite(
+		olc::vi2d spritePos = world.GetTileSprite(
 			x + (int)cameraPosX,
 			y + (int)cameraPosY,
 			z) * tileSize;
@@ -93,8 +93,7 @@ private:
 		for (int i = 0; i < tileSize.y; i++) {
 			for (int j = 0; j < tileSize.x; j++) {
 				screenPos = olc::vi2d((x*tileSize.x) + j, (y*tileSize.y) + i);
-				ref = tileSet->GetPixel(j + spritePos.x, i + spritePos.y);
-				// LogColor(&ref);
+				ref = tileSet.GetPixel(j + spritePos.x, i + spritePos.y);
 				if (ref == forePlaceholder)
 					Draw(screenPos, foreColor);
 				else
@@ -106,7 +105,7 @@ private:
 protected:
 	bool OnUserCreate() override
 	{
-		world->Generate();
+		world.Generate();
 		DrawWorld();
 		return true;
 	}
@@ -116,13 +115,13 @@ protected:
 		// Press 'M' key to regenerate world
 		bool redraw = false;
 		if (GetKey(olc::Key::M).bReleased) {
-			world->Generate();
+			world.Generate();
 			redraw = true;
 		}
 
 		// Press 'R' key to update entities
 		if (GetKey(olc::Key::R).bReleased) {
-			world->Update();
+			world.Update();
 			redraw = true;
 		}
 
@@ -168,12 +167,12 @@ protected:
 		// Clamp world boundaries
 		if (cameraPosX < 0)
 			cameraPosX = 0;
-		if (cameraPosX >= world->GetWidth() - ScreenWidth())
-			cameraPosX = world->GetWidth() - ScreenWidth();
+		if (cameraPosX >= world.GetWidth() - ScreenWidth())
+			cameraPosX = world.GetWidth() - ScreenWidth();
 		if (cameraPosY < 0)
 			cameraPosY = 0;
-		if (cameraPosY >= world->GetHeight() - ScreenHeight())
-			cameraPosY = world->GetHeight() - ScreenHeight();
+		if (cameraPosY >= world.GetHeight() - ScreenHeight())
+			cameraPosY = world.GetHeight() - ScreenHeight();
 
 		if (redraw || left || right || up || down)
 			DrawWorld();

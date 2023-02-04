@@ -4,8 +4,8 @@
 #include "../organisms/organism.h"
 
 #include "../organisms/types/index.h"
-#include "../../util/arithmetics.h"
-#include "../../util/noise.cpp"
+#include "../util/arithmetics.h"
+#include "../util/noise.cpp"
 
 World::World(int width, int height, int depth)
 {
@@ -17,24 +17,24 @@ World::World(int width, int height, int depth)
 	noise = new FastNoiseLite();
 	tileManager = new TileManager();
 	map = (Tile *)malloc(sizeof(Tile) * totalSize);
-};
+}
 
 World::~World()
 {
 	free(noise);
 	free(tileManager);
 	free(map);
-};
+}
 
-int World::Transform3DCoords(int x, int y, int z) { return y + height * (x + width * z); };
-int World::Transform2DCoords(int x, int y) { return y * width + x; };
+int World::Transform3DCoords(int x, int y, int z) { return y + height * (x + width * z); }
+int World::Transform2DCoords(int x, int y) { return y * width + x; }
 
-int World::GetHeight() { return height; };
-int World::GetWidth() { return width; };
-int World::GetDepth() { return depth; };
-void World::SetHeight(int height) { this->height = height; };
-void World::SetWidth(int width) { this->width = width; };
-void World::SetDepth(int depth) { this->depth = depth; };
+int World::GetHeight() { return height; }
+int World::GetWidth() { return width; }
+int World::GetDepth() { return depth; }
+void World::SetHeight(int height) { this->height = height; }
+void World::SetWidth(int width) { this->width = width; }
+void World::SetDepth(int depth) { this->depth = depth; }
 
 Tile *World::GetTile(int x, int y, int z)
 {
@@ -78,32 +78,32 @@ void World::SwapTiles(Tile *tile1, Tile *tile2)
     tile2->defaultSpriteIndex = defaultSpriteIndex1;
     tile2->defaultForeColorIndex = defaultForeColorIndex1;
     tile2->defaultBackColorIndex = defaultBackColorIndex1;
-};
+}
 
 bool World::IsInBounds(int x, int y, int z)
 {
 	bool res = (x < width && x >= 0) && (y < height && y >= 0) && (z < depth && z >= 0);
 	return res;
-};
+}
 
 olc::vi2d World::GetTileSprite(int x, int y, int z)
 {
 	Tile *t = GetTile(x, y, z);
 	olc::vi2d res = tileManager->GetSprite(t);
 	return res;
-};
+}
 olc::Pixel World::GetTileForeColor(int x, int y, int z)
 {
 	Tile *t = GetTile(x, y, z);
 	olc::Pixel res = tileManager->GetForeColor(t);
 	return res;
-};
+}
 olc::Pixel World::GetTileBackColor(int x, int y, int z)
 {
 	Tile *t = GetTile(x, y, z);
 	olc::Pixel res = tileManager->GetBackColor(t);
 	return res;
-};
+}
 TileType *World::GetTileType(int x, int y, int z)
 {
 	Tile *t = GetTile(x, y, z);
@@ -111,7 +111,7 @@ TileType *World::GetTileType(int x, int y, int z)
 		return nullptr;
 	}
 	return t->type;
-};
+}
 std::string World::GetTileTypeName(int x, int y, int z)
 {
 	Tile *t = GetTile(x, y, z);
@@ -119,7 +119,7 @@ std::string World::GetTileTypeName(int x, int y, int z)
 		return "";
 	}
 	return t->type->GetName();
-};
+}
 
 void World::LogTileType(int x, int y, int z)
 {
@@ -133,7 +133,7 @@ void World::LogTileType(int x, int y, int z)
 		return;
 	}
 	printf("%d, %d, %d, Name: %s\n", x, y, z, t->type->GetName().c_str());
-};
+}
 
 void World::Update()
 {
@@ -141,12 +141,12 @@ void World::Update()
 	{
 		o->Update(this);
 	}
-};
+}
 
 void World::Generate()
 {
 	GenerateTestBiome();
-};
+}
 
 void World::GenerateTestBiome()
 {
@@ -260,4 +260,4 @@ void World::GenerateTestBiome()
 
 	delete[] noiseData;
 	delete[] sandLevelData;
-};
+}

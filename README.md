@@ -66,10 +66,14 @@ https://lightcone-games.itch.io/the-1-bit-space-pack
   - [X] Creatures
   - [X] Small plants
 - [X] Multilevel view
+- [X] Code refactor
 - [ ] Change tileset to something prettier
-- [ ] Approach for different biomes
+- [ ] Real-time updates (with TPS)
 - [ ] **Maintain goal of creating a **realistic** biome, then re-structure system from there.
-  - [ ] Inheritance-based approach isn't that bad for now. Leave ECS for later.
+  - Inheritance-based approach isn't that bad for now. Leave ECS for later.
+- [ ] Introduce my own data structures for Vectors and Colors
+- [ ] Investigate if there's any way to refactor the relation between World and Organism
+- [ ] Approach for different biomes
 - [ ] Create a better tile/organism system
   - [ ] Organize metadata system, it is COMPLETELY fucked up. Gladly not used, *yet*.
   - [ ] Track organisms outside of the grid

@@ -12,7 +12,7 @@ bool Organism::_spawnInTile(World *world, TileType *type, int x, int y, int z)
 
 	world->SetTile(x, y, z, type, this);
 	return true;
-};
+}
 
 bool Organism::_growToTile(World *world, TileType *type, int x, int y, int z)
 {
@@ -24,7 +24,7 @@ bool Organism::_growToTile(World *world, TileType *type, int x, int y, int z)
 
 	world->SetTile(x, y, z, type, this);
 	return true;
-};
+}
 
 bool Organism::_moveToTile(World *world, Tile *tile, int x, int y, int z)
 {
@@ -36,4 +36,4 @@ bool Organism::_moveToTile(World *world, Tile *tile, int x, int y, int z)
 
 	world->SwapTiles(tile, target);
 	return true;
-};
+}

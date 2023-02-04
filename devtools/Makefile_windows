@@ -4,4 +4,4 @@ run:
 	.\output.exe
 
 compile:
-	g++ -o output.exe -g src/engine/core/game.cpp -luser32 -lgdi32 -lopengl32 -lgdiplus -lShlwapi -ldwmapi -lstdc++fs -static -std=c++17
+	g++ -o output.exe -g src/main.cpp -luser32 -lgdi32 -lopengl32 -lgdiplus -lShlwapi -ldwmapi -lstdc++fs -static -std=c++17

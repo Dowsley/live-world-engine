@@ -3,7 +3,7 @@
 
 #include <vector>
 
-#include "../world/world.h"
+#include "../core/world.h"
 
 class Tile;
 

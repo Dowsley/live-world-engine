@@ -4,5 +4,5 @@ run:
 	./out
 
 compile:
-    g++ -o out src/engine/core/game.cpp \
+    g++ -o out src/main.cpp \
 	-I/usr/X11/include -L/usr/X11/lib -lX11 -lGL -lpng -lpthread -std=c++17
