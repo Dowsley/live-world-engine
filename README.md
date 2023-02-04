@@ -9,6 +9,12 @@ Or a flesh pit national park roguelike?
 
 Or a terraforming game!
 
+Or a cave ecosystem simulator.
+
+Or all of them.
+
+It could even be minecraft in the future.
+
 https://youtu.be/yTB8qDbfhBg. 
 could be what minecraft failed to be
 
