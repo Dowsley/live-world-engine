@@ -68,8 +68,8 @@ https://lightcone-games.itch.io/the-1-bit-space-pack
 - [X] Multilevel view
 - [X] Code refactor
 - [X] Change tileset to something prettier
-- [ ] Create grass
-- [ ] Real-time updates (with TPS)]
+- [X] Create grass
+- [ ] Real-time updates (with TPS)
 - [ ] **Maintain goal of creating a **realistic** biome, then re-structure system from there.
   - Inheritance-based approach isn't that bad for now. Leave ECS for later.
 - [ ] Introduce my own data structures for Vectors and Colors
@@ -89,6 +89,7 @@ https://lightcone-games.itch.io/the-1-bit-space-pack
   - [ ] Track organisms outside of the grid
   - [ ] Tiles can have two things: What's its surface, and whats on top of it. Like DF.
 - [ ] Introduce data oriented system. I'm tired of recompiling and calling builders inside headers.
+- [ ] Refine the compilation system for faster building
 - [ ] Player (Astronaut)
     - [ ] View mode (K)
 - [ ] Create grass!
