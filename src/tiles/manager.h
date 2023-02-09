@@ -4,8 +4,9 @@
 #include <string>
 #include <map>
 
-#include "../graphics/olcPixelGameEngine.h"
 #include "functions.h"
+#include "../structures/color.h"
+#include "../structures/vec2.h"
 
 class TileManager {
 private:
@@ -14,9 +15,9 @@ private:
 public:
     TileManager();
 
-    olc::vi2d GetSprite(Tile *tile);
-    olc::Pixel GetForeColor(Tile *tile);
-    olc::Pixel GetBackColor(Tile *tile);
+    Vec2 GetSprite(Tile *tile);
+    Color GetForeColor(Tile *tile);
+    Color GetBackColor(Tile *tile);
 
     void SetupTile(Tile *tile, TileType *type, Organism *organism);
 

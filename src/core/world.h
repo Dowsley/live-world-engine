@@ -3,7 +3,9 @@
 
 #include <vector>
 
-#include "../graphics/olcPixelGameEngine.h"
+#include "../engine/olcPixelGameEngine.h"
+#include "../structures/color.h"
+#include "../structures/vec2.h"
 
 class TileType;
 class TileManager;
@@ -49,9 +51,9 @@ public:
 	void SwapTiles(Tile *tile1, Tile *tile2);
 	bool IsInBounds(int x, int y, int z);
 
-	olc::vi2d GetTileSprite(int x, int y, int z);
-	olc::Pixel GetTileForeColor(int x, int y, int z);
-	olc::Pixel GetTileBackColor(int x, int y, int z);
+	Vec2 GetTileSprite(int x, int y, int z);
+	Color GetTileForeColor(int x, int y, int z);
+	Color GetTileBackColor(int x, int y, int z);
 	TileType *GetTileType(int x, int y, int z);
 	std::string GetTileTypeName(int x, int y, int z);
 	void LogTileType(int x, int y, int z);

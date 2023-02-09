@@ -86,22 +86,22 @@ bool World::IsInBounds(int x, int y, int z)
 	return res;
 }
 
-olc::vi2d World::GetTileSprite(int x, int y, int z)
+Vec2 World::GetTileSprite(int x, int y, int z)
 {
 	Tile *t = GetTile(x, y, z);
-	olc::vi2d res = tileManager->GetSprite(t);
+	Vec2 res = tileManager->GetSprite(t);
 	return res;
 }
-olc::Pixel World::GetTileForeColor(int x, int y, int z)
+Color World::GetTileForeColor(int x, int y, int z)
 {
 	Tile *t = GetTile(x, y, z);
-	olc::Pixel res = tileManager->GetForeColor(t);
+	Color res = tileManager->GetForeColor(t);
 	return res;
 }
-olc::Pixel World::GetTileBackColor(int x, int y, int z)
+Color World::GetTileBackColor(int x, int y, int z)
 {
 	Tile *t = GetTile(x, y, z);
-	olc::Pixel res = tileManager->GetBackColor(t);
+	Color res = tileManager->GetBackColor(t);
 	return res;
 }
 TileType *World::GetTileType(int x, int y, int z)
@@ -188,18 +188,15 @@ void World::GenerateTestBiome()
 			
 			for (int z = 0; z < depth; z++)
 			{
-				if (z >= inverseDepth)
-				{
+				if (z >= inverseDepth) {
 					SetTile(x, y, z, tileManager->GetNaturalTileType("rock"));
-				}
-				else
-				{
-					if (z > SAND_LAYER_DEPTH)
-					{
-						SetTile(x, y, z, tileManager->GetNaturalTileType("soil"));
-					}
-					else
-					{
+				} else {
+					if (z > SAND_LAYER_DEPTH) {
+						if (z == SAND_LAYER_DEPTH + 1)
+							SetTile(x, y, z, tileManager->GetNaturalTileType("grass"));
+						else
+							SetTile(x, y, z, tileManager->GetNaturalTileType("soil"));
+					} else {
 						SetTile(x, y, z, tileManager->GetNaturalTileType("empty"));
 						if (z == SAND_LAYER_DEPTH) {
 							sandLevelData[y * width + x] = true;

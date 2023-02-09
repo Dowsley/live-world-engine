@@ -1,23 +1,22 @@
 #define OLC_PGE_APPLICATION
 
 #if _WIN32
-	#define REL_PATH_FOR_OS "assets\\tileset\\vanilla.png"
+	#define REL_PATH_FOR_OS "assets\\tileset\\urizen.png"
 #else
-	#define REL_PATH_FOR_OS "assets/tileset/vanilla.png"
+	#define REL_PATH_FOR_OS "assets/tileset/urizen.png"
 #endif
 
 #include <string>
 
-#include "graphics/olcPixelGameEngine.h"
+#include "engine/olcPixelGameEngine.h"
 
 #include "core/index.h"
 #include "tiles/index.h"
 #include "organisms/index.h"
 #include "util/index.h"
+#include "structures/index.h"
 
 #define MAX_DEPTH 50
-
-using namespace std;
 
 class LiveWorldEngine : public olc::PixelGameEngine
 {
@@ -27,10 +26,11 @@ public:
 	}
 
 private:
-	olc::vi2d tileSize = { 8, 8 };
+	Vec2 tileSize = { 12, 12 };
+	Vec2 tileOffset = { 1, 1 };
 	olc::Sprite tileSet = olc::Sprite(REL_PATH_FOR_OS); // IF THE GAME IS BLACK, YOU MESSED THE PATH
-	olc::Pixel forePlaceholder = olc::WHITE;
-	olc::Pixel backPlaceholder = olc::BLACK;
+	Color forePlaceholder = olc::WHITE;
+	Color backPlaceholder = olc::BLACK;
 
 	World world = World(512, 512, MAX_DEPTH);
 
@@ -39,7 +39,7 @@ private:
 
 	int currDepth = MAX_DEPTH / 2;
 
-	void LogColor(const olc::Pixel &p)
+	void LogColor(const Color &p)
 	{
 		printf("R: %d, G: %d, B:%d\n", p.r, p.g, p.b);
 	}
@@ -69,35 +69,35 @@ private:
 		}
 		std::string str = "Layer: ";
 		str.append(std::to_string(currDepth));
-		DrawString(olc::vi2d(0,0), str, olc::WHITE, 1);
+		DrawString(Vec2(0,0), str, olc::WHITE, 1);
 	}
 
 	void DrawTile(int x, int y, int z)
 	{
-		olc::Pixel foreColor = world.GetTileForeColor(
+		Color foreColor = world.GetTileForeColor(
 			x + (int)cameraPosX,
 			y + (int)cameraPosY,
 			z);
-		olc::Pixel backColor = world.GetTileBackColor(
+		Color backColor = world.GetTileBackColor(
 			x + (int)cameraPosX,
 			y + (int)cameraPosY,
 			z);
-		olc::vi2d spritePos = world.GetTileSprite(
+		Vec2 spritePos = world.GetTileSprite(
 			x + (int)cameraPosX,
 			y + (int)cameraPosY,
-			z) * tileSize;
+			z);
+		spritePos = spritePos * tileSize + (tileOffset * spritePos) + Vec2(1,1);
 
-		olc::Pixel ref;
-		olc::Pixel toDraw;
-		olc::vi2d screenPos;
+		Color ref;
+		Vec2 screenPos;
 		for (int i = 0; i < tileSize.y; i++) {
 			for (int j = 0; j < tileSize.x; j++) {
-				screenPos = olc::vi2d((x*tileSize.x) + j, (y*tileSize.y) + i);
+				screenPos = Vec2((x*tileSize.x) + j, (y*tileSize.y) + i);
 				ref = tileSet.GetPixel(j + spritePos.x, i + spritePos.y);
 				if (ref == forePlaceholder)
 					Draw(screenPos, foreColor);
 				else
-					Draw(screenPos, backColor);
+					Draw(screenPos, ref);
 			}
 		}
 	}
@@ -187,7 +187,7 @@ int main(int argc, char const *argv[])
 {
 	LiveWorldEngine game;
 
-	game.Construct(304, 200, 4, 4);
+	game.Construct(312, 204, 4, 4);
 	game.Start();
 
 	return 0;

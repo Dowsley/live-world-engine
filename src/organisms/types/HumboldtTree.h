@@ -9,13 +9,15 @@ class HumboldtTree : public Organism
 {
 public:
 	TileType *trunk = BuildTileType("trunk", 400)
-		->AddDefaultSprite(olc::vi2d(15, 6))
+		->AddDefaultSprite(Vec2(4, 7))
         ->AddDefaultForeColor(128, 128, 0)
         ->AddDefaultBackColor(0, 0, 0);
 
 	TileType *leaves = BuildTileType("leaves", 20)
-		->AddDefaultSprite(olc::vi2d(12, 10))
-		->AddDefaultSprite(olc::vi2d(11, 10))
+		->AddDefaultSprite(Vec2(0, 7))
+		->AddDefaultSprite(Vec2(1, 7))
+		->AddDefaultSprite(Vec2(2, 7))
+		->AddDefaultSprite(Vec2(3, 7))
         ->AddDefaultForeColor(0, 71, 0)
         ->AddDefaultBackColor(0, 0 ,0);
 

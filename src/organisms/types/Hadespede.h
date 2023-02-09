@@ -12,7 +12,7 @@ class Hadespede : public Organism
 private:
 	int xPos, yPos, zPos;
 	TileType *hadespede = BuildTileType("hadespede", 200)
-		->AddDefaultSprite(olc::vi2d(8, 4))
+		->AddDefaultSprite(Vec2(2, 14))
 		->AddDefaultForeColor(255, 0, 255)
 		->AddDefaultBackColor(0, 0, 0);
 

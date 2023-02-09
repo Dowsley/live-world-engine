@@ -6,19 +6,19 @@ TileType::TileType(std::string name, unsigned short maxHealth)
     this->maxHealth = maxHealth;
 }
 
-TileType *TileType::AddDefaultSprite(olc::vi2d newDefaultSprite)
+TileType *TileType::AddDefaultSprite(Vec2 newDefaultSprite)
 {
     this->defaultSprites.push_back(newDefaultSprite);
     return this;
 }
 TileType *TileType::AddDefaultForeColor(int r, int g, int b)
 {
-    this->defaultForeColors.push_back(olc::Pixel(r,g,b));
+    this->defaultForeColors.push_back(Color(r,g,b));
     return this;
 }
 TileType *TileType::AddDefaultBackColor(int r, int g, int b)
 {
-    this->defaultBackColors.push_back(olc::Pixel(r,g,b));
+    this->defaultBackColors.push_back(Color(r,g,b));
     return this;
 }
 TileType *TileType::SetSurface()
@@ -30,9 +30,9 @@ TileType *TileType::SetSurface()
 std::string TileType::GetName() { return name; }
 unsigned short TileType::GetMaxHealth() { return maxHealth; }
 
-olc::vi2d TileType::GetDefaultSprite(int index) { return defaultSprites[index]; }
-olc::Pixel TileType::GetDefaultForeColor(int index) { return defaultForeColors[index]; }
-olc::Pixel TileType::GetDefaultBackColor(int index) { return defaultBackColors[index]; }
+Vec2 TileType::GetDefaultSprite(int index) { return defaultSprites[index]; }
+Color TileType::GetDefaultForeColor(int index) { return defaultForeColors[index]; }
+Color TileType::GetDefaultBackColor(int index) { return defaultBackColors[index]; }
 
 int TileType::GetRandomDefaultSpriteIndex() { return rand() % defaultSprites.size(); }
 int TileType::GetRandomDefaultForeColorIndex() { return rand() % defaultForeColors.size(); }

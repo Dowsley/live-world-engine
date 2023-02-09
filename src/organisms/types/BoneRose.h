@@ -10,9 +10,11 @@ class BoneRose : public Organism
 private:
 	int xPos, yPos, zPos;
 	TileType *boneRose = BuildTileType("bone rose", 10)
-		->AddDefaultSprite(olc::vi2d(7, 14))
+		->AddDefaultSprite(Vec2(0, 5))
+		->AddDefaultSprite(Vec2(1, 5))
 		->AddDefaultForeColor(249, 246, 238)
-		->AddDefaultForeColor(260, 246, 230)
+		->AddDefaultForeColor(260, 246, 200)
+		->AddDefaultForeColor(200, 246, 200)
 		->AddDefaultBackColor(0, 0, 0);
 
 public:

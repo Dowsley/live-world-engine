@@ -3,41 +3,47 @@
 TileManager::TileManager()
 {
     AddNaturalTileType("empty", 0)
-        ->AddDefaultSprite(olc::vi2d(11, 13))
+        ->AddDefaultSprite(Vec2(12, 0))
         ->AddDefaultForeColor(0, 0, 128)
         ->AddDefaultBackColor(0, 0, 128);
 
     AddNaturalTileType("rock", 1000)
-        ->AddDefaultSprite(olc::vi2d(11, 13))
+        ->AddDefaultSprite(Vec2(9, 32))
         ->AddDefaultForeColor(60, 5, 8)
         ->AddDefaultForeColor(69, 1, 6)
         ->AddDefaultForeColor(74, 6, 11)
         ->AddDefaultBackColor(0, 0 ,0)
         ->SetSurface();
 
-    AddNaturalTileType("soil", 1000)
-        ->AddDefaultSprite(olc::vi2d(7, 15))
-        ->AddDefaultSprite(olc::vi2d(14, 7))
-        ->AddDefaultForeColor(122, 5, 21)
-        ->AddDefaultForeColor(159, 9, 36)
-        ->AddDefaultForeColor(193, 11, 51)
+    AddNaturalTileType("soil", 300)
+        ->AddDefaultSprite(Vec2(9, 32))
+        ->AddDefaultForeColor(40, 20, 0)
+        ->AddDefaultBackColor(0, 0, 0)
+        ->SetSurface();
+
+    AddNaturalTileType("grass", 100)
+        ->AddDefaultSprite(Vec2(14, 4))
+        ->AddDefaultSprite(Vec2(15, 4))
+        ->AddDefaultSprite(Vec2(15, 2))
+        ->AddDefaultSprite(Vec2(16, 2))
+        ->AddDefaultForeColor(53, 178, 58)
         ->AddDefaultBackColor(0, 0, 0)
         ->SetSurface();
 }
 
-olc::vi2d TileManager::GetSprite(Tile *tile)
+Vec2 TileManager::GetSprite(Tile *tile)
 {
     // TODO if (tile->entity)
     // TODO if (tile->metadata)
     return tile->type->GetDefaultSprite(tile->defaultSpriteIndex);
 }
-olc::Pixel TileManager::TileManager::GetForeColor(Tile *tile)
+Color TileManager::TileManager::GetForeColor(Tile *tile)
 {
     // TODO if (tile->entity)
     // TODO if (tile->metadata)
     return tile->type->GetDefaultForeColor(tile->defaultForeColorIndex);
 }
-olc::Pixel TileManager::GetBackColor(Tile *tile)
+Color TileManager::GetBackColor(Tile *tile)
 {
     // TODO if (tile->entity)
     // TODO if (tile->metadata)

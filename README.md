@@ -19,7 +19,7 @@ https://youtu.be/yTB8qDbfhBg.
 could be what minecraft failed to be
 
 # Engine
-Place the engine source code (regardless of platform) inside `src/engine/graphics` at root level.
+Place the engine source code (regardless of platform) inside `src/engine`.
 
 https://github.com/MumflrFumperdink/olcPGEMac
 
@@ -67,17 +67,28 @@ https://lightcone-games.itch.io/the-1-bit-space-pack
   - [X] Small plants
 - [X] Multilevel view
 - [X] Code refactor
-- [ ] Change tileset to something prettier
-- [ ] Real-time updates (with TPS)
+- [X] Change tileset to something prettier
+- [ ] Create grass
+- [ ] Real-time updates (with TPS)]
 - [ ] **Maintain goal of creating a **realistic** biome, then re-structure system from there.
   - Inheritance-based approach isn't that bad for now. Leave ECS for later.
 - [ ] Introduce my own data structures for Vectors and Colors
+- [ ] Add new sprites (e.g. surfaces and leaves from bountiful)
+- [ ] Add automatic analog color variation
+- [ ] Consider removing manual background color, that will save A LOT of space.
+- [ ] Refactor leftover pointers into references
+- [ ] Review Tile system
+  - [ ] Remove "sand" named variables lol
+  - [ ] Natural tyle. The hell is that?
+  - [ ] Everything else
+- [ ] Add sprite rotation system
 - [ ] Investigate if there's any way to refactor the relation between World and Organism
 - [ ] Approach for different biomes
 - [ ] Create a better tile/organism system
   - [ ] Organize metadata system, it is COMPLETELY fucked up. Gladly not used, *yet*.
   - [ ] Track organisms outside of the grid
   - [ ] Tiles can have two things: What's its surface, and whats on top of it. Like DF.
+- [ ] Introduce data oriented system. I'm tired of recompiling and calling builders inside headers.
 - [ ] Player (Astronaut)
     - [ ] View mode (K)
 - [ ] Create grass!

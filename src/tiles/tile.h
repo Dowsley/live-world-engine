@@ -5,7 +5,8 @@
 #include <vector>
 #include <random>
 
-#include "../graphics/olcPixelGameEngine.h"
+#include "../structures/color.h"
+#include "../structures/vec2.h"
 #include "../organisms/organism.h"
 
 class TileType;
@@ -17,16 +18,16 @@ private:
     std::string name;
     unsigned short maxHealth;
 
-    std::vector<olc::vi2d> defaultSprites;
-    std::vector<olc::Pixel> defaultForeColors;
-    std::vector<olc::Pixel> defaultBackColors;
+    std::vector<Vec2> defaultSprites;
+    std::vector<Color> defaultForeColors;
+    std::vector<Color> defaultBackColors;
 
 public:
     static TileType *UNINITIALIZED;
     bool isSurface = false;
     TileType(std::string name, unsigned short maxHealth);
 
-    TileType *AddDefaultSprite(olc::vi2d newDefaultSprite);
+    TileType *AddDefaultSprite(Vec2 newDefaultSprite);
     TileType *AddDefaultForeColor(int r, int g, int b);
     TileType *AddDefaultBackColor(int r, int g, int b);
     TileType *SetSurface();
@@ -34,9 +35,9 @@ public:
     std::string GetName();
     unsigned short GetMaxHealth();
 
-	olc::vi2d GetDefaultSprite(int index);
-	olc::Pixel GetDefaultForeColor(int index);
-	olc::Pixel GetDefaultBackColor(int index);
+	Vec2 GetDefaultSprite(int index);
+	Color GetDefaultForeColor(int index);
+	Color GetDefaultBackColor(int index);
 
     int GetRandomDefaultSpriteIndex();
     int GetRandomDefaultForeColorIndex();
