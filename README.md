@@ -33,6 +33,7 @@ https://github.com/munificent/hauberk
 - https://github.com/h4ctar/yadf
 - https://github.com/Trevoke/dwarlixir
 - https://docs.unity3d.com/Packages/com.unity.entities@0.51/manual/index.html
+- https://www.youtube.com/watch?v=JKFC-TIGCO4&ab_channel=C0
 
 # Dwarf fortress inspiration
 - https://dwarffortresswiki.org/index.php/DF2014:Raw_file
@@ -69,7 +70,7 @@ https://lightcone-games.itch.io/the-1-bit-space-pack
 - [X] Code refactor
 - [X] Change tileset to something prettier
 - [X] Create grass
-- [ ] Real-time updates (with TPS)
+- [X] Real-time updates (with TPS)
 - [ ] **Maintain goal of creating a **realistic** biome, then re-structure system from there.
   - Inheritance-based approach isn't that bad for now. Leave ECS for later.
 - [ ] Introduce my own data structures for Vectors and Colors

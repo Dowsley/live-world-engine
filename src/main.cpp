@@ -31,6 +31,7 @@ private:
 	olc::Sprite tileSet = olc::Sprite(REL_PATH_FOR_OS); // IF THE GAME IS BLACK, YOU MESSED THE PATH
 	Color forePlaceholder = olc::WHITE;
 	Color backPlaceholder = olc::BLACK;
+	int _tickDuration = 700;
 
 	World world = World(512, 512, MAX_DEPTH);
 
@@ -38,6 +39,7 @@ private:
 	float cameraPosY = 0.0f;
 
 	int currDepth = MAX_DEPTH / 2;
+	unsigned int _tickTimer = 0;
 
 	void LogColor(const Color &p)
 	{
@@ -113,17 +115,14 @@ protected:
 	bool OnUserUpdate(float fElapsedTime) override
 	{
 		// Press 'M' key to regenerate world
-		bool redraw = false;
 		if (GetKey(olc::Key::M).bReleased) {
 			world.Generate();
-			redraw = true;
 		}
 
-		// Press 'R' key to update entities
-		if (GetKey(olc::Key::R).bReleased) {
-			world.Update();
-			redraw = true;
-		}
+		// // Press 'R' key to update entities
+		// if (GetKey(olc::Key::R).bReleased) {
+		// 	redraw = true;
+		// }
 
 		// Hold 'Z' key to move camera faster
 		int mode = 1;
@@ -134,7 +133,6 @@ protected:
 		// Hold 'X' key to descend depth
 		if (GetKey(olc::Key::X).bReleased) {
 			if (currDepth != MAX_DEPTH - 1) {
-				redraw = true;
 				currDepth += 1;
 			}
 		}
@@ -142,7 +140,6 @@ protected:
 		// Hold 'C' key to ascend depth
 		if (GetKey(olc::Key::C).bReleased) {
 			if (currDepth != 0) {
-				redraw = true;
 				currDepth -= 1;
 			}
 		}
@@ -174,8 +171,12 @@ protected:
 		if (cameraPosY >= world.GetHeight() - ScreenHeight())
 			cameraPosY = world.GetHeight() - ScreenHeight();
 
-		if (redraw || left || right || up || down)
-			DrawWorld();
+		_tickTimer += fElapsedTime * 1000;
+		if (_tickTimer >= _tickDuration) {
+			world.Update();
+			_tickTimer = 0;
+		}
+		DrawWorld();
 
 		return true;
 	}
