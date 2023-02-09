@@ -38,7 +38,7 @@ private:
 	float cameraPosX = 0.0f;
 	float cameraPosY = 0.0f;
 
-	int currDepth = MAX_DEPTH / 2;
+	int currDepth = 20;
 	unsigned int _tickTimer = 0;
 
 	void LogColor(const Color &p)
@@ -174,7 +174,7 @@ protected:
 		_tickTimer += fElapsedTime * 1000;
 		if (_tickTimer >= _tickDuration) {
 			world.Update();
-			_tickTimer = 0;
+			_tickTimer = _tickTimer - _tickDuration;
 		}
 		DrawWorld();
 
