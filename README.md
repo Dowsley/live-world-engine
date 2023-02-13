@@ -35,6 +35,9 @@ https://github.com/munificent/hauberk
 - https://docs.unity3d.com/Packages/com.unity.entities@0.51/manual/index.html
 - https://www.youtube.com/watch?v=JKFC-TIGCO4&ab_channel=C0
 
+# Biome Inspiration
+- Azure Weald from DRG
+
 # Dwarf fortress inspiration
 - https://dwarffortresswiki.org/index.php/DF2014:Raw_file
 - https://dwarffortresswiki.org/index.php/DF2014:Modding
@@ -73,8 +76,10 @@ https://lightcone-games.itch.io/the-1-bit-space-pack
 - [X] Real-time updates (with TPS)
 - [ ] **Maintain goal of creating a **realistic** biome, then re-structure system from there.
   - Inheritance-based approach isn't that bad for now. Leave ECS for later.
+  - [ ] Tile sprite variance by context
+    - [ ] World calls GetSprite passing context around it, tile returns its sprite.
+- [ ] Multi-level view
 - [ ] Introduce my own data structures for Vectors and Colors
-- [ ] Add new sprites (e.g. surfaces and leaves from bountiful)
 - [ ] Add automatic analog color variation
 - [ ] Consider removing manual background color, that will save A LOT of space.
 - [ ] Refactor leftover pointers into references
@@ -97,9 +102,6 @@ https://lightcone-games.itch.io/the-1-bit-space-pack
 - [ ] Occlusion
 - [ ] Separate OLC pixel game engine classes from mine (vi2d and Pixel)
 - [ ] Color schemes (DF)
-- [ ] Tile sprite & color variance by context
-  - [ ] Slopes
-  - [ ] Multi-level view
 - [ ] Procedurally generate materials and creatures
 - [ ] Procedurally generate planets and its geology
 - [ ] Environment dynamics (weather, etc)
