@@ -74,6 +74,10 @@ https://lightcone-games.itch.io/the-1-bit-space-pack
 - [X] Change tileset to something prettier
 - [X] Create grass
 - [X] Real-time updates (with TPS)
+- [ ] Data oriented system
+- [ ] World asks organism what is its graphic tile.
+- [ ] Organisms reside in a hashmap for coordinates.
+  - [ ] https://stackoverflow.com/questions/26206843/efficient-way-to-hash-a-2d-point
 - [ ] **Maintain goal of creating a **realistic** biome, then re-structure system from there.
   - Inheritance-based approach isn't that bad for now. Leave ECS for later.
   - [ ] Tile sprite variance by context
