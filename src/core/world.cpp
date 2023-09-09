@@ -29,7 +29,7 @@ bool World::IsThereCreatureAt(const Vec3 &pos) const
 
 std::tuple<Tile*, Creature*> World::_getTileAndCreature(const Vec3 &pos) const
 {
-    Tile* t = _getTile(pos);
+    Tile *t = _getTile(pos);
     Creature *c = creatureManager->GetCreatureAt(pos);
 
     return std::make_tuple(t, c);
@@ -150,7 +150,7 @@ void World::GenerateTestBiome()
 
     std::vector<bool> soilLevelData(dimensions.width() * dimensions.height(), false); // Initialization is in-built
 
-    TileType* tileType = nullptr;
+    TileType *tileType = nullptr;
     for (int y = 0; y < dimensions.height(); y++) {
         for (int x = 0; x < dimensions.width(); x++) {
             unsigned short inverseDepth = static_cast<unsigned short>(

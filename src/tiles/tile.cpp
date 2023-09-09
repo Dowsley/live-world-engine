@@ -6,22 +6,22 @@ TileType::TileType(std::string name, unsigned short maxHealth)
     this->maxHealth = maxHealth;
 }
 
-TileType *TileType::AddDefaultSprite(const Vec2 &newDefaultSprite)
+TileType* TileType::AddDefaultSprite(const Vec2 &newDefaultSprite)
 {
     this->defaultSprites.push_back(newDefaultSprite);
     return this;
 }
-TileType *TileType::AddDefaultForeColor(int r, int g, int b)
+TileType* TileType::AddDefaultForeColor(int r, int g, int b)
 {
     this->defaultForeColors.push_back(Color(r,g,b));
     return this;
 }
-TileType *TileType::AddDefaultBackColor(int r, int g, int b)
+TileType* TileType::AddDefaultBackColor(int r, int g, int b)
 {
     this->defaultBackColors.push_back(Color(r,g,b));
     return this;
 }
-TileType *TileType::SetSurface()
+TileType* TileType::SetSurface()
 {
     this->isSurface = true;
     return this;

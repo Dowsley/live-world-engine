@@ -55,14 +55,14 @@ void TileRegistry::SetupTile(Tile *tile, TileType *type)
     tile->defaultBackColorIndex = tile->type->GetRandomDefaultBackColorIndex();
 }
 
-TileType *TileRegistry::AddNaturalTileType(std::string name, unsigned short maxHealth)
+TileType* TileRegistry::AddNaturalTileType(std::string name, unsigned short maxHealth)
 {
     TileType *tileType = BuildTileType(name, maxHealth);
     naturalTileTypes[name] = tileType;
     return tileType;
 }
 
-TileType *TileRegistry::GetNaturalTileType(std::string name) const
+TileType* TileRegistry::GetNaturalTileType(std::string name) const
 {
     auto it = naturalTileTypes.find(name);
     if(it != naturalTileTypes.end())

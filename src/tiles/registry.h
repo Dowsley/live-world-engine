@@ -20,7 +20,7 @@ public:
 
     void SetupTile(Tile *tile, TileType *type);
 
-    TileType *AddNaturalTileType(std::string name, unsigned short maxHealth);
+    TileType* AddNaturalTileType(std::string name, unsigned short maxHealth);
 
-    TileType *GetNaturalTileType(std::string name) const;
+    TileType* GetNaturalTileType(std::string name) const;
 };

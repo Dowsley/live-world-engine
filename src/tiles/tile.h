@@ -25,10 +25,10 @@ public:
     bool isSurface = false;
     TileType(std::string name, unsigned short maxHealth);
 
-    TileType *AddDefaultSprite(const Vec2 &newDefaultSprite);
-    TileType *AddDefaultForeColor(int r, int g, int b);
-    TileType *AddDefaultBackColor(int r, int g, int b);
-    TileType *SetSurface();
+    TileType* AddDefaultSprite(const Vec2 &newDefaultSprite);
+    TileType* AddDefaultForeColor(int r, int g, int b);
+    TileType* AddDefaultBackColor(int r, int g, int b);
+    TileType* SetSurface();
 
     std::string GetName() const;
     unsigned short GetMaxHealth() const;
