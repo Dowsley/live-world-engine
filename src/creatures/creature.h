@@ -31,6 +31,10 @@ private:
 };
 
 class Creature {
+private:
+    CreatureType *type;
+    Vec3 pos;
+
 public:
     Creature(CreatureType *type, Vec3 pos);
 
@@ -38,7 +42,4 @@ public:
     const Vec3& GetPosition() const;
     void SetPosition(const Vec3 &pos);
     bool Update();
-private:
-    Vec3 pos;
-    CreatureType *type;
 };

@@ -49,10 +49,8 @@ void LiveWorldEngine::_drawTile(const Vec3 &pos)
 
     Vec3 offsetPos = Vec3(currX, currY, z);
     Color foreColor = world.GetTileForeColor(offsetPos);
-    Color backColor = world.GetTileBackColor(offsetPos);
+    // Color backColor = world.GetTileBackColor(offsetPos);
     Vec2 spritePos = world.GetTileSprite(offsetPos);
-
-    bool tmp = world.IsThereCreatureAt(offsetPos);
 
     spritePos = spritePos * Settings::TILE_SIZE + (Settings::TILE_OFFSET * spritePos) + Vec2(1,1);
 

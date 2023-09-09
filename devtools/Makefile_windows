@@ -4,4 +4,8 @@ run:
 	.\output.exe
 
 compile:
-	g++ -o output.exe -g src/main.cpp -luser32 -lgdi32 -lopengl32 -lgdiplus -lShlwapi -ldwmapi -lstdc++fs -static -std=c++17
+	g++ -Wall -Wno-unknown-pragmas -o output.exe src/main.cpp -luser32 -lgdi32 -lopengl32 -lgdiplus -lShlwapi -ldwmapi -lstdc++fs -static -std=c++17
+
+debug:
+	g++ -Wunused -Wno-unknown-pragmas -o output.exe -g src/main.cpp -luser32 -lgdi32 -lopengl32 -lgdiplus -lShlwapi -ldwmapi -lstdc++fs -static -std=c++17 -g
+	gdb .\output.exe
