@@ -1,3 +1,3 @@
-#include "functions.cpp"
-#include "manager.cpp"
-#include "tile.cpp"
+#include "functions.h"
+#include "registry.h"
+#include "tile.h"

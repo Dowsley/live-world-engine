@@ -1,5 +1,5 @@
-#ifndef TILE_MANAGER_H
-#define TILE_MANAGER_H
+#ifndef TILE_REGISTRY_H
+#define TILE_REGISTRY_H
 
 #include <string>
 #include <map>
@@ -8,18 +8,18 @@
 #include "../structures/color.h"
 #include "../structures/vec2.h"
 
-class TileManager {
+class TileRegistry {
 private:
     std::map<std::string, TileType*> naturalTileTypes;
 
 public:
-    TileManager();
+    TileRegistry();
 
     Vec2 GetSprite(Tile *tile);
     Color GetForeColor(Tile *tile);
     Color GetBackColor(Tile *tile);
 
-    void SetupTile(Tile *tile, TileType *type, Organism *organism);
+    void SetupTile(Tile *tile, TileType *type);
 
     TileType *AddNaturalTileType(std::string name, unsigned short maxHealth);
 

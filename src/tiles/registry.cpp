@@ -1,6 +1,6 @@
-#include "manager.h"
+#include "registry.h"
 
-TileManager::TileManager()
+TileRegistry::TileRegistry()
 {
     AddNaturalTileType("empty", 0)
         ->AddDefaultSprite(Vec2(12, 0))
@@ -31,48 +31,38 @@ TileManager::TileManager()
         ->SetSurface();
 }
 
-Vec2 TileManager::GetSprite(Tile *tile)
+Vec2 TileRegistry::GetSprite(Tile *tile)
 {
-    // TODO if (tile->entity)
     // TODO if (tile->metadata)
     return tile->type->GetDefaultSprite(tile->defaultSpriteIndex);
 }
-Color TileManager::TileManager::GetForeColor(Tile *tile)
+Color TileRegistry::TileRegistry::GetForeColor(Tile *tile)
 {
-    // TODO if (tile->entity)
     // TODO if (tile->metadata)
     return tile->type->GetDefaultForeColor(tile->defaultForeColorIndex);
 }
-Color TileManager::GetBackColor(Tile *tile)
+Color TileRegistry::GetBackColor(Tile *tile)
 {
-    // TODO if (tile->entity)
     // TODO if (tile->metadata)
     return tile->type->GetDefaultBackColor(tile->defaultBackColorIndex);
 }
 
-void TileManager::SetupTile(Tile *tile, TileType *type, Organism *organism)
+void TileRegistry::SetupTile(Tile *tile, TileType *type)
 {
     tile->type = type;
     tile->defaultSpriteIndex = tile->type->GetRandomDefaultSpriteIndex();
     tile->defaultForeColorIndex = tile->type->GetRandomDefaultForeColorIndex();
     tile->defaultBackColorIndex = tile->type->GetRandomDefaultBackColorIndex();
-    if (organism) {
-        if (tile->metadata) {
-            tile->metadata->SetOrganism(organism);
-        } else {
-            tile->metadata = new TileMetadata(tile, organism);
-        }
-    }
 }
 
-TileType *TileManager::AddNaturalTileType(std::string name, unsigned short maxHealth)
+TileType *TileRegistry::AddNaturalTileType(std::string name, unsigned short maxHealth)
 {
     TileType *tileType = BuildTileType(name, maxHealth);
     naturalTileTypes[name] = tileType;
     return tileType;
 }
 
-TileType *TileManager::GetNaturalTileType(std::string name)
+TileType *TileRegistry::GetNaturalTileType(std::string name)
 {
     return naturalTileTypes[name];
 }

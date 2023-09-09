@@ -1,0 +1,36 @@
+<CREATURE type="SNAPPING TURTLE">
+    <DESCRIPTION>A medium-sized reptile with a thick shell, which it can retreat into when threatened. This creature can administer a painful bite.</DESCRIPTION>
+    <NAME singular="common snapping turtle" plural="common snapping turtles" general="common snapping turtle" />
+    <CASTE_NAME singular="common snapping turtle" plural="common snapping turtles" general="common snapping turtle" />
+    <CREATURE_TILE>t</CREATURE_TILE>
+    <COLOR/>#CCAA00</COLOR>
+    <PETVALUE>25</PETVALUE>
+    <LARGE_ROAMING />
+    <AMPHIBIOUS />
+    <NATURAL />
+    <PET_EXOTIC />
+    <CARNIVORE />
+    <BIOME_LIST>
+        <BIOME type="RIVER_TEMPERATE_FRESHWATER" />
+        <BIOME type="RIVER_TEMPERATE_BRACKISHWATER" />
+        <BIOME type="LAKE_TEMPERATE_FRESHWATER" />
+        <BIOME type="LAKE_TEMPERATE_BRACKISHWATER" />
+        <BIOME type="POOL_TEMPERATE_FRESHWATER" />
+        <BIOME type="POOL_TEMPERATE_BRACKISHWATER" />
+    </BIOME_LIST>
+    <POPULATION_NUMBER min="25" max="50" />
+    <PREFSTRING_LIST>
+        <PREFSTRING>powerful bites</PREFSTRING>
+        <PREFSTRING>long necks</PREFSTRING>
+    </PREFSTRING_LIST>
+    <BODY>QUADRUPED_NECK:TAIL:2EYES:NOSE:2LUNGS:HEART:GUTS:ORGANS:THROAT:NECK:SPINE:BRAIN:SKULL:BEAK:RIBCAGE:SHELL</BODY>
+    <BODY_DETAIL_PLAN_LIST>
+        <!-- Similar structure as previous for BODY_DETAIL_PLAN, wrapping individual plans in their respective elements -->
+        <STANDARD_MATERIALS>
+            <REMOVE_MATERIAL>SKIN</REMOVE_MATERIAL>
+            <!-- Continue for other materials and tissue templates -->
+        </STANDARD_MATERIALS>
+        <!-- Add other body detail plans similarly -->
+    </BODY_DETAIL_PLAN_LIST>
+    <!-- Continue to convert the rest of the RAW data in a similar manner, wrapping each RAW tag in its respective XML element. -->
+</CREATURE>

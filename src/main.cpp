@@ -10,13 +10,12 @@
 
 #include "engine/olcPixelGameEngine.h"
 
-#include "core/index.h"
-#include "tiles/index.h"
-#include "organisms/index.h"
-#include "util/index.h"
-#include "structures/index.h"
-
-#define MAX_DEPTH 50
+#include "core/index.cpp"
+#include "tiles/index.cpp"
+#include "creatures/index.cpp"
+#include "utils/index.cpp"
+#include "structures/index.cpp"
+#include "lib/index.cpp"
 
 class LiveWorldEngine : public olc::PixelGameEngine
 {
@@ -26,14 +25,10 @@ public:
 	}
 
 private:
-	Vec2 tileSize = { 12, 12 };
-	Vec2 tileOffset = { 1, 1 };
-	olc::Sprite tileSet = olc::Sprite(REL_PATH_FOR_OS); // IF THE GAME IS BLACK, YOU MESSED THE PATH
-	Color forePlaceholder = olc::WHITE;
-	Color backPlaceholder = olc::BLACK;
-	int _tickDuration = 700;
-
-	World world = World(512, 512, MAX_DEPTH);
+    olc::Sprite tileSet = olc::Sprite(REL_PATH_FOR_OS); // Note: You need to define REL_PATH_FOR_OS elsewhere, probably in a config or main header
+	World world = World(Settings::WORLD_DIMENSIONS);
+	
+	bool paused = true;
 
 	float cameraPosX = 0.0f;
 	float cameraPosY = 0.0f;
@@ -50,23 +45,27 @@ private:
 	{
 		Clear(olc::BLACK);
 
-		int trueX, trueY;
+		int trueX, trueY, trueZ;
 
 		bool isCurrTileEmpty;
 		bool isLowerTileEmpty;
 		bool isLowerTileSurface;
-		for (int y = 0; y < (ScreenHeight() / tileSize.y); y++) {
-			for (int x = 0; x < (ScreenWidth() / tileSize.x); x++) {
+		bool isCurrTileOccupiedByCreature;
+		for (int y = 0; y < (ScreenHeight() / Settings::TILE_SIZE.y); y++) {
+			for (int x = 0; x < (ScreenWidth() / Settings::TILE_SIZE.x); x++) {
 				trueX = x + (int) cameraPosX;
 				trueY = y + (int) cameraPosY;
 
-				DrawTile(x, y, currDepth);
 				isCurrTileEmpty = world.GetTileTypeName(trueX, trueY, currDepth) == "empty";
+				isCurrTileOccupiedByCreature = world.IsThereCreatureAt(trueX, trueY, currDepth);
 				isLowerTileEmpty = world.GetTileTypeName(trueX, trueY, currDepth+1) == "empty";
 				isLowerTileSurface = world.GetTileType(trueX, trueY, currDepth+1)->isSurface;
-				if (isCurrTileEmpty && !isLowerTileEmpty && isLowerTileSurface) {
-						DrawTile(x, y, currDepth+1);
+				if (isCurrTileEmpty && !isCurrTileOccupiedByCreature && !isLowerTileEmpty && isLowerTileSurface) {
+					trueZ = currDepth + 1;
+				} else {
+					trueZ = currDepth;
 				}
+				DrawTile(x, y, trueZ);
 			}
 		}
 		std::string str = "Layer: ";
@@ -76,30 +75,29 @@ private:
 
 	void DrawTile(int x, int y, int z)
 	{
-		Color foreColor = world.GetTileForeColor(
-			x + (int)cameraPosX,
-			y + (int)cameraPosY,
-			z);
-		Color backColor = world.GetTileBackColor(
-			x + (int)cameraPosX,
-			y + (int)cameraPosY,
-			z);
-		Vec2 spritePos = world.GetTileSprite(
-			x + (int)cameraPosX,
-			y + (int)cameraPosY,
-			z);
-		spritePos = spritePos * tileSize + (tileOffset * spritePos) + Vec2(1,1);
+		int currX = x + (int)cameraPosX;
+		int currY = y + (int)cameraPosY;
+
+		Color foreColor = world.GetTileForeColor(currX, currY, z);
+		Color backColor = world.GetTileBackColor(currX, currY, z);
+		Vec2 spritePos = world.GetTileSprite(currX, currY, z);
+
+		bool tmp = world.IsThereCreatureAt(currX, currY, z);
+
+		spritePos = spritePos * Settings::TILE_SIZE + (Settings::TILE_OFFSET * spritePos) + Vec2(1,1);
 
 		Color ref;
 		Vec2 screenPos;
-		for (int i = 0; i < tileSize.y; i++) {
-			for (int j = 0; j < tileSize.x; j++) {
-				screenPos = Vec2((x*tileSize.x) + j, (y*tileSize.y) + i);
+		for (int i = 0; i < Settings::TILE_SIZE.y; i++) {
+			for (int j = 0; j < Settings::TILE_SIZE.x; j++) {
+				screenPos = Vec2((x * Settings::TILE_SIZE.x) + j, (y * Settings::TILE_SIZE.y) + i);
 				ref = tileSet.GetPixel(j + spritePos.x, i + spritePos.y);
-				if (ref == forePlaceholder)
+				if (ref == Settings::FORE_PLACEHOLDER) {
 					Draw(screenPos, foreColor);
-				else
+				}
+				else {
 					Draw(screenPos, ref);
+				}
 			}
 		}
 	}
@@ -130,18 +128,23 @@ protected:
 			mode = 4;
 		}
 
-		// Hold 'X' key to descend depth
+		// Press 'X' key to descend depth
 		if (GetKey(olc::Key::X).bReleased) {
-			if (currDepth != MAX_DEPTH - 1) {
+			if (currDepth != Settings::WORLD_DIMENSIONS.z() - 1) {
 				currDepth += 1;
 			}
 		}
 
-		// Hold 'C' key to ascend depth
+		// Press 'C' key to ascend depth
 		if (GetKey(olc::Key::C).bReleased) {
 			if (currDepth != 0) {
 				currDepth -= 1;
 			}
+		}
+
+		// Press 'P' key to pause simulation
+		if (GetKey(olc::Key::P).bReleased) {
+			paused = !paused;
 		}
 
 		// Mouse Edge Map Scroll
@@ -171,10 +174,12 @@ protected:
 		if (cameraPosY >= world.GetHeight() - ScreenHeight())
 			cameraPosY = world.GetHeight() - ScreenHeight();
 
-		_tickTimer += fElapsedTime * 1000;
-		if (_tickTimer >= _tickDuration) {
-			world.Update();
-			_tickTimer = _tickTimer - _tickDuration;
+		if (!paused) {
+			_tickTimer += fElapsedTime * 1000;
+			if (_tickTimer >= Settings::TICK_DURATION) {
+				world.Update();
+				_tickTimer = _tickTimer - Settings::TICK_DURATION;
+			}
 		}
 		DrawWorld();
 

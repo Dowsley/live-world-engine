@@ -1,0 +1,9 @@
+<CREATURE id="RATTLESNAKE">
+    <DESCRIPTION>A small reptile with a tell-tale rattle and vicious bite that leads to a quick death.</DESCRIPTION>
+    <NAME singular="rattlesnake" plural="rattlesnakes" general="rattlesnake" />
+    <SPRITE>
+        <POSITION x="2" y="13" />
+        <COLOR r="255" g="170" b="34" />
+    </SPRITE>
+    <SPAWN_CHANCE>7</SPAWN_CHANCE>
+</CREATURE>

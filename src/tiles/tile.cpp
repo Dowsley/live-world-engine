@@ -38,14 +38,8 @@ int TileType::GetRandomDefaultSpriteIndex() { return rand() % defaultSprites.siz
 int TileType::GetRandomDefaultForeColorIndex() { return rand() % defaultForeColors.size(); }
 int TileType::GetRandomDefaultBackColorIndex() { return rand() % defaultBackColors.size(); }
 
-TileMetadata::TileMetadata(Tile *parent, Organism *organism)
+TileMetadata::TileMetadata(Tile *parent)
 {
     this->parent = parent;
     this->health = parent->type->GetMaxHealth();
-    this->organism = organism;
-}
-
-void TileMetadata::SetOrganism(Organism *organism)
-{
-    this->organism = organism;
 }

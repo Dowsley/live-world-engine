@@ -7,7 +7,6 @@
 
 #include "../structures/color.h"
 #include "../structures/vec2.h"
-#include "../organisms/organism.h"
 
 class TileType;
 class Tile;
@@ -59,10 +58,8 @@ class TileMetadata {
 public:
     Tile *parent;
     unsigned short health;
-    Organism *organism;
     
-    TileMetadata(Tile *parent, Organism *organism);
-    void SetOrganism(Organism *organism);
+    TileMetadata(Tile *parent);
 };
 
 #endif

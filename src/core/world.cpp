@@ -1,31 +1,36 @@
 #include "world.h"
 
-#include "../tiles/manager.h"
-#include "../organisms/organism.h"
+#include "../creatures/creature.h"
 
-#include "../organisms/types/index.h"
-#include "../util/arithmetics.h"
-#include "../util/noise.cpp"
+#include "../utils/arithmetics.h"
+#include "../lib/noise.cpp"
+#include "settings.h"
 
-World::World(int width, int height, int depth)
+World::World(Vec3 dimensions)
 {
-	this->height = height;
-	this->width = width;
-	this->depth = depth;
+	this->height = dimensions.x();
+	this->width = dimensions.y();
+	this->depth = dimensions.z();
 	this->totalSize = height * width * depth;
 
-	noise = new FastNoiseLite();
-	tileManager = new TileManager();
 	map = (Tile *)malloc(sizeof(Tile) * totalSize);
+
+	const int MAX_ENTITIES_PER_OCTANT = 10;  // Arbitrary number, adjust as needed
+	Vec3 worldOrigin(width / 2, height, depth / 2);
+	int worldSize = std::max({width, height, depth});
+	creatureManager = new CreatureManager(this);
 }
 
 World::~World()
 {
-	free(noise);
-	free(tileManager);
-	free(map);
+	delete map;
+	delete creatureManager;
 }
 
+bool World::IsThereCreatureAt(int x, int y, int z)
+{
+	return creatureManager->GetCreatureAt(Vec3(x, y, z));
+}
 int World::Transform3DCoords(int x, int y, int z) { return y + height * (x + width * z); }
 int World::Transform2DCoords(int x, int y) { return y * width + x; }
 
@@ -42,15 +47,6 @@ Tile *World::GetTile(int x, int y, int z)
 		return nullptr;
 	return &map[Transform3DCoords(x, y, z)];
 }
-void World::SetTile(int x, int y, int z, TileType *type, Organism *organism)
-{
-	Tile *tile = GetTile(x, y, z);
-	if (!type) {
-		printf("OK ENOUGH");
-		exit(0);
-	}
-	tileManager->SetupTile(tile, type, organism);
-}
 void World::SetTile(int x, int y, int z, TileType *type)
 {
 	Tile *tile = GetTile(x, y, z);
@@ -58,8 +54,9 @@ void World::SetTile(int x, int y, int z, TileType *type)
 		printf("OK ENOUGH");
 		exit(0);
 	}
-	tileManager->SetupTile(tile, type, nullptr);
+	tileRegistry.SetupTile(tile, type);
 }
+
 void World::SwapTiles(Tile *tile1, Tile *tile2)
 {
 	// Oh god.
@@ -88,20 +85,33 @@ bool World::IsInBounds(int x, int y, int z)
 
 Vec2 World::GetTileSprite(int x, int y, int z)
 {
+	// TODO: Stop repeating this behaviour
 	Tile *t = GetTile(x, y, z);
-	Vec2 res = tileManager->GetSprite(t);
-	return res;
+	Creature *c = creatureManager->GetCreatureAt(Vec3(x, y, z));
+	if (c != nullptr && t->type->GetName() == "empty") {
+		return c->GetType()->GetSpritePos();
+	}
+	return tileRegistry.GetSprite(t);
 }
 Color World::GetTileForeColor(int x, int y, int z)
 {
+	// TODO: Stop repeating this behaviour
 	Tile *t = GetTile(x, y, z);
-	Color res = tileManager->GetForeColor(t);
-	return res;
+	Creature *c = creatureManager->GetCreatureAt(Vec3(x, y, z));
+	if (c != nullptr && t->type->GetName() == "empty") {
+		return c->GetType()->GetSpriteColor();
+	}
+	return tileRegistry.GetForeColor(t);
 }
 Color World::GetTileBackColor(int x, int y, int z)
 {
+	// TODO: Stop repeating this behaviour
 	Tile *t = GetTile(x, y, z);
-	Color res = tileManager->GetBackColor(t);
+	Color res = tileRegistry.GetBackColor(t);
+	Creature *c = creatureManager->GetCreatureAt(Vec3(x, y, z));
+	if (c != nullptr && t->type->GetName() == "empty") {
+		return Settings::BACK_PLACEHOLDER;
+	}
 	return res;
 }
 TileType *World::GetTileType(int x, int y, int z)
@@ -137,10 +147,7 @@ void World::LogTileType(int x, int y, int z)
 
 void World::Update()
 {
-	for (auto & o : organisms)
-	{
-		o->Update(this);
-	}
+	creatureManager->UpdateEntities();
 }
 
 void World::Generate()
@@ -150,17 +157,19 @@ void World::Generate()
 
 void World::GenerateTestBiome()
 {
-	int SAND_LAYER_DEPTH = 20;
+	int SOIL_LAYER_DEPTH = 20;
 
-	noise->SetSeed(rand());
+	FastNoiseLite noise;
+
+	noise.SetSeed(rand());
 
 	// Create and configure FastNoise object
-	noise->SetNoiseType(FastNoiseLite::NoiseType_OpenSimplex2);
+	noise.SetNoiseType(FastNoiseLite::NoiseType_OpenSimplex2);
 	// noise->SetNoiseType(FastNoiseLite::NoiseType_Cellular);
 
 	// noise->SetFrequency(0.01f);
 
-	noise->SetFractalType(FastNoiseLite::FractalType_FBm);
+	noise.SetFractalType(FastNoiseLite::FractalType_FBm);
 	// noise->SetFractalType(FastNoiseLite::FractalType_Ridged);
 	// noise->SetFractalType(FastNoiseLite::FractalType_PingPong);
 
@@ -168,19 +177,21 @@ void World::GenerateTestBiome()
 	float *noiseData = new float[width * height];
 	for (int y = 0; y < height; y++) {
 		for (int x = 0; x < width; x++) {
-			noiseData[y * width + x] = noise->GetNoise((float)x, (float)y);
+			noiseData[Transform2DCoords(x, y)] = noise.GetNoise((float)x, (float)y);
 		}
 	}
 	
-	unsigned short inverseDepth;
-	bool *sandLevelData = new bool[width * height];
-	memset(sandLevelData, false, width * height);
+	bool *soilLevelData = new bool[width * height];
+	memset(soilLevelData, false, width * height);
+
+	// TODO: TileType *tileType = nullptr;
+	unsigned short inverseDepth = 0;
 	for (int y = 0; y < height; y++)
 	{
 		for (int x = 0; x < width; x++)
 		{
-			inverseDepth = (unsigned short)Arithmetics::scale(
-				noiseData[y * width + x],
+			inverseDepth = (unsigned short)Arithmetics::Scale(
+				noiseData[Transform2DCoords(x, y)],
 				-1.0f,
 				1.0,
 				0.0f,
@@ -189,17 +200,17 @@ void World::GenerateTestBiome()
 			for (int z = 0; z < depth; z++)
 			{
 				if (z >= inverseDepth) {
-					SetTile(x, y, z, tileManager->GetNaturalTileType("rock"));
+					SetTile(x, y, z, tileRegistry.GetNaturalTileType("rock"));
 				} else {
-					if (z > SAND_LAYER_DEPTH) {
-						if (z == SAND_LAYER_DEPTH + 1)
-							SetTile(x, y, z, tileManager->GetNaturalTileType("grass"));
+					if (z > SOIL_LAYER_DEPTH) {
+						if (z == SOIL_LAYER_DEPTH + 1)
+							SetTile(x, y, z, tileRegistry.GetNaturalTileType("grass"));
 						else
-							SetTile(x, y, z, tileManager->GetNaturalTileType("soil"));
+							SetTile(x, y, z, tileRegistry.GetNaturalTileType("soil"));
 					} else {
-						SetTile(x, y, z, tileManager->GetNaturalTileType("empty"));
-						if (z == SAND_LAYER_DEPTH) {
-							sandLevelData[y * width + x] = true;
+						SetTile(x, y, z, tileRegistry.GetNaturalTileType("empty"));
+						if (z == SOIL_LAYER_DEPTH) {
+							soilLevelData[y * width + x] = true;
 						}
 					}
 				}
@@ -207,54 +218,27 @@ void World::GenerateTestBiome()
 		}
 	}
 	
-	// Organisms
-	HumboldtTree *t;
-	Hadespede *h;
-	BoneRose *b;
-	float treeSpawnChance = 20;
-	float hadespedeSpawnChance = 5;
-	float boneRoseSpawnChance = 20;
-	bool spawned;
+	int crabSpawnChance = creatureManager->GetTypeById("CRAB")->GetSpawnChance();
+	int rattlesnakeSpawnChance = creatureManager->GetTypeById("RATTLESNAKE")->GetSpawnChance();
 	for (int y = 0; y < height; y++)
 	{
 		for (int x = 0; x < width; x++)
 		{
-			if (sandLevelData[y * width + x])
+			if (soilLevelData[y * width + x])
 			{
-				if ((rand() % 10000) < treeSpawnChance)
+				if ((rand() % 10000) < crabSpawnChance)
 				{
-					t = new HumboldtTree();
-					spawned = t->Spawn(this, x, y, SAND_LAYER_DEPTH) == OrganismAction::SPAWN;
-					if (spawned) {
-						organisms.push_back(t);
-					} else {
-						free(t);
-					}
+					creatureManager->InstanceCreature("CRAB", Vec3(x, y, SOIL_LAYER_DEPTH));	
 				}
-				if ((rand() % 10000) < hadespedeSpawnChance)
+				if ((rand() % 10000) < rattlesnakeSpawnChance)
 				{
-					h = new Hadespede();
-					spawned = h->Spawn(this, x, y, SAND_LAYER_DEPTH) == OrganismAction::SPAWN;
-					if (spawned) {
-						organisms.push_back(h);
-					} else {
-						free(h);
-					}
-				}
-				if ((rand() % 10000) < boneRoseSpawnChance)
-				{
-					b = new BoneRose();
-					spawned = b->Spawn(this, x, y, SAND_LAYER_DEPTH) == OrganismAction::SPAWN;
-					if (spawned) {
-						organisms.push_back(b);
-					} else {
-						free(b);
-					}
+					creatureManager->InstanceCreature("RATTLESNAKE", Vec3(x, y, SOIL_LAYER_DEPTH));
 				}
 			}
 		}
 	}
 
+
 	delete[] noiseData;
-	delete[] sandLevelData;
+	delete[] soilLevelData;
 }
