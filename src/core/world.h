@@ -16,50 +16,50 @@ class Creature;
 class World
 {
 private:
-	// Utils
-	int height;
-	int width;
-	int depth;
-	int totalSize;
+    // Utils
+    int height;
+    int width;
+    int depth;
+    int totalSize;
 
-	// Content
-	TileRegistry tileRegistry;
+    // Content
+    TileRegistry tileRegistry;
 
-	// Stage
-	CreatureManager *creatureManager;
-	Tile *map;
+    // Stage
+    CreatureManager *creatureManager;
+    Tile *map;
 
 public:
-	World(Vec3 dimensions);
+    World(Vec3 dimensions);
 
-	~World();
+    ~World();
 
-	int Transform3DCoords(int x, int y, int z);
-	int Transform2DCoords(int x, int y);
+    int Flatten3DCoords(int x, int y, int z);
+    int Flatten2DCoords(int x, int y);
 
-	int GetHeight();
-	int GetWidth();
-	int GetDepth();
-	void SetHeight(int height);
-	void SetWidth(int width);
-	void SetDepth(int depth);
+    int GetHeight();
+    int GetWidth();
+    int GetDepth();
+    void SetHeight(int height);
+    void SetWidth(int width);
+    void SetDepth(int depth);
 
-	Tile *GetTile(int x, int y, int z);
-	void SetTile(int x, int y, int z, TileType *type);
-	void SwapTiles(Tile *tile1, Tile *tile2);
-	bool IsInBounds(int x, int y, int z);
+    Tile *GetTile(int x, int y, int z);
+    void SetTile(int x, int y, int z, TileType *type);
+    void SwapTiles(Tile *tile1, Tile *tile2);
+    bool IsInBounds(int x, int y, int z);
 
-	bool IsThereCreatureAt(int x, int y, int z);
-	Vec2 GetTileSprite(int x, int y, int z);
-	Color GetTileForeColor(int x, int y, int z);
-	Color GetTileBackColor(int x, int y, int z);
-	TileType *GetTileType(int x, int y, int z);
-	std::string GetTileTypeName(int x, int y, int z);
-	void LogTileType(int x, int y, int z);
+    bool IsThereCreatureAt(int x, int y, int z);
+    Vec2 GetTileSprite(int x, int y, int z);
+    Color GetTileForeColor(int x, int y, int z);
+    Color GetTileBackColor(int x, int y, int z);
+    TileType *GetTileType(int x, int y, int z);
+    std::string GetTileTypeName(int x, int y, int z);
+    void LogTileType(int x, int y, int z);
 
-	void Update();
-	void Generate();
-	void GenerateTestBiome();
+    void Update();
+    void Generate();
+    void GenerateTestBiome();
 };
 
 #endif

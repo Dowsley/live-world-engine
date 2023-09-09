@@ -34,9 +34,9 @@ public:
     std::string GetName();
     unsigned short GetMaxHealth();
 
-	Vec2 GetDefaultSprite(int index);
-	Color GetDefaultForeColor(int index);
-	Color GetDefaultBackColor(int index);
+    Vec2 GetDefaultSprite(int index);
+    Color GetDefaultForeColor(int index);
+    Color GetDefaultBackColor(int index);
 
     int GetRandomDefaultSpriteIndex();
     int GetRandomDefaultForeColorIndex();

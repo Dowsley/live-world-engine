@@ -18,7 +18,7 @@ const CreatureType* CreatureManager::GetTypeById(const std::string &id) const
 
 Creature* CreatureManager::GetCreatureAt(Vec3 pos) const
 {
-    int index = worldRef->Transform3DCoords(pos.x(), pos.y(), pos.z());
+    int index = worldRef->Flatten3DCoords(pos.x(), pos.y(), pos.z());
     if(creatureMap.find(index) != creatureMap.end()) {
         return creatureMap.at(index);
     }
@@ -27,7 +27,7 @@ Creature* CreatureManager::GetCreatureAt(Vec3 pos) const
 
 bool CreatureManager::InstanceCreature(const std::string &id, Vec3 pos)
 {
-    int index = worldRef->Transform3DCoords(pos.x(), pos.y(), pos.z());
+    int index = worldRef->Flatten3DCoords(pos.x(), pos.y(), pos.z());
     // If creature already exists at that position, return false
     if (creatureMap.find(index) != creatureMap.end()) {
         return false;
@@ -45,7 +45,7 @@ bool CreatureManager::InstanceCreature(const std::string &id, Vec3 pos)
 
 void CreatureManager::RemoveCreatureAt(Vec3 pos)
 {
-    int index = worldRef->Transform3DCoords(pos.x(), pos.y(), pos.z());
+    int index = worldRef->Flatten3DCoords(pos.x(), pos.y(), pos.z());
     if(creatureMap.find(index) != creatureMap.end()) {
         delete creatureMap[index]; // Delete the creature from the heap
         creatureMap.erase(index);  // Remove the entry from the map

@@ -2,9 +2,9 @@
 #define SETTINGS_H
 
 #if _WIN32
-	#define CREATURE_REGISTRY_PATH_V "data\\creatures"
+    #define CREATURE_REGISTRY_PATH_V "data\\creatures"
 #else
-	#define CREATURE_REGISTRY_PATH_V "data/creatures"
+    #define CREATURE_REGISTRY_PATH_V "data/creatures"
 #endif
 
 #include "../engine/olcPixelGameEngine.h"
