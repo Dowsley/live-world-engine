@@ -191,7 +191,7 @@ void World::GenerateTestBiome()
         for (int x = 0; x < width; x++)
         {
             flattened2DCoords = Flatten2DCoords(x, y);
-            inverseDepth = (unsigned short)Arithmetics::Scale(
+            inverseDepth = (unsigned short)ArithmeticsUtils::Scale(
                 noiseData[flattened2DCoords],
                 -1.0f,
                 1.0,
