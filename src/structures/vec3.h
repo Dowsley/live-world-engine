@@ -3,7 +3,7 @@
 
 #include <fstream>
 
-class Vec3
+class Vec3 final
 {
     public:
         Vec3();
