@@ -17,7 +17,7 @@ public:
     void ReloadCreatures(); // Use this to reload creatures if the files are updated.
 
 private:
-    void LoadCreatures();
+    void _loadCreatures();
 
     CreatureLoader loader;
     std::unordered_map<std::string, CreatureType*> creatureTypes;

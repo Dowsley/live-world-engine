@@ -5,7 +5,7 @@
 
 CreatureRegistry::CreatureRegistry(const std::string& path)
 : loader(path) {
-    LoadCreatures();
+    _loadCreatures();
 }
 
 CreatureRegistry::~CreatureRegistry()
@@ -27,10 +27,10 @@ CreatureType* CreatureRegistry::GetTypeById(const std::string &id) const
 void CreatureRegistry::ReloadCreatures()
 {
     creatureTypes.clear();
-    LoadCreatures();
+    _loadCreatures();
 }
 
-void CreatureRegistry::LoadCreatures()
+void CreatureRegistry::_loadCreatures()
 {
     for (const auto & type : loader.LoadAllCreatures()) {
         creatureTypes[type->GetId()] = type;

@@ -29,22 +29,22 @@ bool World::IsThereCreatureAt(const Vec3 &pos) const
 
 std::tuple<Tile*, Creature*> World::_getTileAndCreature(const Vec3 &pos) const
 {
-    Tile* t = GetTile(pos);
+    Tile* t = _getTile(pos);
     Creature *c = creatureManager->GetCreatureAt(pos);
 
     return std::make_tuple(t, c);
 }
 
-Tile* World::GetTile(const Vec3 &pos) const
+Tile* World::_getTile(const Vec3 &pos) const
 {
-    if (!IsInBounds(pos)) {
+    if (!_isInBounds(pos)) {
         return nullptr;
     }
     return &map[Flatten3DCoords(pos)];
 }
-void World::SetTile(const Vec3 &pos, TileType *type)
+void World::_setTile(const Vec3 &pos, TileType *type)
 {
-    Tile *tile = GetTile(pos);
+    Tile *tile = _getTile(pos);
     if (!type) {
         printf("OK ENOUGH");
         throw std::runtime_error("Tile type of name " + tile->type->GetName() + " is null");
@@ -52,7 +52,7 @@ void World::SetTile(const Vec3 &pos, TileType *type)
     tileRegistry.SetupTile(tile, type);
 }
 
-void World::SwapTiles(Tile *tile1, Tile *tile2)
+void World::_swapTiles(Tile *tile1, Tile *tile2)
 {
     std::swap(tile1->type, tile2->type);
     std::swap(tile1->metadata, tile2->metadata);
@@ -61,7 +61,7 @@ void World::SwapTiles(Tile *tile1, Tile *tile2)
     std::swap(tile1->defaultBackColorIndex, tile2->defaultBackColorIndex);
 }
 
-bool World::IsInBounds(const Vec3 &pos) const
+bool World::_isInBounds(const Vec3 &pos) const
 {
     bool res = 
         (pos.x() < dimensions.width() && pos.x() >= 0)
@@ -105,7 +105,7 @@ const Color& World::GetTileBackColor(const Vec3 &pos) const
 }
 TileType* World::GetTileType(const Vec3 &pos) const
 {
-    Tile *t = GetTile(pos);
+    Tile *t = _getTile(pos);
     if (!t) {
         return nullptr;
     }
@@ -113,7 +113,7 @@ TileType* World::GetTileType(const Vec3 &pos) const
 }
 std::string World::GetTileTypeName(const Vec3 &pos) const
 {
-    Tile *t = GetTile(pos);
+    Tile *t = _getTile(pos);
     if (!t) {
         return "";
     }
@@ -175,7 +175,7 @@ void World::GenerateTestBiome()
                         }
                     }
                 }
-                SetTile(Vec3(x, y, z), tileType);
+                _setTile(Vec3(x, y, z), tileType);
             }
         }
     }

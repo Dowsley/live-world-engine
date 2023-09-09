@@ -12,6 +12,6 @@ public:
     std::vector<CreatureType*> LoadAllCreatures();
 
 private:
-    CreatureType* LoadCreature(const std::string& creatureFile);
+    CreatureType* _loadCreature(const std::string& creatureFile);
     std::string directoryPath;
 };

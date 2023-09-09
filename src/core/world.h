@@ -24,6 +24,10 @@ private:
 
 
     std::tuple<Tile*, Creature*> _getTileAndCreature(const Vec3 &pos) const;
+    Tile* _getTile(const Vec3 &pos) const;
+    void _setTile(const Vec3 &pos, TileType *type);
+    void _swapTiles(Tile *tile1, Tile *tile2);
+    bool _isInBounds(const Vec3 &pos) const;
 
 public:
     World(Vec3 dimensions);
@@ -37,10 +41,6 @@ public:
     int GetDepth() const;
 
     bool IsThereCreatureAt(const Vec3 &pos) const;
-    Tile* GetTile(const Vec3 &pos) const;
-    void SetTile(const Vec3 &pos, TileType *type);
-    void SwapTiles(Tile *tile1, Tile *tile2);
-    bool IsInBounds(const Vec3 &pos) const;
 
     const Vec2& GetTileSprite(const Vec3 &pos) const;
     const Color& GetTileForeColor(const Vec3 &pos) const;

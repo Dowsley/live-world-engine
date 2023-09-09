@@ -10,13 +10,13 @@ std::vector<CreatureType*> CreatureLoader::LoadAllCreatures() {
     std::vector<CreatureType*> creatureTypes;
     for (const auto & entry : std::filesystem::directory_iterator(directoryPath)) {
         if (entry.path().extension() == ".xml") {
-            creatureTypes.push_back(LoadCreature(entry.path().string()));
+            creatureTypes.push_back(_loadCreature(entry.path().string()));
         }
     }
     return creatureTypes;
 }
 
-CreatureType* CreatureLoader::LoadCreature(const std::string &creatureFile) {
+CreatureType* CreatureLoader::_loadCreature(const std::string &creatureFile) {
     CreatureType *creatureType = new CreatureType();
 
     tinyxml2::XMLDocument doc;
