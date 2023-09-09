@@ -18,7 +18,7 @@ public:
     CreatureType* SetDescription(const std::string &description);
     CreatureType* SetName(const std::string &name);
     CreatureType* SetSpritePos(const Vec2 &pos);
-    CreatureType* SetSpriteColor(Color color);
+    CreatureType* SetSpriteColor(const Color &color);
     CreatureType* SetSpawnChance(int chance);
 
 private:

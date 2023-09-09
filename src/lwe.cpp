@@ -48,7 +48,7 @@ void LiveWorldEngine::_drawTile(const Vec3 &pos)
     int currY = y + (int)camera.posY;
 
     Vec3 offsetPos = Vec3(currX, currY, z);
-    Color foreColor = world.GetTileForeColor(offsetPos);
+    const Color &foreColor = world.GetTileForeColor(offsetPos);
     // Color backColor = world.GetTileBackColor(offsetPos);
     Vec2 spritePos = world.GetTileSprite(offsetPos);
 

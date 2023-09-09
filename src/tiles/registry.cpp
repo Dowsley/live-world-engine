@@ -36,12 +36,12 @@ const Vec2& TileRegistry::GetSprite(Tile *tile) const
     // TODO if (tile->metadata)
     return tile->type->GetDefaultSprite(tile->defaultSpriteIndex);
 }
-Color TileRegistry::TileRegistry::GetForeColor(Tile *tile) const
+const Color& TileRegistry::TileRegistry::GetForeColor(Tile *tile) const
 {
     // TODO if (tile->metadata)
     return tile->type->GetDefaultForeColor(tile->defaultForeColorIndex);
 }
-Color TileRegistry::GetBackColor(Tile *tile) const
+const Color& TileRegistry::GetBackColor(Tile *tile) const
 {
     // TODO if (tile->metadata)
     return tile->type->GetDefaultBackColor(tile->defaultBackColorIndex);

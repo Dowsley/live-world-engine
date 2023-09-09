@@ -43,8 +43,8 @@ public:
     bool IsInBounds(const Vec3 &pos) const;
 
     const Vec2& GetTileSprite(const Vec3 &pos) const;
-    Color GetTileForeColor(const Vec3 &pos) const;
-    Color GetTileBackColor(const Vec3 &pos) const;
+    const Color& GetTileForeColor(const Vec3 &pos) const;
+    const Color& GetTileBackColor(const Vec3 &pos) const;
     TileType* GetTileType(const Vec3 &pos) const;
     std::string GetTileTypeName(const Vec3 &pos) const;
 

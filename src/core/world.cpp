@@ -81,7 +81,7 @@ const Vec2& World::GetTileSprite(const Vec3 &pos) const
     }
     return tileRegistry.GetSprite(t);
 }
-Color World::GetTileForeColor(const Vec3 &pos) const
+const Color& World::GetTileForeColor(const Vec3 &pos) const
 {
     Tile *t;
     Creature *c;
@@ -92,7 +92,7 @@ Color World::GetTileForeColor(const Vec3 &pos) const
     }
     return tileRegistry.GetForeColor(t);
 }
-Color World::GetTileBackColor(const Vec3 &pos) const
+const Color& World::GetTileBackColor(const Vec3 &pos) const
 {
     Tile *t;
     Creature *c;

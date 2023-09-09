@@ -15,8 +15,8 @@ public:
     TileRegistry();
 
     const Vec2& GetSprite(Tile *tile) const;
-    Color GetForeColor(Tile *tile) const;
-    Color GetBackColor(Tile *tile) const;
+    const Color& GetForeColor(Tile *tile) const;
+    const Color& GetBackColor(Tile *tile) const;
 
     void SetupTile(Tile *tile, TileType *type);
 

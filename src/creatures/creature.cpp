@@ -29,7 +29,7 @@ CreatureType* CreatureType::SetSpritePos(const Vec2 &pos) {
     return this;
 }
 
-CreatureType* CreatureType::SetSpriteColor(Color color) { 
+CreatureType* CreatureType::SetSpriteColor(const Color &color) { 
     this->spriteColor = color;
     return this;
 }

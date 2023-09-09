@@ -34,8 +34,8 @@ public:
     unsigned short GetMaxHealth() const;
 
     const Vec2& GetDefaultSprite(int index) const;
-    Color GetDefaultForeColor(int index) const;
-    Color GetDefaultBackColor(int index) const;
+    const Color& GetDefaultForeColor(int index) const;
+    const Color& GetDefaultBackColor(int index) const;
 
     int GetRandomDefaultSpriteIndex() const;
     int GetRandomDefaultForeColorIndex() const;

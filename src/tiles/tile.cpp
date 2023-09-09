@@ -31,8 +31,8 @@ std::string TileType::GetName() const { return name; }
 unsigned short TileType::GetMaxHealth() const { return maxHealth; }
 
 const Vec2& TileType::GetDefaultSprite(int index) const { return defaultSprites[index]; }
-Color TileType::GetDefaultForeColor(int index) const { return defaultForeColors[index]; }
-Color TileType::GetDefaultBackColor(int index) const { return defaultBackColors[index]; }
+const Color& TileType::GetDefaultForeColor(int index) const { return defaultForeColors[index]; }
+const Color& TileType::GetDefaultBackColor(int index) const { return defaultBackColors[index]; }
 
 int TileType::GetRandomDefaultSpriteIndex() const { return rand() % defaultSprites.size(); }
 int TileType::GetRandomDefaultForeColorIndex() const { return rand() % defaultForeColors.size(); }
