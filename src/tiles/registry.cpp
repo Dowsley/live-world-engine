@@ -31,7 +31,7 @@ TileRegistry::TileRegistry()
         ->SetSurface();
 }
 
-Vec2 TileRegistry::GetSprite(Tile *tile)
+const Vec2& TileRegistry::GetSprite(Tile *tile)
 {
     // TODO if (tile->metadata)
     return tile->type->GetDefaultSprite(tile->defaultSpriteIndex);

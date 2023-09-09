@@ -19,16 +19,18 @@ void LiveWorldEngine::_drawWorld()
             trueX = x + (int) camera.posX;
             trueY = y + (int) camera.posY;
 
-            isCurrTileEmpty = world.GetTileTypeName(trueX, trueY, currDepth) == "empty";
-            isCurrTileOccupiedByCreature = world.IsThereCreatureAt(trueX, trueY, currDepth);
-            isLowerTileEmpty = world.GetTileTypeName(trueX, trueY, currDepth+1) == "empty";
-            isLowerTileSurface = world.GetTileType(trueX, trueY, currDepth+1)->isSurface;
+            Vec3 currTilePos = Vec3(trueX, trueY, currDepth);
+            Vec3 lowerTilePos = Vec3(trueX, trueY, currDepth + 1);
+            isCurrTileEmpty = world.GetTileTypeName(currTilePos) == "empty";
+            isCurrTileOccupiedByCreature = world.IsThereCreatureAt(currTilePos);
+            isLowerTileEmpty = world.GetTileTypeName(lowerTilePos) == "empty";
+            isLowerTileSurface = world.GetTileType(lowerTilePos)->isSurface;
             if (isCurrTileEmpty && !isCurrTileOccupiedByCreature && !isLowerTileEmpty && isLowerTileSurface) {
                 trueZ = currDepth + 1;
             } else {
                 trueZ = currDepth;
             }
-            _drawTile(x, y, trueZ);
+            _drawTile(Vec3(x, y, trueZ));
         }
     }
     std::string str = "Layer: ";
@@ -36,16 +38,21 @@ void LiveWorldEngine::_drawWorld()
     DrawString(Vec2(0,0), str, olc::WHITE, 1);
 }
 
-void LiveWorldEngine::_drawTile(int x, int y, int z)
+void LiveWorldEngine::_drawTile(const Vec3 &pos)
 {
+    int x = pos.x();
+    int y = pos.y();
+    int z = pos.z();
+
     int currX = x + (int)camera.posX;
     int currY = y + (int)camera.posY;
 
-    Color foreColor = world.GetTileForeColor(currX, currY, z);
-    Color backColor = world.GetTileBackColor(currX, currY, z);
-    Vec2 spritePos = world.GetTileSprite(currX, currY, z);
+    Vec3 offsetPos = Vec3(currX, currY, z);
+    Color foreColor = world.GetTileForeColor(offsetPos);
+    Color backColor = world.GetTileBackColor(offsetPos);
+    Vec2 spritePos = world.GetTileSprite(offsetPos);
 
-    bool tmp = world.IsThereCreatureAt(currX, currY, z);
+    bool tmp = world.IsThereCreatureAt(offsetPos);
 
     spritePos = spritePos * Settings::TILE_SIZE + (Settings::TILE_OFFSET * spritePos) + Vec2(1,1);
 

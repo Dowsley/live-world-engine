@@ -19,10 +19,15 @@ Vec3::Vec3(int x, int y, int z)
 int Vec3::x() const { return e[0]; }
 int Vec3::y() const { return e[1]; }
 int Vec3::z() const { return e[2]; }
+int Vec3::width() const { return x(); }
+int Vec3::height() const { return y(); }
+int Vec3::depth() const { return z(); }
 
-void Vec3::setX(int x) { e[0] = x; }
-void Vec3::setY(int y) { e[1] = y; }
-void Vec3::setZ(int z) { e[2] = z; }
+int Vec3::GetFlattenedSize() const { return e[0] * e[1] * e[2]; }
+
+void Vec3::SetX(int x) { e[0] = x; }
+void Vec3::SetY(int y) { e[1] = y; }
+void Vec3::SetZ(int z) { e[2] = z; }
 
 Vec3 Vec3::operator-() const { return Vec3(-e[0], -e[1], -e[2]); }
 int Vec3::operator[](int i) const { return e[i]; }

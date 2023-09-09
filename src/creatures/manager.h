@@ -15,7 +15,6 @@ class CreatureManager {
 private:
     World *worldRef = nullptr;
     std::unordered_map<int, Creature*> creatureMap;
-
     CreatureRegistry registry = CreatureRegistry(Settings::CREATURE_REGISTRY_PATH);
 
 public:
@@ -23,9 +22,9 @@ public:
     ~CreatureManager();
 
     const CreatureType* GetTypeById(const std::string &id) const;
-    Creature* GetCreatureAt(Vec3 pos) const;
-    bool InstanceCreature(const std::string &name, Vec3 pos);
-    void RemoveCreatureAt(Vec3 pos);
+    Creature* GetCreatureAt(const Vec3 &pos) const;
+    bool InstanceCreature(const std::string &name, const Vec3 &pos);
+    void RemoveCreatureAt(const Vec3 &pos);
     void UpdateEntities();
     void TraverseEntities(std::function<void(Creature*)> callback);
     int GetTotalCreatureCount();

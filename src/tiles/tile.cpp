@@ -6,7 +6,7 @@ TileType::TileType(std::string name, unsigned short maxHealth)
     this->maxHealth = maxHealth;
 }
 
-TileType *TileType::AddDefaultSprite(Vec2 newDefaultSprite)
+TileType *TileType::AddDefaultSprite(const Vec2 &newDefaultSprite)
 {
     this->defaultSprites.push_back(newDefaultSprite);
     return this;
@@ -30,7 +30,7 @@ TileType *TileType::SetSurface()
 std::string TileType::GetName() { return name; }
 unsigned short TileType::GetMaxHealth() { return maxHealth; }
 
-Vec2 TileType::GetDefaultSprite(int index) { return defaultSprites[index]; }
+const Vec2& TileType::GetDefaultSprite(int index) { return defaultSprites[index]; }
 Color TileType::GetDefaultForeColor(int index) { return defaultForeColors[index]; }
 Color TileType::GetDefaultBackColor(int index) { return defaultBackColors[index]; }
 

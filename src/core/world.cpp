@@ -7,8 +7,7 @@
 #include "settings.h"
 
 World::World(Vec3 dimensions)
-: height(dimensions.x()), width(dimensions.y()), depth(dimensions.z()),
-  totalSize(height * width * depth), creatureManager(std::make_unique<CreatureManager>(this)), map(new Tile[totalSize])
+: dimensions(dimensions), creatureManager(std::make_unique<CreatureManager>(this)), map(new Tile[dimensions.GetFlattenedSize()])
 {}
 
 World::~World()
@@ -16,40 +15,36 @@ World::~World()
     delete map;
 }
 
+int World::Flatten3DCoords(const Vec3 &pos) { return pos.y() + dimensions.height() * (pos.x() + dimensions.width() * pos.z()); }
+int World::Flatten2DCoords(const Vec2 &pos) { return pos.y * dimensions.width() + pos.x; }
 
-int World::Flatten3DCoords(int x, int y, int z) { return y + height * (x + width * z); }
-int World::Flatten2DCoords(int x, int y) { return y * width + x; }
+int World::GetHeight() { return dimensions.height(); }
+int World::GetWidth() { return dimensions.width(); }
+int World::GetDepth() { return dimensions.depth(); }
 
-int World::GetHeight() { return height; }
-int World::GetWidth() { return width; }
-int World::GetDepth() { return depth; }
-void World::SetHeight(int height) { this->height = height; }
-void World::SetWidth(int width) { this->width = width; }
-void World::SetDepth(int depth) { this->depth = depth; }
-
-bool World::IsThereCreatureAt(int x, int y, int z)
+bool World::IsThereCreatureAt(const Vec3 &pos)
 {
-    return (creatureManager->GetCreatureAt(Vec3(x, y, z)) != nullptr);
+    return (creatureManager->GetCreatureAt(pos) != nullptr);
 }
 
-std::tuple<Tile*, Creature*> World::_getTileAndCreature(Vec3 pos)
+std::tuple<Tile*, Creature*> World::_getTileAndCreature(const Vec3 &pos)
 {
-    Tile* t = GetTile(pos.x(), pos.y(), pos.z());
-    Creature *c = creatureManager->GetCreatureAt(Vec3(pos.x(), pos.y(), pos.z()));
+    Tile* t = GetTile(pos);
+    Creature *c = creatureManager->GetCreatureAt(pos);
 
     return std::make_tuple(t, c);
 }
 
-Tile* World::GetTile(int x, int y, int z)
+Tile* World::GetTile(const Vec3 &pos)
 {
-    if (!IsInBounds(x,y,z)) {
+    if (!IsInBounds(pos)) {
         return nullptr;
     }
-    return &map[Flatten3DCoords(x, y, z)];
+    return &map[Flatten3DCoords(pos)];
 }
-void World::SetTile(int x, int y, int z, TileType *type)
+void World::SetTile(const Vec3 &pos, TileType *type)
 {
-    Tile *tile = GetTile(x, y, z);
+    Tile *tile = GetTile(pos);
     if (!type) {
         printf("OK ENOUGH");
         throw std::runtime_error("Tile type of name " + tile->type->GetName() + " is null");
@@ -66,74 +61,63 @@ void World::SwapTiles(Tile *tile1, Tile *tile2)
     std::swap(tile1->defaultBackColorIndex, tile2->defaultBackColorIndex);
 }
 
-bool World::IsInBounds(int x, int y, int z)
+bool World::IsInBounds(const Vec3 &pos)
 {
-    bool res = (x < width && x >= 0) && (y < height && y >= 0) && (z < depth && z >= 0);
+    bool res = 
+        (pos.x() < dimensions.width() && pos.x() >= 0)
+        && (pos.y() < dimensions.height() && pos.y() >= 0)
+        && (pos.z() < dimensions.depth() && pos.z() >= 0);
     return res;
 }
 
-Vec2 World::GetTileSprite(int x, int y, int z)
+const Vec2& World::GetTileSprite(const Vec3 &pos)
 {
     Tile *t;
     Creature *c;
-    std::tie(t, c) = _getTileAndCreature(Vec3(x, y, z));
+    std::tie(t, c) = _getTileAndCreature(pos);
     
     if (c != nullptr && t->type->GetName() == "empty") {
         return c->GetType()->GetSpritePos();
     }
     return tileRegistry.GetSprite(t);
 }
-Color World::GetTileForeColor(int x, int y, int z)
+Color World::GetTileForeColor(const Vec3 &pos)
 {
     Tile *t;
     Creature *c;
-    std::tie(t, c) = _getTileAndCreature(Vec3(x, y, z));
+    std::tie(t, c) = _getTileAndCreature(pos);
 
     if (c != nullptr && t->type->GetName() == "empty") {
         return c->GetType()->GetSpriteColor();
     }
     return tileRegistry.GetForeColor(t);
 }
-Color World::GetTileBackColor(int x, int y, int z)
+Color World::GetTileBackColor(const Vec3 &pos)
 {
     Tile *t;
     Creature *c;
-    std::tie(t, c) = _getTileAndCreature(Vec3(x, y, z));
+    std::tie(t, c) = _getTileAndCreature(pos);
 
     if (c != nullptr && t->type->GetName() == "empty") {
         return Settings::BACK_PLACEHOLDER;
     }
     return tileRegistry.GetBackColor(t);
 }
-TileType* World::GetTileType(int x, int y, int z)
+TileType* World::GetTileType(const Vec3 &pos)
 {
-    Tile *t = GetTile(x, y, z);
+    Tile *t = GetTile(pos);
     if (!t) {
         return nullptr;
     }
     return t->type;
 }
-std::string World::GetTileTypeName(int x, int y, int z)
+std::string World::GetTileTypeName(const Vec3 &pos)
 {
-    Tile *t = GetTile(x, y, z);
+    Tile *t = GetTile(pos);
     if (!t) {
         return "";
     }
     return t->type->GetName();
-}
-
-void World::LogTileType(int x, int y, int z)
-{
-    Tile *t = GetTile(x, y, z);
-    if (!t) {
-        printf("Tile POSITION %d %d %d does not exist, somehow\n", x, y, z);
-        return;
-    }
-    if (!t) {
-        printf("Tile TYPE type in %d %d %d does not exist, somehow\n", x, y, z);
-        return;
-    }
-    printf("%d, %d, %d, Name: %s\n", x, y, z, t->type->GetName().c_str());
 }
 
 void World::Update()
@@ -157,26 +141,26 @@ void World::GenerateTestBiome()
     noise.SetFractalType(FastNoiseLite::FractalType_FBm);
 
     // Using std::vector is safer than raw arrays and manual memory management
-    std::vector<float> noiseData(width * height);
-    for (int y = 0; y < height; y++) {
-        for (int x = 0; x < width; x++) {
-            noiseData[Flatten2DCoords(x, y)] = noise.GetNoise(static_cast<float>(x), static_cast<float>(y));
+    std::vector<float> noiseData(dimensions.width() * dimensions.height());
+    for (int y = 0; y < dimensions.height(); y++) {
+        for (int x = 0; x < dimensions.width(); x++) {
+            noiseData[Flatten2DCoords(Vec2(x, y))] = noise.GetNoise(static_cast<float>(x), static_cast<float>(y));
         }
     }
 
-    std::vector<bool> soilLevelData(width * height, false); // Initialization is in-built
+    std::vector<bool> soilLevelData(dimensions.width() * dimensions.height(), false); // Initialization is in-built
 
     TileType* tileType = nullptr;
-    for (int y = 0; y < height; y++) {
-        for (int x = 0; x < width; x++) {
+    for (int y = 0; y < dimensions.height(); y++) {
+        for (int x = 0; x < dimensions.width(); x++) {
             unsigned short inverseDepth = static_cast<unsigned short>(
                 ArithmeticsUtils::Scale(
-                    noiseData[Flatten2DCoords(x, y)],
-                    -1.0f, 1.0f, 0.0f, static_cast<float>(depth)
+                    noiseData[Flatten2DCoords(Vec2(x, y))],
+                    -1.0f, 1.0f, 0.0f, static_cast<float>(dimensions.depth())
                 )
             );
 
-            for (int z = 0; z < depth; z++) {
+            for (int z = 0; z < dimensions.depth(); z++) {
                 if (z >= inverseDepth) {
                     tileType = tileRegistry.GetNaturalTileType("rock");
                 } else {
@@ -187,11 +171,11 @@ void World::GenerateTestBiome()
                     } else {
                         tileType = tileRegistry.GetNaturalTileType("empty");
                         if (z == SOIL_LAYER_DEPTH) {
-                            soilLevelData[y * width + x] = true;
+                            soilLevelData[y * dimensions.width() + x] = true;
                         }
                     }
                 }
-                SetTile(x, y, z, tileType);
+                SetTile(Vec3(x, y, z), tileType);
             }
         }
     }
@@ -199,9 +183,9 @@ void World::GenerateTestBiome()
     int crabSpawnChance = creatureManager->GetTypeById("CRAB")->GetSpawnChance();
     int rattlesnakeSpawnChance = creatureManager->GetTypeById("RATTLESNAKE")->GetSpawnChance();
 
-    for (int y = 0; y < height; y++) {
-        for (int x = 0; x < width; x++) {
-            if (soilLevelData[y * width + x]) {
+    for (int y = 0; y < dimensions.height(); y++) {
+        for (int x = 0; x < dimensions.width(); x++) {
+            if (soilLevelData[y * dimensions.width() + x]) {
                 int spawnRand = rand() % MAX_SPAWN_CHANCE;
                 if (spawnRand < crabSpawnChance) {
                     creatureManager->InstanceCreature("CRAB", Vec3(x, y, SOIL_LAYER_DEPTH));

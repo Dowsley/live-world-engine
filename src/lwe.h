@@ -49,9 +49,8 @@ private:
     void _handleInputs();
     void _moveCamera(float fElapsedTime);
     void _simulate(float fElapsedTime);
-    void _logColor(const Color &p);
     void _drawWorld();
-    void _drawTile(int x, int y, int z);
+    void _drawTile(const Vec3 &pos);
 
 protected:
     bool OnUserCreate() override;

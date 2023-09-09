@@ -9,15 +9,20 @@ class Vec3 final
         Vec3();
         Vec3(int x, int y, int z);
 
-        // No, I'm not gonna respect standard names here.
+        // No, I'm not gonna respect standard names here. I want it to be short.
         int x() const;
         int y() const;
         int z() const;
+        int width() const;
+        int height() const;
+        int depth() const;
+
 
         // here I will
-        void setX(int x);
-        void setY(int y);
-        void setZ(int z);
+        int GetFlattenedSize() const;
+        void SetX(int x);
+        void SetY(int y);
+        void SetZ(int z);
 
         Vec3 operator-() const;
         int operator[](int i) const;

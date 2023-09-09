@@ -5,7 +5,7 @@ const std::string& CreatureType::GetId() const { return id; }
 
 const std::string& CreatureType::GetDescription() const { return description; }
 const std::string& CreatureType::GetName() const { return name; }
-const Vec2 CreatureType::GetSpritePos() const { return spritePos; }
+const Vec2& CreatureType::GetSpritePos() const { return spritePos; }
 const Color& CreatureType::GetSpriteColor() const { return spriteColor; }
 int CreatureType::GetSpawnChance() const { return spawnChance; }
 
@@ -14,7 +14,7 @@ CreatureType* CreatureType::SetId(const std::string &id) {
     return this;
 }
 
-CreatureType* CreatureType::SetDescription(const std::string& descriptionVal) {
+CreatureType* CreatureType::SetDescription(const std::string &descriptionVal) {
     description = descriptionVal;
     return this;
 }
@@ -24,7 +24,7 @@ CreatureType* CreatureType::SetName(const std::string &name) {
     return this;
 }
 
-CreatureType* CreatureType::SetSpritePos(Vec2 pos) { 
+CreatureType* CreatureType::SetSpritePos(const Vec2 &pos) { 
     this->spritePos = pos;
     return this;
 }
@@ -54,5 +54,5 @@ bool Creature::Update()
     return false;
 }
 CreatureType* Creature::GetType() const { return type; }
-Vec3 Creature::GetPosition() const { return pos; }
-void Creature::SetPosition(Vec3 pos) { pos = pos; }
+const Vec3& Creature::GetPosition() const { return pos; }
+void Creature::SetPosition(const Vec3 &pos) { this->pos = pos; }

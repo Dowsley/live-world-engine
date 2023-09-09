@@ -15,7 +15,7 @@ private:
 public:
     TileRegistry();
 
-    Vec2 GetSprite(Tile *tile);
+    const Vec2& GetSprite(Tile *tile);
     Color GetForeColor(Tile *tile);
     Color GetBackColor(Tile *tile);
 

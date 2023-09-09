@@ -26,7 +26,7 @@ public:
     bool isSurface = false;
     TileType(std::string name, unsigned short maxHealth);
 
-    TileType *AddDefaultSprite(Vec2 newDefaultSprite);
+    TileType *AddDefaultSprite(const Vec2 &newDefaultSprite);
     TileType *AddDefaultForeColor(int r, int g, int b);
     TileType *AddDefaultBackColor(int r, int g, int b);
     TileType *SetSurface();
@@ -34,7 +34,7 @@ public:
     std::string GetName();
     unsigned short GetMaxHealth();
 
-    Vec2 GetDefaultSprite(int index);
+    const Vec2& GetDefaultSprite(int index);
     Color GetDefaultForeColor(int index);
     Color GetDefaultBackColor(int index);
 

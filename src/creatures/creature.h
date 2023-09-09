@@ -11,14 +11,14 @@ public:
     const std::string& GetId() const;
     const std::string& GetDescription() const;
     const std::string& GetName() const;
-    const Vec2 GetSpritePos() const;
+    const Vec2& GetSpritePos() const;
     const Color& GetSpriteColor() const;
     int GetSpawnChance() const;
 
     CreatureType* SetId(const std::string &id);
     CreatureType* SetDescription(const std::string &description);
     CreatureType* SetName(const std::string &name);
-    CreatureType* SetSpritePos(Vec2 pos);
+    CreatureType* SetSpritePos(const Vec2 &pos);
     CreatureType* SetSpriteColor(Color color);
     CreatureType* SetSpawnChance(int chance);
 
@@ -36,8 +36,8 @@ public:
     Creature(CreatureType *type, Vec3 pos);
 
     CreatureType* GetType() const;
-    Vec3 GetPosition() const;
-    void SetPosition(Vec3 pos);
+    const Vec3& GetPosition() const;
+    void SetPosition(const Vec3 &pos);
     bool Update();
 private:
     Vec3 pos;
