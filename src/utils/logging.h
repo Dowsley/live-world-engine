@@ -1,5 +1,4 @@
-#ifndef LOGGING_H
-#define LOGGING_H
+#pragma once
 
 #include "../structures/color.h"
 
@@ -7,5 +6,3 @@ namespace LoggingUtils
 {
     void LogColor(const Color &p);
 };
-
-#endif

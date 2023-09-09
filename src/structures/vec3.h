@@ -1,5 +1,4 @@
-#ifndef VEC3_H
-#define VEC3_H
+#pragma once
 
 #include <fstream>
 
@@ -46,5 +45,3 @@ class Vec3 final
     protected:
         int e[3];
 };
-
-#endif

@@ -1,5 +1,4 @@
-#ifndef CREATURE_MANAGER_H
-#define CREATURE_MANAGER_H
+#pragma once
 
 #include <unordered_map>
 #include <functional>
@@ -29,5 +28,3 @@ public:
     void TraverseEntities(std::function<void(Creature*)> callback);
     int GetTotalCreatureCount();
 };
-
-#endif

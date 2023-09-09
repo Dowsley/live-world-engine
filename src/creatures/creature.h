@@ -1,5 +1,4 @@
-#ifndef CREATURE_H
-#define CREATURE_H
+#pragma once
 
 #include <string>
 
@@ -43,5 +42,3 @@ private:
     Vec3 pos;
     CreatureType *type;
 };
-
-#endif

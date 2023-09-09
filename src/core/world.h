@@ -1,5 +1,4 @@
-#ifndef WORLD_H
-#define WORLD_H
+#pragma once
 
 #include <vector>
 #include <tuple>
@@ -53,5 +52,3 @@ public:
     void Generate();
     void GenerateTestBiome();
 };
-
-#endif

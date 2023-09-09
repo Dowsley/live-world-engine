@@ -1,5 +1,4 @@
-#ifndef CREATURE_LOADER_H
-#define CREATURE_LOADER_H
+#pragma once
 
 #include <string>
 
@@ -16,5 +15,3 @@ private:
     CreatureType* LoadCreature(const std::string& creatureFile);
     std::string directoryPath;
 };
-
-#endif

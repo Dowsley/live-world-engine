@@ -1,5 +1,4 @@
-#ifndef TILE_H
-#define TILE_H
+#pragma once
 
 #include <string>
 #include <vector>
@@ -61,5 +60,3 @@ public:
     
     TileMetadata(Tile *parent);
 };
-
-#endif

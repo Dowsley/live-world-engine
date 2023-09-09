@@ -1,8 +1,5 @@
-#ifndef COLOR_H
-#define COLOR_H
+#pragma once
 
 #include "../engine/olcPixelGameEngine.h"
 
 using Color = olc::Pixel;
-
-#endif

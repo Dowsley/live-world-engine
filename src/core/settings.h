@@ -1,5 +1,4 @@
-#ifndef SETTINGS_H
-#define SETTINGS_H
+#pragma once
 
 #if _WIN32
     #define CREATURE_REGISTRY_PATH_V "data\\creatures"
@@ -19,5 +18,3 @@ namespace Settings {
     const int TICK_DURATION = 700;
     const std::string CREATURE_REGISTRY_PATH = CREATURE_REGISTRY_PATH_V;
 }
-
-#endif

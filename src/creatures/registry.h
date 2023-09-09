@@ -1,5 +1,4 @@
-#ifndef CREATURE_REGISTRY_H
-#define CREATURE_REGISTRY_H
+#pragma once
 
 #include <unordered_map>
 #include <string>
@@ -23,5 +22,3 @@ private:
     CreatureLoader loader;
     std::unordered_map<std::string, CreatureType*> creatureTypes;
 };
-
-#endif

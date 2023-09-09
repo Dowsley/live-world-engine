@@ -1,5 +1,4 @@
-#ifndef TILE_REGISTRY_H
-#define TILE_REGISTRY_H
+#pragma once
 
 #include <string>
 #include <map>
@@ -25,5 +24,3 @@ public:
 
     TileType *GetNaturalTileType(std::string name);
 };
-
-#endif
