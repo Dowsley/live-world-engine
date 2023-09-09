@@ -66,7 +66,7 @@ void CreatureManager::UpdateEntities()
     }
 }
 
-int CreatureManager::GetTotalCreatureCount()
+int CreatureManager::GetTotalCreatureCount() const
 {
     return creatureMap.size();
 }

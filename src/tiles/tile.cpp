@@ -27,16 +27,16 @@ TileType *TileType::SetSurface()
     return this;
 }
 
-std::string TileType::GetName() { return name; }
-unsigned short TileType::GetMaxHealth() { return maxHealth; }
+std::string TileType::GetName() const { return name; }
+unsigned short TileType::GetMaxHealth() const { return maxHealth; }
 
-const Vec2& TileType::GetDefaultSprite(int index) { return defaultSprites[index]; }
-Color TileType::GetDefaultForeColor(int index) { return defaultForeColors[index]; }
-Color TileType::GetDefaultBackColor(int index) { return defaultBackColors[index]; }
+const Vec2& TileType::GetDefaultSprite(int index) const { return defaultSprites[index]; }
+Color TileType::GetDefaultForeColor(int index) const { return defaultForeColors[index]; }
+Color TileType::GetDefaultBackColor(int index) const { return defaultBackColors[index]; }
 
-int TileType::GetRandomDefaultSpriteIndex() { return rand() % defaultSprites.size(); }
-int TileType::GetRandomDefaultForeColorIndex() { return rand() % defaultForeColors.size(); }
-int TileType::GetRandomDefaultBackColorIndex() { return rand() % defaultBackColors.size(); }
+int TileType::GetRandomDefaultSpriteIndex() const { return rand() % defaultSprites.size(); }
+int TileType::GetRandomDefaultForeColorIndex() const { return rand() % defaultForeColors.size(); }
+int TileType::GetRandomDefaultBackColorIndex() const { return rand() % defaultBackColors.size(); }
 
 TileMetadata::TileMetadata(Tile *parent)
 {

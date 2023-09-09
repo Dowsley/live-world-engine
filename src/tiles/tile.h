@@ -30,16 +30,16 @@ public:
     TileType *AddDefaultBackColor(int r, int g, int b);
     TileType *SetSurface();
 
-    std::string GetName();
-    unsigned short GetMaxHealth();
+    std::string GetName() const;
+    unsigned short GetMaxHealth() const;
 
-    const Vec2& GetDefaultSprite(int index);
-    Color GetDefaultForeColor(int index);
-    Color GetDefaultBackColor(int index);
+    const Vec2& GetDefaultSprite(int index) const;
+    Color GetDefaultForeColor(int index) const;
+    Color GetDefaultBackColor(int index) const;
 
-    int GetRandomDefaultSpriteIndex();
-    int GetRandomDefaultForeColorIndex();
-    int GetRandomDefaultBackColorIndex();
+    int GetRandomDefaultSpriteIndex() const;
+    int GetRandomDefaultForeColorIndex() const;
+    int GetRandomDefaultBackColorIndex() const;
 };
 
 class Tile {

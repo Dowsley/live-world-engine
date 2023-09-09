@@ -14,13 +14,13 @@ private:
 public:
     TileRegistry();
 
-    const Vec2& GetSprite(Tile *tile);
-    Color GetForeColor(Tile *tile);
-    Color GetBackColor(Tile *tile);
+    const Vec2& GetSprite(Tile *tile) const;
+    Color GetForeColor(Tile *tile) const;
+    Color GetBackColor(Tile *tile) const;
 
     void SetupTile(Tile *tile, TileType *type);
 
     TileType *AddNaturalTileType(std::string name, unsigned short maxHealth);
 
-    TileType *GetNaturalTileType(std::string name);
+    TileType *GetNaturalTileType(std::string name) const;
 };

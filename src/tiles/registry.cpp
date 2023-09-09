@@ -31,17 +31,17 @@ TileRegistry::TileRegistry()
         ->SetSurface();
 }
 
-const Vec2& TileRegistry::GetSprite(Tile *tile)
+const Vec2& TileRegistry::GetSprite(Tile *tile) const
 {
     // TODO if (tile->metadata)
     return tile->type->GetDefaultSprite(tile->defaultSpriteIndex);
 }
-Color TileRegistry::TileRegistry::GetForeColor(Tile *tile)
+Color TileRegistry::TileRegistry::GetForeColor(Tile *tile) const
 {
     // TODO if (tile->metadata)
     return tile->type->GetDefaultForeColor(tile->defaultForeColorIndex);
 }
-Color TileRegistry::GetBackColor(Tile *tile)
+Color TileRegistry::GetBackColor(Tile *tile) const
 {
     // TODO if (tile->metadata)
     return tile->type->GetDefaultBackColor(tile->defaultBackColorIndex);
@@ -62,7 +62,10 @@ TileType *TileRegistry::AddNaturalTileType(std::string name, unsigned short maxH
     return tileType;
 }
 
-TileType *TileRegistry::GetNaturalTileType(std::string name)
+TileType *TileRegistry::GetNaturalTileType(std::string name) const
 {
-    return naturalTileTypes[name];
+    auto it = naturalTileTypes.find(name);
+    if(it != naturalTileTypes.end())
+        return it->second;
+    return nullptr;
 }

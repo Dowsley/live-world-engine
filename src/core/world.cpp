@@ -15,19 +15,19 @@ World::~World()
     delete map;
 }
 
-int World::Flatten3DCoords(const Vec3 &pos) { return pos.y() + dimensions.height() * (pos.x() + dimensions.width() * pos.z()); }
-int World::Flatten2DCoords(const Vec2 &pos) { return pos.y * dimensions.width() + pos.x; }
+int World::Flatten3DCoords(const Vec3 &pos) const { return pos.y() + dimensions.height() * (pos.x() + dimensions.width() * pos.z()); }
+int World::Flatten2DCoords(const Vec2 &pos) const { return pos.y * dimensions.width() + pos.x; }
 
-int World::GetHeight() { return dimensions.height(); }
-int World::GetWidth() { return dimensions.width(); }
-int World::GetDepth() { return dimensions.depth(); }
+int World::GetHeight() const { return dimensions.height(); }
+int World::GetWidth() const { return dimensions.width(); }
+int World::GetDepth() const { return dimensions.depth(); }
 
-bool World::IsThereCreatureAt(const Vec3 &pos)
+bool World::IsThereCreatureAt(const Vec3 &pos) const
 {
     return (creatureManager->GetCreatureAt(pos) != nullptr);
 }
 
-std::tuple<Tile*, Creature*> World::_getTileAndCreature(const Vec3 &pos)
+std::tuple<Tile*, Creature*> World::_getTileAndCreature(const Vec3 &pos) const
 {
     Tile* t = GetTile(pos);
     Creature *c = creatureManager->GetCreatureAt(pos);
@@ -35,7 +35,7 @@ std::tuple<Tile*, Creature*> World::_getTileAndCreature(const Vec3 &pos)
     return std::make_tuple(t, c);
 }
 
-Tile* World::GetTile(const Vec3 &pos)
+Tile* World::GetTile(const Vec3 &pos) const
 {
     if (!IsInBounds(pos)) {
         return nullptr;
@@ -61,7 +61,7 @@ void World::SwapTiles(Tile *tile1, Tile *tile2)
     std::swap(tile1->defaultBackColorIndex, tile2->defaultBackColorIndex);
 }
 
-bool World::IsInBounds(const Vec3 &pos)
+bool World::IsInBounds(const Vec3 &pos) const
 {
     bool res = 
         (pos.x() < dimensions.width() && pos.x() >= 0)
@@ -70,7 +70,7 @@ bool World::IsInBounds(const Vec3 &pos)
     return res;
 }
 
-const Vec2& World::GetTileSprite(const Vec3 &pos)
+const Vec2& World::GetTileSprite(const Vec3 &pos) const
 {
     Tile *t;
     Creature *c;
@@ -81,7 +81,7 @@ const Vec2& World::GetTileSprite(const Vec3 &pos)
     }
     return tileRegistry.GetSprite(t);
 }
-Color World::GetTileForeColor(const Vec3 &pos)
+Color World::GetTileForeColor(const Vec3 &pos) const
 {
     Tile *t;
     Creature *c;
@@ -92,7 +92,7 @@ Color World::GetTileForeColor(const Vec3 &pos)
     }
     return tileRegistry.GetForeColor(t);
 }
-Color World::GetTileBackColor(const Vec3 &pos)
+Color World::GetTileBackColor(const Vec3 &pos) const
 {
     Tile *t;
     Creature *c;
@@ -103,7 +103,7 @@ Color World::GetTileBackColor(const Vec3 &pos)
     }
     return tileRegistry.GetBackColor(t);
 }
-TileType* World::GetTileType(const Vec3 &pos)
+TileType* World::GetTileType(const Vec3 &pos) const
 {
     Tile *t = GetTile(pos);
     if (!t) {
@@ -111,7 +111,7 @@ TileType* World::GetTileType(const Vec3 &pos)
     }
     return t->type;
 }
-std::string World::GetTileTypeName(const Vec3 &pos)
+std::string World::GetTileTypeName(const Vec3 &pos) const
 {
     Tile *t = GetTile(pos);
     if (!t) {

@@ -26,5 +26,5 @@ public:
     void RemoveCreatureAt(const Vec3 &pos);
     void UpdateEntities();
     void TraverseEntities(std::function<void(Creature*)> callback);
-    int GetTotalCreatureCount();
+    int GetTotalCreatureCount() const;
 };

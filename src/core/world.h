@@ -23,30 +23,30 @@ private:
     Tile *map;
 
 
-    std::tuple<Tile*, Creature*> _getTileAndCreature(const Vec3 &pos);
+    std::tuple<Tile*, Creature*> _getTileAndCreature(const Vec3 &pos) const;
 
 public:
     World(Vec3 dimensions);
     ~World();
 
-    int Flatten3DCoords(const Vec3 &pos);
-    int Flatten2DCoords(const Vec2 &pos);
+    int Flatten3DCoords(const Vec3 &pos) const;
+    int Flatten2DCoords(const Vec2 &pos) const;
 
-    int GetHeight();
-    int GetWidth();
-    int GetDepth();
+    int GetHeight() const;
+    int GetWidth() const;
+    int GetDepth() const;
 
-    bool IsThereCreatureAt(const Vec3 &pos);
-    Tile* GetTile(const Vec3 &pos);
+    bool IsThereCreatureAt(const Vec3 &pos) const;
+    Tile* GetTile(const Vec3 &pos) const;
     void SetTile(const Vec3 &pos, TileType *type);
     void SwapTiles(Tile *tile1, Tile *tile2);
-    bool IsInBounds(const Vec3 &pos);
+    bool IsInBounds(const Vec3 &pos) const;
 
-    const Vec2& GetTileSprite(const Vec3 &pos);
-    Color GetTileForeColor(const Vec3 &pos);
-    Color GetTileBackColor(const Vec3 &pos);
-    TileType* GetTileType(const Vec3 &pos);
-    std::string GetTileTypeName(const Vec3 &pos);
+    const Vec2& GetTileSprite(const Vec3 &pos) const;
+    Color GetTileForeColor(const Vec3 &pos) const;
+    Color GetTileBackColor(const Vec3 &pos) const;
+    TileType* GetTileType(const Vec3 &pos) const;
+    std::string GetTileTypeName(const Vec3 &pos) const;
 
     void Update();
     void Generate();
