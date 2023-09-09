@@ -70,3 +70,9 @@ int CreatureManager::GetTotalCreatureCount() const
 {
     return creatureMap.size();
 }
+
+void CreatureManager::ClearCreatures()
+{
+    // TODO Make sure there will be non dangling references of creatures outside.
+    creatureMap.clear();
+}

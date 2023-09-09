@@ -27,4 +27,5 @@ public:
     void UpdateEntities();
     void TraverseEntities(std::function<void(Creature*)> callback);
     int GetTotalCreatureCount() const;
+    void ClearCreatures();
 };

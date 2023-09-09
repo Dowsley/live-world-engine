@@ -39,12 +39,6 @@ CreatureType* CreatureType::SetSpawnChance(int spawnChance) {
     return this;
 }
 
-
-// Creature CreatureType::InstanceCreature() const
-// {
-//     return Creature(this);
-// }
-
 /* ---- CREATURE ---- */
 Creature::Creature(CreatureType *type, Vec3 pos)
     : type(type), pos(pos) {};

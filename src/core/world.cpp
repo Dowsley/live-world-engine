@@ -179,7 +179,8 @@ void World::GenerateTestBiome()
             }
         }
     }
-
+    
+    creatureManager->ClearCreatures();
     int crabSpawnChance = creatureManager->GetTypeById("CRAB")->GetSpawnChance();
     int rattlesnakeSpawnChance = creatureManager->GetTypeById("RATTLESNAKE")->GetSpawnChance();
 
