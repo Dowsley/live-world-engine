@@ -12,7 +12,7 @@ World::World(Vec3 dimensions)
 
 World::~World()
 {
-    delete map;
+    delete[] map;
 }
 
 int World::Flatten3DCoords(const Vec3 &pos) const { return pos.y() + dimensions.height() * (pos.x() + dimensions.width() * pos.z()); }
