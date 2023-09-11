@@ -9,4 +9,4 @@ Alive, breathing, and heavily inspired in Dwarf-Fortress. I'm building this as a
 Place the engine source code (regardless of platform) inside `src/engine`.
 
 [Source-code for Windows and Linux.](https://github.com/OneLoneCoder/olcPixelGameEngine)  
-[Source-code for mac.](https://github.com/MumflrFumperdink/olcPGEMac)
+[Source-code for mac.](https://github.com/sadikovi/olcPixelGameEngine-macos)
