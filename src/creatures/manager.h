@@ -24,8 +24,8 @@ public:
     Creature* GetCreatureAt(const Vec3 &pos) const;
     bool InstanceCreature(const std::string &name, const Vec3 &pos);
     void RemoveCreatureAt(const Vec3 &pos);
-    void UpdateEntities();
-    void TraverseEntities(std::function<void(Creature*)> callback);
+    void UpdateCreatures();
+    void TraverseCreatures(std::function<void(Creature*)> callback);
     int GetTotalCreatureCount() const;
     void ClearCreatures();
 };

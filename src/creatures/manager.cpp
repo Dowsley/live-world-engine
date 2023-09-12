@@ -52,14 +52,14 @@ void CreatureManager::RemoveCreatureAt(const Vec3 &pos)
     }
 }
 
-void CreatureManager::TraverseEntities(std::function<void(Creature*)> callback)
+void CreatureManager::TraverseCreatures(std::function<void(Creature*)> callback)
 {
     for(auto & pair : creatureMap) {
         callback(pair.second);
     }
 }
 
-void CreatureManager::UpdateEntities()
+void CreatureManager::UpdateCreatures()
 {
     for(auto& pair : creatureMap) {
         pair.second->Update();

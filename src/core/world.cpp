@@ -122,7 +122,7 @@ std::string World::GetTileTypeName(const Vec3 &pos) const
 
 void World::Update()
 {
-    creatureManager->UpdateEntities();
+    creatureManager->UpdateCreatures();
 }
 
 void World::Generate()
