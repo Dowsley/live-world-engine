@@ -1,4 +1,5 @@
 #include "../core/world.h"
+#include "../utils/geometry.h"
 #include "manager.h"
 #include "creature.h"
 
@@ -18,7 +19,7 @@ const CreatureType* CreatureManager::GetTypeById(const std::string &id) const
 
 Creature* CreatureManager::GetCreatureAt(const Vec3 &pos) const
 {
-    int index = worldRef->Flatten3DCoords(pos);
+    int index = GeometryUtils::Flatten3DCoords(pos, worldRef->GetDimensions());
     if(creatureMap.find(index) != creatureMap.end()) {
         return creatureMap.at(index);
     }
@@ -27,7 +28,7 @@ Creature* CreatureManager::GetCreatureAt(const Vec3 &pos) const
 
 bool CreatureManager::InstanceCreature(const std::string &id, const Vec3 &pos)
 {
-    int index = worldRef->Flatten3DCoords(pos);
+    int index = GeometryUtils::Flatten3DCoords(pos, worldRef->GetDimensions());
     // If creature already exists at that position, return false
     if (creatureMap.find(index) != creatureMap.end()) {
         return false;
@@ -45,7 +46,7 @@ bool CreatureManager::InstanceCreature(const std::string &id, const Vec3 &pos)
 
 void CreatureManager::RemoveCreatureAt(const Vec3 &pos)
 {
-    int index = worldRef->Flatten3DCoords(pos);
+    int index = GeometryUtils::Flatten3DCoords(pos, worldRef->GetDimensions());
     if(creatureMap.find(index) != creatureMap.end()) {
         delete creatureMap[index]; // Delete the creature from the heap
         creatureMap.erase(index);  // Remove the entry from the map

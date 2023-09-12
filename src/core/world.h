@@ -33,12 +33,10 @@ public:
     World(Vec3 dimensions);
     ~World();
 
-    int Flatten3DCoords(const Vec3 &pos) const;
-    int Flatten2DCoords(const Vec2 &pos) const;
-
     int GetHeight() const;
     int GetWidth() const;
     int GetDepth() const;
+    const Vec3& GetDimensions() const;
 
     bool IsThereCreatureAt(const Vec3 &pos) const;
 

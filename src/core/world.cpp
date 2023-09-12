@@ -1,10 +1,10 @@
 #include "world.h"
 
-#include "../creatures/creature.h"
-
-#include "../utils/arithmetics.h"
-#include "../lib/noise.cpp"
 #include "settings.h"
+#include "../creatures/creature.h"
+#include "../utils/arithmetics.h"
+#include "../utils/geometry.h"
+#include "../lib/noise.cpp"
 
 World::World(Vec3 dimensions)
 : dimensions(dimensions), creatureManager(std::make_unique<CreatureManager>(this)), map(new Tile[dimensions.GetFlattenedSize()])
@@ -15,12 +15,10 @@ World::~World()
     delete[] map;
 }
 
-int World::Flatten3DCoords(const Vec3 &pos) const { return pos.y() + dimensions.height() * (pos.x() + dimensions.width() * pos.z()); }
-int World::Flatten2DCoords(const Vec2 &pos) const { return pos.y * dimensions.width() + pos.x; }
-
 int World::GetHeight() const { return dimensions.height(); }
 int World::GetWidth() const { return dimensions.width(); }
 int World::GetDepth() const { return dimensions.depth(); }
+const Vec3& World::GetDimensions() const { return dimensions; }
 
 bool World::IsThereCreatureAt(const Vec3 &pos) const
 {
@@ -40,7 +38,8 @@ Tile* World::_getTile(const Vec3 &pos) const
     if (!_isInBounds(pos)) {
         return nullptr;
     }
-    return &map[Flatten3DCoords(pos)];
+    int flatIndex = GeometryUtils::Flatten3DCoords(pos, dimensions);
+    return &map[flatIndex];
 }
 void World::_setTile(const Vec3 &pos, TileType *type)
 {
@@ -132,6 +131,8 @@ void World::Generate()
 
 void World::GenerateTestBiome()
 {
+    int flatIndex = 0;
+
     const int SOIL_LAYER_DEPTH = 20;
     const int MAX_SPAWN_CHANCE = 10000;
 
@@ -144,7 +145,8 @@ void World::GenerateTestBiome()
     std::vector<float> noiseData(dimensions.width() * dimensions.height());
     for (int y = 0; y < dimensions.height(); y++) {
         for (int x = 0; x < dimensions.width(); x++) {
-            noiseData[Flatten2DCoords(Vec2(x, y))] = noise.GetNoise(static_cast<float>(x), static_cast<float>(y));
+            flatIndex = GeometryUtils::Flatten2DCoords(Vec2(x, y), dimensions);
+            noiseData[flatIndex] = noise.GetNoise(static_cast<float>(x), static_cast<float>(y));
         }
     }
 
@@ -153,9 +155,10 @@ void World::GenerateTestBiome()
     TileType *tileType = nullptr;
     for (int y = 0; y < dimensions.height(); y++) {
         for (int x = 0; x < dimensions.width(); x++) {
+            flatIndex = GeometryUtils::Flatten2DCoords(Vec2(x, y), dimensions);
             unsigned short inverseDepth = static_cast<unsigned short>(
                 ArithmeticsUtils::Scale(
-                    noiseData[Flatten2DCoords(Vec2(x, y))],
+                    noiseData[flatIndex],
                     -1.0f, 1.0f, 0.0f, static_cast<float>(dimensions.depth())
                 )
             );
@@ -171,7 +174,8 @@ void World::GenerateTestBiome()
                     } else {
                         tileType = tileRegistry.GetNaturalTileType("empty");
                         if (z == SOIL_LAYER_DEPTH) {
-                            soilLevelData[y * dimensions.width() + x] = true;
+                            flatIndex = GeometryUtils::Flatten2DCoords(Vec2(x, y), dimensions);
+                            soilLevelData[flatIndex] = true;
                         }
                     }
                 }
@@ -186,7 +190,8 @@ void World::GenerateTestBiome()
 
     for (int y = 0; y < dimensions.height(); y++) {
         for (int x = 0; x < dimensions.width(); x++) {
-            if (soilLevelData[y * dimensions.width() + x]) {
+            flatIndex = GeometryUtils::Flatten2DCoords(Vec2(x, y), dimensions);
+            if (soilLevelData[flatIndex]) {
                 int spawnRand = rand() % MAX_SPAWN_CHANCE;
                 if (spawnRand < crabSpawnChance) {
                     creatureManager->InstanceCreature("CRAB", Vec3(x, y, SOIL_LAYER_DEPTH));
