@@ -1,7 +1,7 @@
 #pragma once
 
 #include <string>
-#include <map>
+#include <unordered_map>
 
 #include "functions.h"
 #include "../structures/color.h"
@@ -9,7 +9,7 @@
 
 class TileRegistry {
 private:
-    std::map<std::string, TileType*> naturalTileTypes;
+    std::unordered_map<std::string, TileType*> naturalTileTypes;
 
 public:
     TileRegistry();
