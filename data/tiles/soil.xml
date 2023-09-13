@@ -1,0 +1,8 @@
+<TILE id="SOIL">
+    <DESCRIPTION>Strike the Earth!</DESCRIPTION>
+    <NAME singular="soil" plural="soils" general="soil" />
+    <MAX_HEALTH>300</MAX_HEALTH>
+    <SPRITE x="9" y="32" />
+    <COLOR r="40" g="20" b="0" />
+    <SOLID />
+</TILE>

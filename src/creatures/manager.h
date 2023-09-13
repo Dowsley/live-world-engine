@@ -22,7 +22,7 @@ public:
 
     const CreatureType* GetTypeById(const std::string &id) const;
     Creature* GetCreatureAt(const Vec3 &pos) const;
-    bool InstanceCreature(const std::string &name, const Vec3 &pos);
+    Creature* InstanceCreature(const std::string &typeID, const Vec3 &pos);
     void RemoveCreatureAt(const Vec3 &pos);
     void UpdateCreatures();
     void TraverseCreatures(std::function<void(Creature*)> callback);

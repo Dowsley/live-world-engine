@@ -3,24 +3,23 @@
 #include <string>
 #include <unordered_map>
 
-#include "functions.h"
+#include "tile.h"
+#include "loader.h"
+
 #include "../structures/color.h"
 #include "../structures/vec2.h"
 
 class TileRegistry {
-private:
-    std::unordered_map<std::string, TileType*> naturalTileTypes;
-
 public:
-    TileRegistry();
+    explicit TileRegistry(const std::string &path);
+    ~TileRegistry();
 
-    const Vec2& GetSprite(Tile *tile) const;
-    const Color& GetForeColor(Tile *tile) const;
-    const Color& GetBackColor(Tile *tile) const;
+    TileType* GetTypeById(const std::string &id) const;
+    void ReloadTiles(); // Use this to reload tiles if the files are updated.
 
-    void SetupTile(Tile *tile, TileType *type);
+private:
+    void _loadTiles();
 
-    TileType* AddNaturalTileType(std::string name, unsigned short maxHealth);
-
-    TileType* GetNaturalTileType(std::string name) const;
+    std::unordered_map<std::string, TileType*> tileTypes;
+    TileLoader loader;
 };

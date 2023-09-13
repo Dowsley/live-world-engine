@@ -1,0 +1,10 @@
+<TILE id="ROCK">
+    <DESCRIPTION>...and stone!</DESCRIPTION>
+    <NAME singular="rock" plural="rock" general="rock" />
+    <MAX_HEALTH>1000</MAX_HEALTH>
+    <SPRITE x="9" y="32" />
+    <COLOR r="60" g="5" b="8" />
+    <COLOR r="69" g="1" b="6" />
+    <COLOR r="74" g="6" b="11" />
+    <SOLID />
+</TILE>

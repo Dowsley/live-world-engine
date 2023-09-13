@@ -7,14 +7,14 @@
 //TODO: Make component-based creatures
 class CreatureType {
 public:
-    const std::string& GetId() const;
+    const std::string& GetID() const;
     const std::string& GetDescription() const;
     const std::string& GetName() const;
     const Vec2& GetSpritePos() const;
     const Color& GetSpriteColor() const;
     int GetSpawnChance() const;
 
-    CreatureType* SetId(const std::string &id);
+    CreatureType* SetID(const std::string &id);
     CreatureType* SetDescription(const std::string &description);
     CreatureType* SetName(const std::string &name);
     CreatureType* SetSpritePos(const Vec2 &pos);

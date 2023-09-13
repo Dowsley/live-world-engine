@@ -23,6 +23,8 @@ class Vec3 final
         void SetY(int y);
         void SetZ(int z);
 
+        std::string ToString() const;
+
         Vec3 operator-() const;
         int operator[](int i) const;
         int& operator[](int i);

@@ -2,16 +2,13 @@
 
 #include <string>
 
-#include "registry.h"
+#include "../core/base_loader.h"
 #include "creature.h"
-#include "../lib/tinyxml2.h"
 
-class CreatureLoader {
+class CreatureLoader : public BaseLoader<CreatureType> {
 public:
-    explicit CreatureLoader(const std::string &path);
-    std::vector<CreatureType*> LoadAllCreatures();
+    explicit CreatureLoader(const std::string &path) : BaseLoader(path) {}
 
-private:
-    CreatureType* _loadCreature(const std::string& creatureFile);
-    std::string directoryPath;
+protected:
+    CreatureType* _loadSpecific(const std::string &creatureFile) override;
 };

@@ -1,7 +1,7 @@
 #include "creature.h"
 
 /* ---- CREATURE TYPE ---- */
-const std::string& CreatureType::GetId() const { return id; }
+const std::string& CreatureType::GetID() const { return id; }
 
 const std::string& CreatureType::GetDescription() const { return description; }
 const std::string& CreatureType::GetName() const { return name; }
@@ -9,7 +9,7 @@ const Vec2& CreatureType::GetSpritePos() const { return spritePos; }
 const Color& CreatureType::GetSpriteColor() const { return spriteColor; }
 int CreatureType::GetSpawnChance() const { return spawnChance; }
 
-CreatureType* CreatureType::SetId(const std::string &id) { 
+CreatureType* CreatureType::SetID(const std::string &id) { 
     this->id = id;
     return this;
 }

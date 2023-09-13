@@ -12,7 +12,7 @@ void LiveWorldEngine::_drawWorld()
 
     bool isCurrTileEmpty;
     bool isLowerTileEmpty;
-    bool isLowerTileSurface;
+    bool isLowerTileSolid;
     bool isCurrTileOccupiedByCreature;
     for (int y = 0; y < (ScreenHeight() / Settings::TILE_SIZE.y); y++) {
         for (int x = 0; x < (ScreenWidth() / Settings::TILE_SIZE.x); x++) {
@@ -21,11 +21,11 @@ void LiveWorldEngine::_drawWorld()
 
             Vec3 currTilePos = Vec3(trueX, trueY, currDepth);
             Vec3 lowerTilePos = Vec3(trueX, trueY, currDepth + 1);
-            isCurrTileEmpty = world.GetTileTypeName(currTilePos) == "empty";
+            isCurrTileEmpty = world.IsPositionEmpty(currTilePos);
             isCurrTileOccupiedByCreature = world.IsThereCreatureAt(currTilePos);
-            isLowerTileEmpty = world.GetTileTypeName(lowerTilePos) == "empty";
-            isLowerTileSurface = world.GetTileType(lowerTilePos)->isSurface;
-            if (isCurrTileEmpty && !isCurrTileOccupiedByCreature && !isLowerTileEmpty && isLowerTileSurface) {
+            isLowerTileEmpty = world.IsPositionEmpty(lowerTilePos);
+            isLowerTileSolid = world.GetTypeForTileAt(lowerTilePos)->GetIsSolid();
+            if (isCurrTileEmpty && !isCurrTileOccupiedByCreature && !isLowerTileEmpty && isLowerTileSolid) {
                 trueZ = currDepth + 1;
             } else {
                 trueZ = currDepth;
@@ -48,8 +48,7 @@ void LiveWorldEngine::_drawTile(const Vec3 &pos)
     int currY = y + (int)camera.posY;
 
     Vec3 offsetPos = Vec3(currX, currY, z);
-    const Color &foreColor = world.GetTileForeColor(offsetPos);
-    // Color backColor = world.GetTileBackColor(offsetPos);
+    const Color &foreColor = world.GetTileColor(offsetPos);
     Vec2 spritePos = world.GetTileSprite(offsetPos);
 
     spritePos = spritePos * Settings::TILE_SIZE + (Settings::TILE_OFFSET * spritePos) + Vec2(1,1);

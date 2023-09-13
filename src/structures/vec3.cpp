@@ -1,6 +1,7 @@
 #include "vec3.h"
 
 #include <cmath>
+#include <string>
 
 Vec3::Vec3()
 {
@@ -28,6 +29,11 @@ int Vec3::GetFlattenedSize() const { return e[0] * e[1] * e[2]; }
 void Vec3::SetX(int x) { e[0] = x; }
 void Vec3::SetY(int y) { e[1] = y; }
 void Vec3::SetZ(int z) { e[2] = z; }
+
+std::string Vec3::ToString() const
+{
+    return std::to_string(e[0]) + " " + std::to_string(e[1]) + " " + std::to_string(e[2]);
+}
 
 Vec3 Vec3::operator-() const { return Vec3(-e[0], -e[1], -e[2]); }
 int Vec3::operator[](int i) const { return e[i]; }

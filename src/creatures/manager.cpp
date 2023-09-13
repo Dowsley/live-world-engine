@@ -26,22 +26,22 @@ Creature* CreatureManager::GetCreatureAt(const Vec3 &pos) const
     return nullptr;
 }
 
-bool CreatureManager::InstanceCreature(const std::string &id, const Vec3 &pos)
+Creature* CreatureManager::InstanceCreature(const std::string &typeID, const Vec3 &pos)
 {
     int index = GeometryUtils::Flatten3DCoords(pos, worldRef->GetDimensions());
-    // If creature already exists at that position, return false
+    // If creature already exists at that position
     if (creatureMap.find(index) != creatureMap.end()) {
-        return false;
+        return nullptr;
     }
 
-    CreatureType *type = registry.GetTypeById(id);
+    CreatureType *type = registry.GetTypeById(typeID);
     if (type == nullptr) {
-        throw std::runtime_error("Type not implemented: " + id);
+        throw std::runtime_error("Type not implemented: " + typeID);
     }
 
     Creature* newCreature = new Creature(type, pos);
     creatureMap[index] = newCreature;
-    return true;
+    return newCreature;
 }
 
 void CreatureManager::RemoveCreatureAt(const Vec3 &pos)
@@ -62,7 +62,7 @@ void CreatureManager::TraverseCreatures(std::function<void(Creature*)> callback)
 
 void CreatureManager::UpdateCreatures()
 {
-    for(auto& pair : creatureMap) {
+    for(auto & pair : creatureMap) {
         pair.second->Update();
     }
 }
@@ -74,6 +74,6 @@ int CreatureManager::GetTotalCreatureCount() const
 
 void CreatureManager::ClearCreatures()
 {
-    // TODO Make sure there will be non dangling references of creatures outside.
+    // TODO Make sure there will be no dangling references of creatures outside.
     creatureMap.clear();
 }

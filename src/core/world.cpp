@@ -7,7 +7,9 @@
 #include "../lib/noise.cpp"
 
 World::World(Vec3 dimensions)
-: dimensions(dimensions), creatureManager(std::make_unique<CreatureManager>(this)), map(new Tile[dimensions.GetFlattenedSize()])
+: dimensions(dimensions), creatureManager(std::make_unique<CreatureManager>(this)),
+map(new Tile[dimensions.GetFlattenedSize()]), tileRegistry(TileRegistry(Settings::TILE_REGISTRY_PATH)),
+tileInstanceManager(std::make_unique<TileInstanceManager>(this))
 {}
 
 World::~World()
@@ -19,6 +21,12 @@ int World::GetHeight() const { return dimensions.height(); }
 int World::GetWidth() const { return dimensions.width(); }
 int World::GetDepth() const { return dimensions.depth(); }
 const Vec3& World::GetDimensions() const { return dimensions; }
+bool World::IsPositionEmpty(const Vec3 &pos) const
+{
+    bool isTypeEmpty = GetTypeIDForTileAt(pos) == "EMPTY";
+    bool creatureThere = IsThereCreatureAt(pos);
+    return isTypeEmpty && !creatureThere;
+}
 
 bool World::IsThereCreatureAt(const Vec3 &pos) const
 {
@@ -45,19 +53,22 @@ void World::_setTile(const Vec3 &pos, TileType *type)
 {
     Tile *tile = _getTile(pos);
     if (!type) {
-        printf("OK ENOUGH");
-        throw std::runtime_error("Tile type of name " + tile->type->GetName() + " is null");
+        // throw std::runtime_error("Tile type is null");
     }
-    tileRegistry.SetupTile(tile, type);
+    
+    tile->type = type;
+    tile->spritePosVariantIndex = tile->type->GetRandomSpritePosIndex();
+    tile->spriteColorVariantIndex = tile->type->GetRandomSpriteColorIndex();
 }
 
+/* TODO: Implement this + review if this system is correct, because there are tile references that may need to be updated 
+ * Thinking about it now... wouldnt it be better if I just swap the entire structs? */
 void World::_swapTiles(Tile *tile1, Tile *tile2)
 {
-    std::swap(tile1->type, tile2->type);
-    std::swap(tile1->metadata, tile2->metadata);
-    std::swap(tile1->defaultSpriteIndex, tile2->defaultSpriteIndex);
-    std::swap(tile1->defaultForeColorIndex, tile2->defaultForeColorIndex);
-    std::swap(tile1->defaultBackColorIndex, tile2->defaultBackColorIndex);
+    // std::swap(tile1->type, tile2->type);
+    // std::swap(tile1->defaultSpriteIndex, tile2->defaultSpriteIndex);
+    // std::swap(tile1->defaultForeColorIndex, tile2->defaultForeColorIndex);
+    // std::swap(tile1->defaultBackColorIndex, tile2->defaultBackColorIndex);
 }
 
 bool World::_isInBounds(const Vec3 &pos) const
@@ -75,34 +86,24 @@ const Vec2& World::GetTileSprite(const Vec3 &pos) const
     Creature *c;
     std::tie(t, c) = _getTileAndCreature(pos);
     
-    if (c != nullptr && t->type->GetName() == "empty") {
+    if (c != nullptr && t->type->GetID() == "EMPTY") {
         return c->GetType()->GetSpritePos();
     }
-    return tileRegistry.GetSprite(t);
+    return tileInstanceManager->GetSprite(t);
 }
-const Color& World::GetTileForeColor(const Vec3 &pos) const
+const Color& World::GetTileColor(const Vec3 &pos) const
 {
     Tile *t;
     Creature *c;
     std::tie(t, c) = _getTileAndCreature(pos);
 
-    if (c != nullptr && t->type->GetName() == "empty") {
+    if (c != nullptr && t->type->GetID() == "EMPTY") {
         return c->GetType()->GetSpriteColor();
     }
-    return tileRegistry.GetForeColor(t);
+    return tileInstanceManager->GetColor(t);
 }
-const Color& World::GetTileBackColor(const Vec3 &pos) const
-{
-    Tile *t;
-    Creature *c;
-    std::tie(t, c) = _getTileAndCreature(pos);
 
-    if (c != nullptr && t->type->GetName() == "empty") {
-        return Settings::BACK_PLACEHOLDER;
-    }
-    return tileRegistry.GetBackColor(t);
-}
-TileType* World::GetTileType(const Vec3 &pos) const
+TileType* World::GetTypeForTileAt(const Vec3 &pos) const
 {
     Tile *t = _getTile(pos);
     if (!t) {
@@ -110,13 +111,10 @@ TileType* World::GetTileType(const Vec3 &pos) const
     }
     return t->type;
 }
-std::string World::GetTileTypeName(const Vec3 &pos) const
+const std::string& World::GetTypeIDForTileAt(const Vec3 &pos) const
 {
     Tile *t = _getTile(pos);
-    if (!t) {
-        return "";
-    }
-    return t->type->GetName();
+    return t->type->GetID();
 }
 
 void World::Update()
@@ -133,15 +131,11 @@ void World::GenerateTestBiome()
 {
     int flatIndex = 0;
 
-    const int SOIL_LAYER_DEPTH = 20;
-    const int MAX_SPAWN_CHANCE = 10000;
-
+    /* 1. Generate height map with noise */
     FastNoiseLite noise;
     noise.SetSeed(rand());
     noise.SetNoiseType(FastNoiseLite::NoiseType_OpenSimplex2);
     noise.SetFractalType(FastNoiseLite::FractalType_FBm);
-
-    // Using std::vector is safer than raw arrays and manual memory management
     std::vector<float> noiseData(dimensions.width() * dimensions.height());
     for (int y = 0; y < dimensions.height(); y++) {
         for (int x = 0; x < dimensions.width(); x++) {
@@ -150,9 +144,14 @@ void World::GenerateTestBiome()
         }
     }
 
-    std::vector<bool> soilLevelData(dimensions.width() * dimensions.height(), false); // Initialization is in-built
 
+    /* 2. Fill in with blocks */
+    tileInstanceManager->ClearInstances();
+
+    const int SOIL_LAYER_DEPTH = 20;
+    std::vector<bool> soilLevelData(dimensions.width() * dimensions.height(), false);
     TileType *tileType = nullptr;
+
     for (int y = 0; y < dimensions.height(); y++) {
         for (int x = 0; x < dimensions.width(); x++) {
             flatIndex = GeometryUtils::Flatten2DCoords(Vec2(x, y), dimensions);
@@ -165,14 +164,14 @@ void World::GenerateTestBiome()
 
             for (int z = 0; z < dimensions.depth(); z++) {
                 if (z >= inverseDepth) {
-                    tileType = tileRegistry.GetNaturalTileType("rock");
+                    tileType = tileRegistry.GetTypeById("ROCK");
                 } else {
                     if (z > SOIL_LAYER_DEPTH) {
                         tileType = (z == SOIL_LAYER_DEPTH + 1) 
-                            ? tileRegistry.GetNaturalTileType("grass")
-                            : tileRegistry.GetNaturalTileType("soil");
+                            ? tileRegistry.GetTypeById("GRASS")
+                            : tileRegistry.GetTypeById("SOIL");
                     } else {
-                        tileType = tileRegistry.GetNaturalTileType("empty");
+                        tileType = tileRegistry.GetTypeById("EMPTY");
                         if (z == SOIL_LAYER_DEPTH) {
                             flatIndex = GeometryUtils::Flatten2DCoords(Vec2(x, y), dimensions);
                             soilLevelData[flatIndex] = true;
@@ -184,6 +183,9 @@ void World::GenerateTestBiome()
         }
     }
     
+    /* 3. Spawn creatures */
+    const int MAX_SPAWN_CHANCE = 10000;
+
     creatureManager->ClearCreatures();
     int crabSpawnChance = creatureManager->GetTypeById("CRAB")->GetSpawnChance();
     int rattlesnakeSpawnChance = creatureManager->GetTypeById("RATTLESNAKE")->GetSpawnChance();

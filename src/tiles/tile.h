@@ -8,55 +8,58 @@
 #include "../structures/vec2.h"
 
 class TileType;
-class Tile;
-class TileMetadata;
+struct Tile;
+class TileInstance;
 
 class TileType {
 private:
+private:
+    std::string id;
     std::string name;
-    unsigned short maxHealth;
-
-    std::vector<Vec2> defaultSprites;
-    std::vector<Color> defaultForeColors;
-    std::vector<Color> defaultBackColors;
+    std::string description;
+    unsigned int maxHealth;
+    bool isSolid = false;
+    
+    std::vector<Vec2> spritePosVariants;
+    std::vector<Color> spriteColorVariants;
 
 public:
     static TileType *UNINITIALIZED;
-    bool isSurface = false;
-    TileType(std::string name, unsigned short maxHealth);
 
-    TileType* AddDefaultSprite(const Vec2 &newDefaultSprite);
-    TileType* AddDefaultForeColor(int r, int g, int b);
-    TileType* AddDefaultBackColor(int r, int g, int b);
-    TileType* SetSurface();
+    const std::string& GetID() const;
+    const std::string& GetDescription() const;
+    const std::string& GetName() const;
+    const std::vector<Vec2>& GetSpritePosVariants() const;
+    const std::vector<Color>& GetSpriteColorVariants() const;
+    unsigned int GetMaxHealth() const;
+    bool GetIsSolid() const;
 
-    std::string GetName() const;
-    unsigned short GetMaxHealth() const;
+    const Vec2& GetSpritePos(int index) const;
+    const Color& GetSpriteColor(int index) const;
+    int GetRandomSpritePosIndex() const;
+    int GetRandomSpriteColorIndex() const;
 
-    const Vec2& GetDefaultSprite(int index) const;
-    const Color& GetDefaultForeColor(int index) const;
-    const Color& GetDefaultBackColor(int index) const;
-
-    int GetRandomDefaultSpriteIndex() const;
-    int GetRandomDefaultForeColorIndex() const;
-    int GetRandomDefaultBackColorIndex() const;
+    TileType* SetID(const std::string &id);
+    TileType* SetDescription(const std::string &description);
+    TileType* SetName(const std::string &name);
+    TileType* AddSpritePosVariant(const Vec2 &pos);
+    TileType* AddSpriteColorVariant(const Color &color);
+    TileType* SetMaxHealth(unsigned int maxHealth);
+    TileType* SetIsSolid();
 };
 
-class Tile {
-public:
+struct Tile {
     TileType *type = nullptr;
-    TileMetadata *metadata = nullptr;
-
-    unsigned char defaultSpriteIndex = 0;
-    unsigned char defaultForeColorIndex = 0;
-    unsigned char defaultBackColorIndex = 0;
+    unsigned char spritePosVariantIndex = 0;
+    unsigned char spriteColorVariantIndex = 0;
 };
 
 
-class TileMetadata {
+class TileInstance {
 public:
-    Tile *parent;
+    const Tile *parent;
     unsigned short health;
     
-    TileMetadata(Tile *parent);
+    TileInstance(const Tile *parent);
+    bool Update();
 };

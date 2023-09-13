@@ -2,8 +2,10 @@
 
 #if _WIN32
     #define CREATURE_REGISTRY_PATH_V "data\\creatures"
+    #define TILE_REGISTRY_PATH_V "data\\tiles"
 #else
     #define CREATURE_REGISTRY_PATH_V "data/creatures"
+        #define TILE_REGISTRY_PATH_V "data/tiles"
 #endif
 
 #include "../engine/olcPixelGameEngine.h"
@@ -17,4 +19,5 @@ namespace Settings {
     const Color BACK_PLACEHOLDER = olc::BLACK;
     const int TICK_DURATION = 700;
     const std::string CREATURE_REGISTRY_PATH = CREATURE_REGISTRY_PATH_V;
+    const std::string TILE_REGISTRY_PATH = TILE_REGISTRY_PATH_V;
 }

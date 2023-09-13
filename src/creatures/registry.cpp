@@ -1,5 +1,3 @@
-#include <filesystem>
-
 #include "registry.h"
 #include "creature.h"
 
@@ -32,7 +30,7 @@ void CreatureRegistry::ReloadCreatures()
 
 void CreatureRegistry::_loadCreatures()
 {
-    for (const auto & type : loader.LoadAllCreatures()) {
-        creatureTypes[type->GetId()] = type;
+    for (const auto & type : loader.LoadAll()) {
+        creatureTypes[type->GetID()] = type;
     }
 }

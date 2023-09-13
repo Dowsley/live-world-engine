@@ -1,0 +1,7 @@
+<TILE id="EMPTY">
+    <DESCRIPTION>Probably just air.</DESCRIPTION>
+    <NAME singular="empty" plural="empties" general="empty" />
+    <MAX_HEALTH>0</MAX_HEALTH>
+    <SPRITE x="12" y="0" />
+    <COLOR r="0" g="0" b="128"/>
+</TILE>

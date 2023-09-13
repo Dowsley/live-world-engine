@@ -2,9 +2,7 @@
 
 #include <unordered_map>
 #include <string>
-#include <memory>
 
-#include "../lib/tinyxml2.h"
 #include "creature.h"
 #include "loader.h"
 
@@ -13,7 +11,7 @@ public:
     explicit CreatureRegistry(const std::string &path);
     ~CreatureRegistry();
 
-    CreatureType* GetTypeById(const std::string &name) const;
+    CreatureType* GetTypeById(const std::string &id) const;
     void ReloadCreatures(); // Use this to reload creatures if the files are updated.
 
 private:
