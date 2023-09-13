@@ -48,6 +48,7 @@ public:
     TileType* GetTypeForTileAt(const Vec3 &pos) const;
     const std::string& GetTypeIDForTileAt(const Vec3 &pos) const;
 
+    void LoadData();
     void Update();
     void Generate();
     void GenerateTestBiome();

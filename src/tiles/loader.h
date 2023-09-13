@@ -2,7 +2,7 @@
 
 #include <string>
 
-#include "../core/base_loader.h"
+#include "../core/base/loader.h"
 #include "tile.h"
 
 class TileLoader : public BaseLoader<TileType> {

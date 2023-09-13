@@ -3,7 +3,11 @@
 #include "manager.h"
 #include "creature.h"
 
-CreatureManager::CreatureManager(World *worldRef) : worldRef(worldRef) {}
+CreatureManager::CreatureManager(World *worldRef) : worldRef(worldRef)
+{
+    registry.Initialize();
+}
+
 CreatureManager::~CreatureManager()
 {
     for(auto & pair : creatureMap) {

@@ -2,7 +2,7 @@
 
 #include <string>
 
-#include "../core/base_loader.h"
+#include "../core/base/loader.h"
 #include "creature.h"
 
 class CreatureLoader : public BaseLoader<CreatureType> {

@@ -1,25 +1,13 @@
 #pragma once
 
-#include <string>
-#include <unordered_map>
-
+#include "../core/base/registry.h"
 #include "tile.h"
 #include "loader.h"
 
-#include "../structures/color.h"
-#include "../structures/vec2.h"
-
-class TileRegistry {
+class TileRegistry : public BaseRegistry<TileType, TileLoader> {
 public:
-    explicit TileRegistry(const std::string &path);
-    ~TileRegistry();
+    using BaseRegistry::BaseRegistry; // Inherit constructors
 
-    TileType* GetTypeById(const std::string &id) const;
-    void ReloadTiles(); // Use this to reload tiles if the files are updated.
-
-private:
-    void _loadTiles();
-
-    std::unordered_map<std::string, TileType*> tileTypes;
-    TileLoader loader;
+protected:
+    std::vector<TileType*> _loadSpecific() override;
 };

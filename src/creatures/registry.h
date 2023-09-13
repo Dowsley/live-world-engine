@@ -1,22 +1,13 @@
 #pragma once
 
-#include <unordered_map>
-#include <string>
-
+#include "../core/base/registry.h"
 #include "creature.h"
 #include "loader.h"
 
-class CreatureRegistry {
+class CreatureRegistry : public BaseRegistry<CreatureType, CreatureLoader> {
 public:
-    explicit CreatureRegistry(const std::string &path);
-    ~CreatureRegistry();
+    using BaseRegistry::BaseRegistry; // Inherit constructors
 
-    CreatureType* GetTypeById(const std::string &id) const;
-    void ReloadCreatures(); // Use this to reload creatures if the files are updated.
-
-private:
-    void _loadCreatures();
-
-    CreatureLoader loader;
-    std::unordered_map<std::string, CreatureType*> creatureTypes;
+protected:
+    std::vector<CreatureType*> _loadSpecific() override;
 };

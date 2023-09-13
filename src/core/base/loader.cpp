@@ -1,6 +1,6 @@
 #include <filesystem>
 
-#include "base_loader.h"
+#include "loader.h"
 
 template<typename T>
 std::vector<T*> BaseLoader<T>::LoadAll() {

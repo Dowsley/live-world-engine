@@ -10,7 +10,9 @@ World::World(Vec3 dimensions)
 : dimensions(dimensions), creatureManager(std::make_unique<CreatureManager>(this)),
 map(new Tile[dimensions.GetFlattenedSize()]), tileRegistry(TileRegistry(Settings::TILE_REGISTRY_PATH)),
 tileInstanceManager(std::make_unique<TileInstanceManager>(this))
-{}
+{
+    LoadData();
+}
 
 World::~World()
 {
@@ -115,6 +117,11 @@ const std::string& World::GetTypeIDForTileAt(const Vec3 &pos) const
 {
     Tile *t = _getTile(pos);
     return t->type->GetID();
+}
+
+void World::LoadData()
+{
+    tileRegistry.Initialize();
 }
 
 void World::Update()
