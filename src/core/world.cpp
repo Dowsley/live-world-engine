@@ -55,7 +55,7 @@ void World::_setTile(const Vec3 &pos, TileType *type)
 {
     Tile *tile = _getTile(pos);
     if (!type) {
-        // throw std::runtime_error("Tile type is null");
+        throw std::runtime_error("Tile type at " + pos.ToString() + " is null");
     }
     
     tile->type = type;
