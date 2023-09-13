@@ -5,3 +5,7 @@ run:
 
 compile:
 	g++ -Wall -Wno-unknown-pragmas -o out src/main.cpp -I/usr/X11/include -L/usr/X11/lib -lX11 -lGL -lpng -lpthread -std=c++17
+
+debug:
+	g++ -Wall -Wno-unknown-pragmas -o out src/main.cpp -g -I/usr/X11/include -L/usr/X11/lib -lX11 -lGL -lpng -lpthread -std=c++17
+	lldb ./out
