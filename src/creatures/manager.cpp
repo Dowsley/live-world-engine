@@ -1,40 +1,23 @@
-#include "../core/world.h"
-#include "../utils/geometry.h"
 #include "manager.h"
-#include "creature.h"
+#include "../core/world.h"
 
-CreatureManager::CreatureManager(World *worldRef) : worldRef(worldRef)
-{
+CreatureManager::CreatureManager(World *world) : ManagerBase<Creature>(world) {
     registry.Initialize();
 }
 
-CreatureManager::~CreatureManager()
-{
-    for(auto & pair : creatureMap) {
-        delete pair.second;
-    }
+CreatureManager::~CreatureManager() {
+    ClearItems();
 }
 
-const CreatureType* CreatureManager::GetTypeById(const std::string &id) const
-{
+const CreatureType* CreatureManager::GetTypeById(const std::string &id) const {
     return registry.GetTypeById(id);
 }
 
-
-Creature* CreatureManager::GetCreatureAt(const Vec3 &pos) const
-{
+Creature* CreatureManager::InstanceCreature(const std::string &typeID, const Vec3 &pos) {
     int index = GeometryUtils::Flatten3DCoords(pos, worldRef->GetDimensions());
-    if(creatureMap.find(index) != creatureMap.end()) {
-        return creatureMap.at(index);
-    }
-    return nullptr;
-}
 
-Creature* CreatureManager::InstanceCreature(const std::string &typeID, const Vec3 &pos)
-{
-    int index = GeometryUtils::Flatten3DCoords(pos, worldRef->GetDimensions());
     // If creature already exists at that position
-    if (creatureMap.find(index) != creatureMap.end()) {
+    if (items.find(index) != items.end()) {
         return nullptr;
     }
 
@@ -44,40 +27,28 @@ Creature* CreatureManager::InstanceCreature(const std::string &typeID, const Vec
     }
 
     Creature* newCreature = new Creature(type, pos);
-    creatureMap[index] = newCreature;
+    items[index] = newCreature;
     return newCreature;
 }
 
-void CreatureManager::RemoveCreatureAt(const Vec3 &pos)
-{
+void CreatureManager::RemoveCreatureAt(const Vec3 &pos) {
     int index = GeometryUtils::Flatten3DCoords(pos, worldRef->GetDimensions());
-    if(creatureMap.find(index) != creatureMap.end()) {
-        delete creatureMap[index]; // Delete the creature from the heap
-        creatureMap.erase(index);  // Remove the entry from the map
+    if(items.find(index) != items.end()) {
+        delete items[index]; // Delete the creature from the heap
+        items.erase(index);  // Remove the entry from the map
     }
 }
 
-void CreatureManager::TraverseCreatures(std::function<void(Creature*)> callback)
-{
-    for(auto & pair : creatureMap) {
-        callback(pair.second);
-    }
-}
-
-void CreatureManager::UpdateCreatures()
-{
-    for(auto & pair : creatureMap) {
+void CreatureManager::UpdateCreatures() {
+    for(auto & pair : items) {
         pair.second->Update();
     }
 }
 
-int CreatureManager::GetTotalCreatureCount() const
-{
-    return creatureMap.size();
+void CreatureManager::TraverseCreatures(std::function<void(Creature*)> callback) {
+    TraverseItems(callback);
 }
 
-void CreatureManager::ClearCreatures()
-{
-    // TODO Make sure there will be no dangling references of creatures outside.
-    creatureMap.clear();
+void CreatureManager::ClearCreatures() {
+    ClearItems();
 }

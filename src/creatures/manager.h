@@ -1,31 +1,22 @@
 #pragma once
 
-#include <unordered_map>
-#include <functional>
+#include "../core/base/manager.h"
+#include "../core/settings.h"
 
 #include "creature.h"
 #include "registry.h"
-#include "../structures/vec3.h"
-#include "../core/settings.h"
 
-class World;
-
-class CreatureManager {
+class CreatureManager : public ManagerBase<Creature> {
 private:
-    World *worldRef = nullptr;
-    std::unordered_map<int, Creature*> creatureMap;
     CreatureRegistry registry = CreatureRegistry(Settings::CREATURE_REGISTRY_PATH);
-
 public:
     CreatureManager(World *world);
     ~CreatureManager();
 
     const CreatureType* GetTypeById(const std::string &id) const;
-    Creature* GetCreatureAt(const Vec3 &pos) const;
     Creature* InstanceCreature(const std::string &typeID, const Vec3 &pos);
     void RemoveCreatureAt(const Vec3 &pos);
     void UpdateCreatures();
     void TraverseCreatures(std::function<void(Creature*)> callback);
-    int GetTotalCreatureCount() const;
     void ClearCreatures();
 };

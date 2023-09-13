@@ -32,13 +32,13 @@ bool World::IsPositionEmpty(const Vec3 &pos) const
 
 bool World::IsThereCreatureAt(const Vec3 &pos) const
 {
-    return (creatureManager->GetCreatureAt(pos) != nullptr);
+    return (creatureManager->GetItemAt(pos) != nullptr);
 }
 
 std::tuple<Tile*, Creature*> World::_getTileAndCreature(const Vec3 &pos) const
 {
     Tile *t = _getTile(pos);
-    Creature *c = creatureManager->GetCreatureAt(pos);
+    Creature *c = creatureManager->GetItemAt(pos);
 
     return std::make_tuple(t, c);
 }
