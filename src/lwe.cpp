@@ -36,6 +36,7 @@ void LiveWorldEngine::_drawWorld()
     std::string str = "Layer: ";
     str.append(std::to_string(currDepth));
     DrawString(Vec2(0,0), str, olc::WHITE, 1);
+    DrawString(Vec2(0, 10), paused ? "Paused" : "Active", olc::WHITE, 1);
 }
 
 void LiveWorldEngine::_drawTile(const Vec3 &pos)
@@ -98,7 +99,7 @@ void LiveWorldEngine::_handleInputs()
     }
 
     // Press 'P' key to pause simulation
-    if (GetKey(olc::Key::P).bReleased) {
+    if (GetKey(olc::Key::SPACE).bReleased) {
         paused = !paused;
     }
 
