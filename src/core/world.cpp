@@ -114,13 +114,13 @@ TileType* World::GetTypeForTileAt(const Vec3 &pos) const
     }
     return t->type;
 }
-const std::string& World::GetTypeIDForTileAt(const Vec3 &pos) const
+std::string World::GetTypeIDForTileAt(const Vec3 &pos) const
 {
     Tile *t = _getTile(pos);
     return t->type->GetID();
 }
 
-const std::string& World::GetTypeIDForCreatureAt(const Vec3 &pos) const
+std::string World::GetTypeIDForCreatureAt(const Vec3 &pos) const
 {
     Creature *c = creatureManager->GetItemAt(pos);
     if (c == nullptr) {
