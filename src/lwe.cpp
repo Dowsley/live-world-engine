@@ -10,21 +10,22 @@ void LiveWorldEngine::_drawWorld()
 
     int trueX, trueY, trueZ;
 
+    bool isLastLayer;
     bool isCurrTileEmpty;
     bool isLowerTileEmpty;
     bool isLowerTileSolid;
-    bool isCurrTileOccupiedByCreature;
     for (int y = 0; y < (ScreenHeight() / Settings::TILE_SIZE.y); y++) {
         for (int x = 0; x < (ScreenWidth() / Settings::TILE_SIZE.x); x++) {
             trueX = x + (int) camera.posX;
             trueY = y + (int) camera.posY;
 
+            isLastLayer = currDepth == Settings::WORLD_DIMENSIONS.depth() - 1;
             Vec3 currTilePos = Vec3(trueX, trueY, currDepth);
             Vec3 lowerTilePos = Vec3(trueX, trueY, currDepth + 1);
             isCurrTileEmpty = world.IsPositionEmpty(currTilePos);
-            isLowerTileEmpty = world.IsPositionEmpty(lowerTilePos);
-            isLowerTileSolid = world.GetTypeForTileAt(lowerTilePos)->GetIsSolid();
-            if (isCurrTileEmpty && !isCurrTileOccupiedByCreature && !isLowerTileEmpty && isLowerTileSolid) {
+            isLowerTileEmpty = isLastLayer ? true : world.IsPositionEmpty(lowerTilePos);
+            isLowerTileSolid = isLastLayer ? false : world.GetTypeForTileAt(lowerTilePos)->GetIsSolid();
+            if (isCurrTileEmpty && !isLowerTileEmpty && isLowerTileSolid) {
                 trueZ = currDepth + 1;
             } else {
                 trueZ = currDepth;
@@ -85,7 +86,7 @@ void LiveWorldEngine::_handleInputs()
 
     // Press 'X' key to descend depth
     if (GetKey(olc::Key::X).bReleased) {
-        if (currDepth != Settings::WORLD_DIMENSIONS.z() - 1) {
+        if (currDepth != Settings::WORLD_DIMENSIONS.depth() - 1) {
             currDepth += 1;
         }
     }
