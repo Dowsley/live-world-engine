@@ -22,7 +22,6 @@ void LiveWorldEngine::_drawWorld()
             Vec3 currTilePos = Vec3(trueX, trueY, currDepth);
             Vec3 lowerTilePos = Vec3(trueX, trueY, currDepth + 1);
             isCurrTileEmpty = world.IsPositionEmpty(currTilePos);
-            isCurrTileOccupiedByCreature = world.IsThereCreatureAt(currTilePos);
             isLowerTileEmpty = world.IsPositionEmpty(lowerTilePos);
             isLowerTileSolid = world.GetTypeForTileAt(lowerTilePos)->GetIsSolid();
             if (isCurrTileEmpty && !isCurrTileOccupiedByCreature && !isLowerTileEmpty && isLowerTileSolid) {
