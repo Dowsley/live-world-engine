@@ -10,9 +10,11 @@ public:
     explicit BaseRegistry(const std::string &path);
     virtual ~BaseRegistry();
 
-    T* GetTypeById(const std::string &id) const;
     void Reload();
     void Initialize();
+
+    T* GetTypeById(const std::string &id) const;
+    std::vector<const T*> GetAllTypes() const; 
 
 protected:
     void _load();

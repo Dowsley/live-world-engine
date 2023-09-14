@@ -39,3 +39,14 @@ void BaseRegistry<T, L>::_load() {
         types[type->GetID()] = type;
     }
 }
+
+
+template <typename T, typename L>
+std::vector<const T*> BaseRegistry<T, L>::GetAllTypes() const
+{
+    std::vector<const T*> vec;
+    for (const auto& pair : types) {
+        vec.push_back(pair.second);
+    }
+    return vec;
+}

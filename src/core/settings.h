@@ -20,4 +20,5 @@ namespace Settings {
     const int TICK_DURATION = 700;
     const std::string CREATURE_REGISTRY_PATH = CREATURE_REGISTRY_PATH_V;
     const std::string TILE_REGISTRY_PATH = TILE_REGISTRY_PATH_V;
+    const float SPAWN_CHANCE = 0.005;
 }

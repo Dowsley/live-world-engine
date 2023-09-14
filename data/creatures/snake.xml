@@ -5,5 +5,5 @@
         <POSITION x="2" y="13" />
         <COLOR r="255" g="170" b="34" />
     </SPRITE>
-    <SPAWN_CHANCE>20</SPAWN_CHANCE>
+    <SPAWN_CHANCE>10</SPAWN_CHANCE>
 </CREATURE>

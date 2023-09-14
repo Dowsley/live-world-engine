@@ -19,4 +19,5 @@ public:
     void UpdateCreatures();
     void TraverseCreatures(std::function<void(Creature*)> callback);
     void ClearCreatures();
+    std::vector<const CreatureType*> GetAllTypes() const;
 };

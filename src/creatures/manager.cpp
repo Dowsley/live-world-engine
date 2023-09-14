@@ -28,6 +28,7 @@ Creature* CreatureManager::InstanceCreature(const std::string &typeID, const Vec
 
     Creature* newCreature = new Creature(type, pos);
     items[index] = newCreature;
+
     return newCreature;
 }
 
@@ -51,4 +52,9 @@ void CreatureManager::TraverseCreatures(std::function<void(Creature*)> callback)
 
 void CreatureManager::ClearCreatures() {
     ClearItems();
+}
+
+std::vector<const CreatureType*> CreatureManager::GetAllTypes() const
+{
+    return registry.GetAllTypes();
 }

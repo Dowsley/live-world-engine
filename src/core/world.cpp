@@ -1,5 +1,7 @@
 #include "world.h"
 
+#include <utility>
+
 #include "settings.h"
 #include "../creatures/creature.h"
 #include "../utils/arithmetics.h"
@@ -190,24 +192,48 @@ void World::GenerateTestBiome()
         }
     }
     
-    /* 3. Spawn creatures */
-    const int MAX_SPAWN_CHANCE = 10000;
-
+    /* 3. Spawn creatures from a cumulative-weighted chance pool */
     creatureManager->ClearCreatures();
-    int crabSpawnChance = creatureManager->GetTypeById("CRAB")->GetSpawnChance();
-    int rattlesnakeSpawnChance = creatureManager->GetTypeById("RATTLESNAKE")->GetSpawnChance();
+
+    std::vector<const CreatureType*> allCreatureTypes = creatureManager->GetAllTypes();
+    std::vector<std::pair<std::string, int>> spawnChancePool;
+
+    const CreatureType *prevType = nullptr;
+    int weight = 0;
+    for (const auto & t : allCreatureTypes) {
+        weight = t->GetSpawnChance();
+        if (prevType != nullptr) {
+            weight += prevType->GetSpawnChance();
+        }
+        spawnChancePool.emplace_back(t->GetID(), weight);
+        prevType = t;
+    }
+
+    int totalWeight = spawnChancePool.back().second;
+    const int noSpawnWeight = static_cast<int>(totalWeight / Settings::SPAWN_CHANCE - totalWeight); 
+    totalWeight += noSpawnWeight;
 
     for (int y = 0; y < dimensions.height(); y++) {
         for (int x = 0; x < dimensions.width(); x++) {
             flatIndex = GeometryUtils::Flatten2DCoords(Vec2(x, y), dimensions);
             if (soilLevelData[flatIndex]) {
-                int spawnRand = rand() % MAX_SPAWN_CHANCE;
-                if (spawnRand < crabSpawnChance) {
-                    creatureManager->InstanceCreature("CRAB", Vec3(x, y, SOIL_LAYER_DEPTH));
-                } else if (spawnRand < rattlesnakeSpawnChance) {
-                    creatureManager->InstanceCreature("RATTLESNAKE", Vec3(x, y, SOIL_LAYER_DEPTH));
+                int randomValue = rand() % totalWeight;
+
+                if (randomValue < noSpawnWeight) {
+                    continue;
                 }
+
+                randomValue -= noSpawnWeight;
+
+                // Find the creature to spawn based on the adjusted random value
+                int i = 0;
+                while (randomValue >= spawnChancePool[i].second) {
+                    i++;
+                }
+
+                creatureManager->InstanceCreature(spawnChancePool[i].first, Vec3(x, y, SOIL_LAYER_DEPTH));
             }
         }
     }
+
 }
