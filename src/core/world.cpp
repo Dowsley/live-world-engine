@@ -61,8 +61,7 @@ void World::_setTile(const Vec3 &pos, TileType *type)
     }
     
     tile->type = type;
-    tile->spritePosVariantIndex = tile->type->GetRandomSpritePosIndex();
-    tile->spriteColorVariantIndex = tile->type->GetRandomSpriteColorIndex();
+    tile->spriteVariantIndex = tile->type->GetRandomSpriteIndex();
 }
 
 /* TODO: Implement this + review if this system is correct, because there are tile references that may need to be updated 
@@ -93,7 +92,7 @@ const Vec2& World::GetTileSprite(const Vec3 &pos) const
     if (c != nullptr && t->type->GetID() == "EMPTY") {
         return c->GetType()->GetSpritePos();
     }
-    return tileInstanceManager->GetSprite(t);
+    return tileInstanceManager->GetSprite(t).position;
 }
 const Color& World::GetTileColor(const Vec3 &pos) const
 {
@@ -104,7 +103,7 @@ const Color& World::GetTileColor(const Vec3 &pos) const
     if (c != nullptr && t->type->GetID() == "EMPTY") {
         return c->GetType()->GetSpriteColor();
     }
-    return tileInstanceManager->GetColor(t);
+    return tileInstanceManager->GetSprite(t).color;
 }
 
 TileType* World::GetTypeForTileAt(const Vec3 &pos) const

@@ -24,30 +24,28 @@ TileType* TileLoader::_loadSpecific(const std::string &tileFile) {
         tileType->SetIsSolid();
     }
 
-    /* Sprite positions */
-    tinyxml2::XMLElement* spriteElem = tileElem->FirstChildElement("SPRITE");
+    std::vector<Vec2> spritePositions;
+    std::vector<Color> spriteColors;
+
+    // Extract sprite positions
+    tinyxml2::XMLElement *spriteElem = tileElem->FirstChildElement("SPRITE");
     while (spriteElem != nullptr) {
-        tileType->AddSpritePosVariant(
-            Vec2(spriteElem->IntAttribute("x"), spriteElem->IntAttribute("y"))
-        );
-        
-        // Move to the next <SPRITE /> element
+        spritePositions.push_back(Vec2(spriteElem->IntAttribute("x"), spriteElem->IntAttribute("y")));
         spriteElem = spriteElem->NextSiblingElement("SPRITE");
     }
 
-    /* Colors */
-    tinyxml2::XMLElement* colorElem = tileElem->FirstChildElement("COLOR");
+    // Extract sprite colors
+    tinyxml2::XMLElement *colorElem = tileElem->FirstChildElement("COLOR");
     while (colorElem != nullptr) {
-        tileType->AddSpriteColorVariant(
-            Color(
-                colorElem->IntAttribute("r"),
-                colorElem->IntAttribute("g"),
-                colorElem->IntAttribute("b")
-            )
-        );
-        
-        // Move to the next <COLOR /> element
+        spriteColors.push_back(Color(colorElem->IntAttribute("r"), colorElem->IntAttribute("g"), colorElem->IntAttribute("b")));
         colorElem = colorElem->NextSiblingElement("COLOR");
+    }
+
+    // Combine sprite positions and colors and store them
+    for (const Vec2 &pos : spritePositions) {
+        for (const Color &col : spriteColors) {
+            tileType->AddSpriteVariant(SpriteVariant(pos, col));
+        }
     }
 
     return tileType;

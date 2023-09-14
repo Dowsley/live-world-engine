@@ -11,6 +11,14 @@ class TileType;
 struct Tile;
 class TileInstance;
 
+struct SpriteVariant {
+    Vec2 position;
+    Color color;
+
+    SpriteVariant(const Vec2& pos, const Color& col)
+        : position(pos), color(col) {}
+};
+
 class TileType {
 private:
 private:
@@ -20,8 +28,7 @@ private:
     unsigned int maxHealth;
     bool isSolid = false;
     
-    std::vector<Vec2> spritePosVariants;
-    std::vector<Color> spriteColorVariants;
+    std::vector<SpriteVariant> spriteVariants; 
 
 public:
     static TileType *UNINITIALIZED;
@@ -29,29 +36,24 @@ public:
     const std::string& GetID() const;
     const std::string& GetDescription() const;
     const std::string& GetName() const;
-    const std::vector<Vec2>& GetSpritePosVariants() const;
-    const std::vector<Color>& GetSpriteColorVariants() const;
+    const std::vector<SpriteVariant>& GetSpriteVariants() const;
     unsigned int GetMaxHealth() const;
     bool GetIsSolid() const;
 
-    const Vec2& GetSpritePos(int index) const;
-    const Color& GetSpriteColor(int index) const;
-    int GetRandomSpritePosIndex() const;
-    int GetRandomSpriteColorIndex() const;
+    const SpriteVariant& GetSprite(int index) const;
+    int GetRandomSpriteIndex() const;
 
     TileType* SetID(const std::string &id);
     TileType* SetDescription(const std::string &description);
     TileType* SetName(const std::string &name);
-    TileType* AddSpritePosVariant(const Vec2 &pos);
-    TileType* AddSpriteColorVariant(const Color &color);
+    TileType* AddSpriteVariant(const SpriteVariant &spriteVariant);
     TileType* SetMaxHealth(unsigned int maxHealth);
     TileType* SetIsSolid();
 };
 
 struct Tile {
     TileType *type = nullptr;
-    unsigned char spritePosVariantIndex = 0;
-    unsigned char spriteColorVariantIndex = 0;
+    unsigned char spriteVariantIndex = 0;
 };
 
 

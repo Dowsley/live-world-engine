@@ -42,12 +42,7 @@ void TileInstanceManager::ClearInstances() {
     ClearItems();
 }
 
-const Vec2& TileInstanceManager::GetSprite(const Tile *tile) const {
+const SpriteVariant& TileInstanceManager::GetSprite(const Tile *tile) const {
     // TODO Metadata check
-    return tile->type->GetSpritePos(tile->spritePosVariantIndex);
-}
-
-const Color& TileInstanceManager::GetColor(const Tile *tile) const {
-    // TODO Metadata check
-    return tile->type->GetSpriteColor(tile->spriteColorVariantIndex);
+    return tile->type->GetSprite(tile->spriteVariantIndex);
 }

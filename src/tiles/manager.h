@@ -14,6 +14,5 @@ public:
     void TraverseInstances(std::function<void(TileInstance*)> callback);
     void ClearInstances();
 
-    const Vec2& GetSprite(const Tile *tile) const;
-    const Color& GetColor(const Tile *tile) const;
+    const SpriteVariant& GetSprite(const Tile *tile) const;
 };
