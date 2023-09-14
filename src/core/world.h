@@ -11,7 +11,7 @@
 #include "../tiles/registry.h"
 
 class TileType;
-class Tile;
+struct Tile;
 class Creature;
 
 class World
@@ -47,6 +47,7 @@ public:
     const Color& GetTileColor(const Vec3 &pos) const;
     TileType* GetTypeForTileAt(const Vec3 &pos) const;
     const std::string& GetTypeIDForTileAt(const Vec3 &pos) const;
+    const std::string& GetTypeIDForCreatureAt(const Vec3 &pos) const;
 
     void LoadData();
     void Update();

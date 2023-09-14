@@ -35,12 +35,23 @@ private:
         int speedMultiplier = 1;
     } camera;
 
-    struct {
+    struct MoveInput {
         bool left = false;
         bool right = false;
         bool up = false;
         bool down = false;
     } moveInput;
+
+    struct {
+        Vec2 pointerPos;
+        Vec2 pointerSpritePos = Vec2(18, 49);
+        bool active = false;
+        bool pointerBlink = true;
+        Color color = olc::YELLOW;
+        float accumulatedTime = 0.0f;
+        const float BLINK_INTERVAl = 0.35f; 
+        struct MoveInput moveInput;
+    } viewMode;
 
     bool paused = false;
     int currDepth = 20;
@@ -49,8 +60,9 @@ private:
     void _handleInputs();
     void _moveCamera(float fElapsedTime);
     void _simulate(float fElapsedTime);
+    bool _updateUI(float fElapsedTime);
     void _drawWorld();
-    void _drawTile(const Vec3 &pos);
+    void _drawTile(const Vec2 &pos, const Color &color, const Vec2 &spritePos);
 
 protected:
     bool OnUserCreate() override;

@@ -10,7 +10,11 @@ int main(int argc, char const *argv[])
 {
     LiveWorldEngine game;
 
-    game.Construct(312, 204, 4, 4);
+    game.Construct(
+        Settings::TILE_SIZE.x * 26,
+        Settings::TILE_SIZE.y * 17,
+        4, 4
+        );
     game.Start();
 
     return 0;

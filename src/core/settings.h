@@ -18,6 +18,7 @@ namespace Settings {
     const Color FORE_PLACEHOLDER = olc::WHITE;
     const Color BACK_PLACEHOLDER = olc::BLACK;
     const int TICK_DURATION = 700;
+    const int UI_TICK_DURATION = 500;
     const std::string CREATURE_REGISTRY_PATH = CREATURE_REGISTRY_PATH_V;
     const std::string TILE_REGISTRY_PATH = TILE_REGISTRY_PATH_V;
     const float SPAWN_CHANCE = 0.005;
