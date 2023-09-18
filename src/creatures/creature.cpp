@@ -40,13 +40,13 @@ CreatureType* CreatureType::SetSpawnChance(int spawnChance) {
 }
 
 /* ---- CREATURE ---- */
-Creature::Creature(CreatureType *type, Vec3 pos)
+Creature::Creature(const CreatureType &type, Vec3 pos)
     : type(type), pos(pos) {};
 
 bool Creature::Update()
 {
     return false;
 }
-CreatureType* Creature::GetType() const { return type; }
+const CreatureType& Creature::GetType() const { return type; }
 const Vec3& Creature::GetPosition() const { return pos; }
-void Creature::SetPosition(const Vec3 &pos) { this->pos = pos; }
+void Creature::SetPosition(Vec3 pos) { this->pos = pos; }

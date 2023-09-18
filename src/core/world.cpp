@@ -90,7 +90,7 @@ const Vec2& World::GetTileSprite(const Vec3 &pos) const
     std::tie(t, c) = _getTileAndCreature(pos);
     
     if (c != nullptr && t->type->GetID() == "EMPTY") {
-        return c->GetType()->GetSpritePos();
+        return c->GetType().GetSpritePos();
     }
     return tileInstanceManager->GetSprite(t).position;
 }
@@ -101,7 +101,7 @@ const Color& World::GetTileColor(const Vec3 &pos) const
     std::tie(t, c) = _getTileAndCreature(pos);
 
     if (c != nullptr && t->type->GetID() == "EMPTY") {
-        return c->GetType()->GetSpriteColor();
+        return c->GetType().GetSpriteColor();
     }
     return tileInstanceManager->GetSprite(t).color;
 }
@@ -126,7 +126,7 @@ std::string World::GetTypeIDForCreatureAt(const Vec3 &pos) const
     if (c == nullptr) {
         return "NONE";
     }
-    return c->GetType()->GetID();
+    return c->GetType().GetID();
 }
 
 void World::LoadData()

@@ -26,7 +26,7 @@ Creature* CreatureManager::InstanceCreature(const std::string &typeID, const Vec
         throw std::runtime_error("Type not implemented: " + typeID);
     }
 
-    Creature* newCreature = new Creature(type, pos);
+    Creature *newCreature = new Creature(*type, pos);
     items[index] = newCreature;
 
     return newCreature;

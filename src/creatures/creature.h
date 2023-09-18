@@ -32,14 +32,14 @@ private:
 
 class Creature {
 private:
-    CreatureType *type;
+    const CreatureType &type;
     Vec3 pos;
 
 public:
-    Creature(CreatureType *type, Vec3 pos);
+    Creature(const CreatureType &type, Vec3 pos);
 
-    CreatureType* GetType() const;
+    const CreatureType& GetType() const;
     const Vec3& GetPosition() const;
-    void SetPosition(const Vec3 &pos);
+    void SetPosition(Vec3 pos);
     bool Update();
 };
