@@ -1,6 +1,7 @@
 #pragma once
 
 #include <string>
+#include <optional>
 
 #include "../structures/index.h"
 
@@ -41,5 +42,5 @@ public:
     const CreatureType& GetType() const;
     const Vec3& GetPosition() const;
     void SetPosition(Vec3 pos);
-    bool Update();
+    std::optional<Vec3> Update();
 };

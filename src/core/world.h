@@ -4,6 +4,8 @@
 
 #include "settings.h"
 
+#include "../core/pathfinding.h"
+
 #include "../engine/olcPixelGameEngine.h"
 #include "../structures/index.h"
 #include "../creatures/manager.h"
@@ -17,13 +19,11 @@ class Creature;
 class World
 {
 private:
-    // Utils
     Vec3 dimensions;
+    Tile *map;
 
     std::unique_ptr<CreatureManager> creatureManager;
-
-    Tile *map;
-    TileRegistry tileRegistry;
+    std::unique_ptr<TileRegistry> tileRegistry;
     std::unique_ptr<TileInstanceManager> tileInstanceManager;
 
     std::tuple<Tile*, Creature*> _getTileAndCreature(const Vec3 &pos) const;
@@ -42,6 +42,8 @@ public:
     const Vec3& GetDimensions() const;
     bool IsPositionEmpty(const Vec3 &pos) const;
     bool IsThereCreatureAt(const Vec3 &pos) const;
+    bool IsPositionWalkable(const Vec3 &pos) const;
+    std::list<Vec3> GetPath(const Vec3 &start, const Vec3 &end) const;
 
     const Vec2& GetTileSprite(const Vec3 &pos) const;
     const Color& GetTileColor(const Vec3 &pos) const;

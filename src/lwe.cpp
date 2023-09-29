@@ -13,17 +13,26 @@ void LiveWorldEngine::_drawWorld()
     Clear(olc::BLACK);
     for (int y = 0; y < (ScreenHeight() / Settings::TILE_SIZE.y); y++) {
         for (int x = 0; x < (ScreenWidth() / Settings::TILE_SIZE.x); x++) {
-            int isPointerPos = viewMode.pointerPos.x == x && viewMode.pointerPos.y == y;
-            if (viewMode.active && viewMode.pointerBlink && isPointerPos) {
+            int mapX = x + (int) camera.posX;
+            int mapY = y + (int) camera.posY;
+
+            bool isPointerPos = viewMode.pointerPos.x == x && viewMode.pointerPos.y == y;
+            bool isPath = false;
+            if (viewMode.tracePath == 2) {
+                for (auto & p : viewMode.path) {
+                    isPath = p.x() == mapX && p.y() == mapY && p.z() == currDepth;
+                    if (isPath) {
+                        break;
+                    }
+                }
+            }
+            if (viewMode.active && viewMode.pointerBlink && (isPointerPos || isPath)) {
                 _drawTile(
-                    viewMode.pointerPos,
-                    viewMode.color,
-                    viewMode.pointerSpritePos
+                        Vec2(x, y),
+                        viewMode.color,
+                        viewMode.pointerSpritePos
                 );
             } else {
-                int mapX = x + (int) camera.posX;
-                int mapY = y + (int) camera.posY;
-
                 bool isLastLayer = currDepth == Settings::WORLD_DIMENSIONS.depth() - 1;
                 Vec3 currTilePos = Vec3(mapX, mapY, currDepth);
                 Vec3 lowerTilePos = Vec3(mapX, mapY, currDepth + 1);
@@ -44,7 +53,7 @@ void LiveWorldEngine::_drawWorld()
     }
     std::string str = "Layer: ";
     str.append(std::to_string(currDepth));
-    DrawString(Vec2(0,0), str, olc::WHITE, 1);
+    DrawString(Vec2(0, 0), str, olc::WHITE, 1);
     DrawString(Vec2(0, 10), paused ? "Paused" : "Active", olc::WHITE, 1);
 
     if (viewMode.active) {
@@ -58,6 +67,20 @@ void LiveWorldEngine::_drawWorld()
         DrawString(
             Vec2(0, 20),
             viewPosMap.ToString() + ": T: '" + tileID + "', C: '" + creatureID + "'", 
+            olc::WHITE, 1
+        );
+        str = "PATH: ";
+        if (viewMode.tracePath == 0) {
+            str += "Press ENTER";
+        } else if (viewMode.tracePath == 1) {
+            str += "From " + viewMode.start.ToString();
+        } else {
+            str += "From " + viewMode.start.ToString() + " To " + viewMode.end.ToString();
+        }
+        
+        DrawString(
+            Vec2(0, 30),
+            str,
             olc::WHITE, 1
         );
     }
@@ -130,11 +153,40 @@ void LiveWorldEngine::_handleInputs()
     moveInput.up = GetKey(olc::Key::UP).bHeld;
     moveInput.down = GetKey(olc::Key::DOWN).bHeld;
 
-    // View Mode movement
+    // View Mode
     viewMode.moveInput.left = GetKey(olc::Key::LEFT).bReleased;
     viewMode.moveInput.right = GetKey(olc::Key::RIGHT).bReleased;
     viewMode.moveInput.up = GetKey(olc::Key::UP).bReleased;
     viewMode.moveInput.down = GetKey(olc::Key::DOWN).bReleased;
+
+    if (GetKey(olc::Key::ENTER).bReleased && viewMode.active) {
+        if (viewMode.tracePath == 0) {
+            viewMode.start = Vec3(
+                viewMode.pointerPos.x + (int) camera.posX,
+                viewMode.pointerPos.y + (int) camera.posY,
+                currDepth
+            ); 
+            viewMode.tracePath = 1;
+        } else if (viewMode.tracePath == 1) {
+            viewMode.tracePath = 2;
+            viewMode.end = Vec3(
+                viewMode.pointerPos.x + (int) camera.posX,
+                viewMode.pointerPos.y + (int) camera.posY,
+                currDepth
+            );
+            viewMode.path = world.GetPath(
+                viewMode.start,
+                viewMode.end
+            );
+            printf("%d\n", viewMode.path.size());
+            for (auto & p : viewMode.path) {
+                std::cout << p.ToString() << std::endl;
+            }
+        }
+    }
+    if (GetKey(olc::Key::ESCAPE).bReleased && viewMode.tracePath) {
+        viewMode.tracePath = 0;
+    }
 }
 
 void LiveWorldEngine::_moveCamera(float fElapsedTime)

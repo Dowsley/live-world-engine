@@ -43,9 +43,10 @@ CreatureType* CreatureType::SetSpawnChance(int spawnChance) {
 Creature::Creature(const CreatureType &type, Vec3 pos)
     : type(type), pos(pos) {};
 
-bool Creature::Update()
+std::optional<Vec3> Creature::Update()
 {
-    return false;
+    
+    return std::nullopt;
 }
 const CreatureType& Creature::GetType() const { return type; }
 const Vec3& Creature::GetPosition() const { return pos; }

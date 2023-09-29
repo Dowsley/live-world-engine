@@ -1,19 +1,23 @@
 #include "manager.h"
 #include "../core/world.h"
 
-CreatureManager::CreatureManager(World *world) : ManagerBase<Creature>(world) {
+CreatureManager::CreatureManager(World *world) : ManagerBase<Creature>(world)
+{
     registry.Initialize();
 }
 
-CreatureManager::~CreatureManager() {
+CreatureManager::~CreatureManager()
+{
     ClearItems();
 }
 
-const CreatureType* CreatureManager::GetTypeById(const std::string &id) const {
+const CreatureType* CreatureManager::GetTypeById(const std::string &id) const
+{
     return registry.GetTypeById(id);
 }
 
-Creature* CreatureManager::InstanceCreature(const std::string &typeID, const Vec3 &pos) {
+Creature* CreatureManager::InstanceCreature(const std::string &typeID, const Vec3 &pos)
+{
     int index = GeometryUtils::Flatten3DCoords(pos, worldRef->GetDimensions());
 
     // If creature already exists at that position
@@ -32,7 +36,8 @@ Creature* CreatureManager::InstanceCreature(const std::string &typeID, const Vec
     return newCreature;
 }
 
-void CreatureManager::RemoveCreatureAt(const Vec3 &pos) {
+void CreatureManager::RemoveCreatureAt(const Vec3 &pos)
+{
     int index = GeometryUtils::Flatten3DCoords(pos, worldRef->GetDimensions());
     if(items.find(index) != items.end()) {
         delete items[index]; // Delete the creature from the heap
@@ -40,13 +45,15 @@ void CreatureManager::RemoveCreatureAt(const Vec3 &pos) {
     }
 }
 
-void CreatureManager::UpdateCreatures() {
+void CreatureManager::UpdateCreatures()
+{
     for(auto & pair : items) {
         pair.second->Update();
     }
 }
 
-void CreatureManager::TraverseCreatures(std::function<void(Creature*)> callback) {
+void CreatureManager::TraverseCreatures(std::function<void(Creature*)> callback)
+{
     TraverseItems(callback);
 }
 

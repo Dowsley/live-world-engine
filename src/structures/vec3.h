@@ -2,10 +2,13 @@
 
 #include <fstream>
 
+#include "vec2.h"
+
 class Vec3 final
 {
     public:
         Vec3();
+        Vec3(Vec2 v, int z);
         Vec3(int x, int y, int z);
 
         // No, I'm not gonna respect standard names here. I want it to be short.
@@ -28,6 +31,7 @@ class Vec3 final
         Vec3 operator-() const;
         int operator[](int i) const;
         int& operator[](int i);
+        bool operator==(const Vec3 &v) const;
 
         Vec3& operator+=(const Vec3 &v);
         Vec3& operator+=(const int t);

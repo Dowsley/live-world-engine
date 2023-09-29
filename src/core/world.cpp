@@ -2,17 +2,19 @@
 
 #include <utility>
 
-#include "settings.h"
 #include "../creatures/creature.h"
 #include "../utils/arithmetics.h"
 #include "../utils/geometry.h"
 #include "../lib/noise.cpp"
 
 World::World(Vec3 dimensions)
-: dimensions(dimensions), creatureManager(std::make_unique<CreatureManager>(this)),
-map(new Tile[dimensions.GetFlattenedSize()]), tileRegistry(TileRegistry(Settings::TILE_REGISTRY_PATH)),
-tileInstanceManager(std::make_unique<TileInstanceManager>(this))
+: dimensions(dimensions) 
 {
+    this->tileInstanceManager = std::make_unique<TileInstanceManager>(this);
+    this->creatureManager = std::make_unique<CreatureManager>(this);
+    this->tileRegistry = std::make_unique<TileRegistry>(Settings::TILE_REGISTRY_PATH);
+    this->map = new Tile[dimensions.GetFlattenedSize()];
+
     LoadData();
 }
 
@@ -25,6 +27,10 @@ int World::GetHeight() const { return dimensions.height(); }
 int World::GetWidth() const { return dimensions.width(); }
 int World::GetDepth() const { return dimensions.depth(); }
 const Vec3& World::GetDimensions() const { return dimensions; }
+std::list<Vec3> World::GetPath(const Vec3 &start, const Vec3 &end) const
+{ 
+    return Pathfinding::FindPath(this, start, end);
+}
 bool World::IsPositionEmpty(const Vec3 &pos) const
 {
     bool isTypeEmpty = GetTypeIDForTileAt(pos) == "EMPTY";
@@ -35,6 +41,27 @@ bool World::IsPositionEmpty(const Vec3 &pos) const
 bool World::IsThereCreatureAt(const Vec3 &pos) const
 {
     return (creatureManager->GetItemAt(pos) != nullptr);
+}
+
+bool World::IsPositionWalkable(const Vec3 &pos) const
+{
+    bool exists = GetTypeForTileAt(pos); // really important lol
+    if (!exists) {
+        return false;
+    }
+    bool isEmpty = IsPositionEmpty(pos);
+    if (!isEmpty) {
+        return false; // Tile occupied by creature or solid block
+    }
+    
+    Vec3 below{pos.x(), pos.y(), pos.z() + 1};
+    if (below.z() < 0) {
+        return false; // Below tile is literally empty void below the map. TODO: Careful here.
+    }
+
+    // So pos is only walkable if below it there's solid ground.
+    bool isSolid = GetTypeForTileAt(below)->GetIsSolid();
+    return isSolid;
 }
 
 std::tuple<Tile*, Creature*> World::_getTileAndCreature(const Vec3 &pos) const
@@ -131,7 +158,7 @@ std::string World::GetTypeIDForCreatureAt(const Vec3 &pos) const
 
 void World::LoadData()
 {
-    tileRegistry.Initialize();
+    tileRegistry->Initialize();
 }
 
 void World::Update()
@@ -181,14 +208,14 @@ void World::GenerateTestBiome()
 
             for (int z = 0; z < dimensions.depth(); z++) {
                 if (z >= inverseDepth) {
-                    tileType = tileRegistry.GetTypeById("ROCK");
+                    tileType = tileRegistry->GetTypeById("ROCK");
                 } else {
                     if (z > SOIL_LAYER_DEPTH) {
                         tileType = (z == SOIL_LAYER_DEPTH + 1) 
-                            ? tileRegistry.GetTypeById("GRASS")
-                            : tileRegistry.GetTypeById("SOIL");
+                            ? tileRegistry->GetTypeById("GRASS")
+                            : tileRegistry->GetTypeById("SOIL");
                     } else {
-                        tileType = tileRegistry.GetTypeById("EMPTY");
+                        tileType = tileRegistry->GetTypeById("EMPTY");
                         if (z == SOIL_LAYER_DEPTH) {
                             flatIndex = GeometryUtils::Flatten2DCoords(Vec2(x, y), dimensions);
                             soilLevelData[flatIndex] = true;

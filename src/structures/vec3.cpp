@@ -10,6 +10,14 @@ Vec3::Vec3()
    e[2] = 0;
 }
 
+
+Vec3::Vec3(Vec2 v, int z)
+{
+    e[0] = v.x;
+    e[1] = v.y;
+    e[2] = z;
+}
+
 Vec3::Vec3(int x, int y, int z)
 {
     e[0] = x;
@@ -38,6 +46,13 @@ std::string Vec3::ToString() const
 Vec3 Vec3::operator-() const { return Vec3(-e[0], -e[1], -e[2]); }
 int Vec3::operator[](int i) const { return e[i]; }
 int& Vec3::operator[](int i) { return e[i]; }
+
+bool Vec3::operator==(const Vec3 &v) const
+{
+    return e[0] == v[0]
+        && e[1] == v[1]
+        && e[2] == v[2];
+}
 
 Vec3& Vec3::operator+=(const Vec3 &v)
 {

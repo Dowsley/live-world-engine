@@ -51,6 +51,10 @@ private:
         float accumulatedTime = 0.0f;
         const float BLINK_INTERVAl = 0.35f; 
         struct MoveInput moveInput;
+        Vec3 start;
+        Vec3 end;
+        std::list<Vec3> path;
+        int tracePath = 0;
     } viewMode;
 
     bool paused = false;
