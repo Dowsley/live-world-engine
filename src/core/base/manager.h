@@ -2,7 +2,6 @@
 
 #include <unordered_map>
 #include <functional>
-
 #include "../../structures/vec3.h"
 #include "../../utils/geometry.h"
 
@@ -15,11 +14,33 @@ protected:
     std::unordered_map<int, T*> items;
 
 public:
-    ManagerBase(World *world);
-    virtual ~ManagerBase();
+    ManagerBase(World *world) : worldRef(world) {}
 
-    T* GetItemAt(const Vec3 &pos) const;
-    void TraverseItems(std::function<void(T*)> callback);
-    int GetTotalItemCount() const;
-    void ClearItems();
+    virtual ~ManagerBase() {
+        ClearItems();
+    }
+
+    T* GetItemAt(const Vec3 &pos) const {
+        int index = GeometryUtils::Flatten3DCoords(pos, worldRef->GetDimensions());
+        auto it = items.find(index);
+        return (it != items.end()) ? it->second : nullptr;
+    }
+
+    void TraverseItems(std::function<void(T*)> callback) {
+        for (auto& item : items) {
+            callback(item.second);
+        }
+    }
+
+    int GetTotalItemCount() const {
+        return items.size();
+    }
+
+    void ClearItems() {
+        for (auto& item : items) {
+            delete item.second;
+            item.second = nullptr;
+        }
+        items.clear();
+    }
 };

@@ -1,10 +1,10 @@
-#include "core/index.cpp"
-#include "tiles/index.cpp"
-#include "creatures/index.cpp"
-#include "utils/index.cpp"
-#include "structures/index.cpp"
-#include "lib/index.cpp"
-#include "lwe.cpp"
+#include "core/index.h"
+#include "tiles/index.h"
+#include "creatures/index.h"
+#include "utils/index.h"
+#include "structures/index.h"
+#include "lib/index.h"
+#include "lwe.h"
 
 int main(int argc, char const *argv[])
 {

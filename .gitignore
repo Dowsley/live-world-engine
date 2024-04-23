@@ -1,16 +1,11 @@
-\.vscode
-Makefile
+# IDEs
+.vscode
+
+# Misc
 \.DS_Store
-\output
-CMakeFiles
-CMakeLists.txt
-CMakeCache.txt
-cmake_install.cmake
-.DS_Store
-output.exe
-tmp
-notes
-log.txt
-\out*
-old_*
-engine
+
+# Build
+cmake-build-debug
+
+# Engine
+src/engine

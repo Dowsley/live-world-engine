@@ -1,7 +1,0 @@
-all: compile run
-
-run:
-	./output
-
-compile:
-	g++ -g -o output src/main.cpp -lX11 -lGL -lpthread -lpng -lstdc++fs -std=c++17
