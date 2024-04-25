@@ -37,12 +37,12 @@ void LiveWorldEngine::_drawWorld()
                 Vec3 currTilePos = Vec3(mapX, mapY, currDepth);
                 Vec3 lowerTilePos = Vec3(mapX, mapY, currDepth + 1);
                 bool isCurrTileEmpty = world.IsPositionEmpty(currTilePos);
-                bool isLowerTileEmpty = isLastLayer ? true : world.IsPositionEmpty(lowerTilePos);
-                bool isLowerTileSolid = isLastLayer ? false : world.GetTypeForTileAt(lowerTilePos)->GetIsSolid();
+                bool isLowerTileEmpty = isLastLayer || world.IsPositionEmpty(lowerTilePos);
+                bool isLowerTileSolid = !isLastLayer && world.GetTypeForTileAt(lowerTilePos)->GetIsSolid();
                 int mapZ = currDepth;
                 if (isCurrTileEmpty && !isLowerTileEmpty && isLowerTileSolid) {
                     mapZ += 1;
-                } 
+                }
                 _drawTile(
                     Vec2(x, y),
                     world.GetTileColor(Vec3(mapX, mapY, mapZ)),
@@ -66,7 +66,7 @@ void LiveWorldEngine::_drawWorld()
         std::string creatureID = world.GetTypeIDForCreatureAt(viewPosMap);
         DrawString(
             Vec2(0, 20),
-            viewPosMap.ToString() + ": T: '" + tileID + "', C: '" + creatureID + "'", 
+            viewPosMap.ToString() + ": T: '" + tileID + "', C: '" + creatureID + "'",
             olc::WHITE, 1
         );
         str = "PATH: ";
@@ -77,7 +77,7 @@ void LiveWorldEngine::_drawWorld()
         } else {
             str += "From " + viewMode.start.ToString() + " To " + viewMode.end.ToString();
         }
-        
+
         DrawString(
             Vec2(0, 30),
             str,
@@ -142,7 +142,7 @@ void LiveWorldEngine::_handleInputs()
         paused = !paused;
     }
 
-    // Press 'K' key to toggle view mode 
+    // Press 'K' key to toggle view mode
     if (GetKey(olc::Key::K).bReleased) {
         viewMode.active = !viewMode.active;
     }
@@ -165,7 +165,7 @@ void LiveWorldEngine::_handleInputs()
                 viewMode.pointerPos.x + (int) camera.posX,
                 viewMode.pointerPos.y + (int) camera.posY,
                 currDepth
-            ); 
+            );
             viewMode.tracePath = 1;
         } else if (viewMode.tracePath == 1) {
             viewMode.tracePath = 2;
@@ -178,7 +178,7 @@ void LiveWorldEngine::_handleInputs()
                 viewMode.start,
                 viewMode.end
             );
-            printf("%d\n", viewMode.path.size());
+            printf("%zu\n", viewMode.path.size());
             for (auto & p : viewMode.path) {
                 std::cout << p.ToString() << std::endl;
             }

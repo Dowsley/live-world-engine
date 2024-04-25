@@ -1,4 +1,6 @@
 #include "manager.h"
+
+#include <utility>
 #include "../core/world.h"
 
 CreatureManager::CreatureManager(World *world) : ManagerBase<Creature>(world)
@@ -30,7 +32,7 @@ Creature* CreatureManager::InstanceCreature(const std::string &typeID, const Vec
         throw std::runtime_error("Type not implemented: " + typeID);
     }
 
-    Creature *newCreature = new Creature(*type, pos);
+    auto *newCreature = new Creature(*type, pos);
     items[index] = newCreature;
 
     return newCreature;
@@ -54,7 +56,7 @@ void CreatureManager::UpdateCreatures()
 
 void CreatureManager::TraverseCreatures(std::function<void(Creature*)> callback)
 {
-    TraverseItems(callback);
+    TraverseItems(std::move(callback));
 }
 
 void CreatureManager::ClearCreatures() {

@@ -14,7 +14,7 @@ protected:
     std::unordered_map<int, T*> items;
 
 public:
-    ManagerBase(World *world) : worldRef(world) {}
+    explicit ManagerBase(World *world) : worldRef(world) {}
 
     virtual ~ManagerBase() {
         ClearItems();

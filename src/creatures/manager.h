@@ -10,8 +10,8 @@ class CreatureManager : public ManagerBase<Creature> {
 private:
     CreatureRegistry registry = CreatureRegistry(Settings::CREATURE_REGISTRY_PATH);
 public:
-    CreatureManager(World *world);
-    ~CreatureManager();
+    explicit CreatureManager(World *world);
+    ~CreatureManager() override;
 
     const CreatureType* GetTypeById(const std::string &id) const;
     Creature* InstanceCreature(const std::string &typeID, const Vec3 &pos);

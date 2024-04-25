@@ -8,7 +8,7 @@ class Vec3 final
 {
     public:
         Vec3();
-        Vec3(Vec2 v, int z);
+        Vec3(const Vec2& v, int z);
         Vec3(int x, int y, int z);
 
         // No, I'm not gonna respect standard names here. I want it to be short.
@@ -34,9 +34,9 @@ class Vec3 final
         bool operator==(const Vec3 &v) const;
 
         Vec3& operator+=(const Vec3 &v);
-        Vec3& operator+=(const int t);
-        Vec3& operator*=(const int t);
-        Vec3& operator/=(const int t);
+        Vec3& operator+=(int t);
+        Vec3& operator*=(int t);
+        Vec3& operator/=(int t);
 
         friend Vec3 operator+(const Vec3 &u, const Vec3 &v);
         friend Vec3 operator+(const Vec3 &u, int val);
@@ -49,5 +49,5 @@ class Vec3 final
         friend std::ostream& operator<<(std::ostream &out, const Vec3 &v);
 
     protected:
-        int e[3];
+        int e[3]{};
 };

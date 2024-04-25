@@ -1,4 +1,6 @@
 #include "manager.h"
+
+#include <utility>
 #include "../core/world.h"
 
 TileInstanceManager::TileInstanceManager(World *world) : ManagerBase<TileInstance>(world) {}
@@ -15,7 +17,7 @@ TileInstance* TileInstanceManager::InstanceTile(const Tile *tile, const Vec3 &po
         throw std::runtime_error("Tile already instantiated at position " + pos.ToString());
     }
 
-    TileInstance *instance = new TileInstance(tile);
+    auto *instance = new TileInstance(tile);
     items[index] = instance;
     return instance;
 }
@@ -35,7 +37,7 @@ void TileInstanceManager::UpdateInstances() {
 }
 
 void TileInstanceManager::TraverseInstances(std::function<void(TileInstance*)> callback) {
-    TraverseItems(callback);
+    TraverseItems(std::move(callback));
 }
 
 void TileInstanceManager::ClearInstances() {

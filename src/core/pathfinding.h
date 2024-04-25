@@ -17,10 +17,10 @@ class CreatureManager;
 
 class PFNode {
 public:
-    PFNode *parent;
+    PFNode *parent{};
     Vec3 position;
-    float gCost; // Cost from start node to this node
-    float hCost; // Heuristic estimate from this node to goal
+    float gCost{}; // Cost from start node to this node
+    float hCost{}; // Heuristic estimate from this node to goal
 
     PFNode() = default;
     PFNode(PFNode *parent, Vec3 position, float gCost, float hCost);

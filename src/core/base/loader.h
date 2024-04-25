@@ -1,6 +1,7 @@
 #pragma once
 
 #include <string>
+#include <utility>
 #include <vector>
 #include <filesystem>
 #include <iostream>
@@ -8,13 +9,12 @@
 template<typename T>
 class BaseLoader {
 public:
-    explicit BaseLoader(const std::string &path) : directoryPath(path) {}
+    explicit BaseLoader(std::string path) : directoryPath(std::move(path)) {}
 
-    virtual ~BaseLoader() {}
+    virtual ~BaseLoader() = default;
 
     std::vector<T*> LoadAll() {
         std::vector<T*> types;
-        std::cout << "Current working directory: " << std::filesystem::current_path() << std::endl;
         for (const auto & entry : std::filesystem::directory_iterator(directoryPath)) {
             if (entry.path().extension() == ".xml") {
                 T *loaded = _loadSpecific(entry.path().string());

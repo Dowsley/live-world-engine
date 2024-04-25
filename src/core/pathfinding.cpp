@@ -16,7 +16,7 @@ struct PFNodeComparator {
 };
 
 PFNode::PFNode(PFNode *parent, Vec3 position, float gCost, float hCost)
-    : parent(parent), position(position), gCost(gCost), hCost(hCost) 
+    : parent(parent), position(position), gCost(gCost), hCost(hCost)
 {}
 float PFNode::fCost() const { return gCost + hCost; }
 
@@ -60,7 +60,7 @@ std::list<Vec3> Pathfinding::FindPath(const World *world, const Vec3 &start, con
                 path.push_front(currentNode->position);
                 currentNode = currentNode->parent;
             }
-            return path; 
+            return path;
         }
 
         std::vector<Vec3> neighbors;
@@ -82,26 +82,23 @@ std::list<Vec3> Pathfinding::FindPath(const World *world, const Vec3 &start, con
                 continue;
             }
 
-        float movementCost = 1;  // default movement cost
+            float movementCost = 1;  // default movement cost
 
-        // Check if it's a diagonal movement
-        if (neighborPos.x() != currentNode->position.x() && neighborPos.y() != currentNode->position.y()) {
-            movementCost = 1.414;  // Diagonal movement on X-Y plane
-        }
-        else if (neighborPos.x() != currentNode->position.x() && neighborPos.z() != currentNode->position.z()) {
-            movementCost = 1.414;  // Diagonal movement on X-Z plane
-        }
-        else if (neighborPos.y() != currentNode->position.y() && neighborPos.z() != currentNode->position.z()) {
-            movementCost = 1.414;  // Diagonal movement on Y-Z plane
-        }
+            // Check if movement is diagonal
+            if (
+                (neighborPos.x() != currentNode->position.x() && neighborPos.y() != currentNode->position.y()) ||
+                (neighborPos.x() != currentNode->position.x() && neighborPos.z() != currentNode->position.z()) ||
+                (neighborPos.y() != currentNode->position.y() && neighborPos.z() != currentNode->position.z())
+            ) {
+                movementCost = 1.414;
+            }
 
-        // For diagonal upward movements (as you specified earlier, it costs more)
-        if (neighborPos.z() > currentNode->position.z() && 
-        (neighborPos.x() != currentNode->position.x() || neighborPos.y() != currentNode->position.y())) {
-            movementCost *= 1.5;  // This will make the upward diagonal 1.414 * 1.5
-        }
+            if (neighborPos.z() > currentNode->position.z() &&
+            (neighborPos.x() != currentNode->position.x() || neighborPos.y() != currentNode->position.y())) {
+                movementCost *= 1.5;  // Upward diagonals cost more
+            }
 
-        float tentativeGCost = currentNode->gCost + movementCost;
+            float tentativeGCost = currentNode->gCost + movementCost;
 
             if (allNodes.find(neighborPos) == allNodes.end() || tentativeGCost < allNodes[neighborPos].gCost) {
                 allNodes[neighborPos] = PFNode(currentNode, neighborPos, tentativeGCost, _heuristic(world, neighborPos, end));

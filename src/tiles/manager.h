@@ -5,8 +5,8 @@
 
 class TileInstanceManager : public ManagerBase<TileInstance> {
 public:
-    TileInstanceManager(World *world);
-    ~TileInstanceManager();
+    explicit TileInstanceManager(World *world);
+    ~TileInstanceManager() override;
 
     TileInstance* InstanceTile(const Tile *tile, const Vec3 &pos);
     void RemoveInstanceAt(const Vec3 &pos);

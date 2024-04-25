@@ -27,8 +27,8 @@ private:
     std::string description;
     unsigned int maxHealth;
     bool isSolid = false;
-    
-    std::vector<SpriteVariant> spriteVariants; 
+
+    std::vector<SpriteVariant> spriteVariants;
 
 public:
     static TileType *UNINITIALIZED;
@@ -61,7 +61,7 @@ class TileInstance {
 public:
     const Tile *parent;
     unsigned short health;
-    
-    TileInstance(const Tile *parent);
+
+    explicit TileInstance(const Tile *parent);
     bool Update();
 };

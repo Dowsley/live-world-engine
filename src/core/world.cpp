@@ -8,7 +8,7 @@
 #include "../lib/noise.cpp"
 
 World::World(Vec3 dimensions)
-: dimensions(dimensions) 
+: dimensions(dimensions)
 {
     this->tileInstanceManager = std::make_unique<TileInstanceManager>(this);
     this->creatureManager = std::make_unique<CreatureManager>(this);
@@ -28,7 +28,7 @@ int World::GetWidth() const { return dimensions.width(); }
 int World::GetDepth() const { return dimensions.depth(); }
 const Vec3& World::GetDimensions() const { return dimensions; }
 std::list<Vec3> World::GetPath(const Vec3 &start, const Vec3 &end) const
-{ 
+{
     return Pathfinding::FindPath(this, start, end);
 }
 bool World::IsPositionEmpty(const Vec3 &pos) const
@@ -53,7 +53,7 @@ bool World::IsPositionWalkable(const Vec3 &pos) const
     if (!isEmpty) {
         return false; // Tile occupied by creature or solid block
     }
-    
+
     Vec3 below{pos.x(), pos.y(), pos.z() + 1};
     if (below.z() < 0) {
         return false; // Below tile is literally empty void below the map. TODO: Careful here.
@@ -86,12 +86,12 @@ void World::_setTile(const Vec3 &pos, TileType *type)
     if (!type) {
         throw std::runtime_error("Tile type at " + pos.ToString() + " is null");
     }
-    
+
     tile->type = type;
     tile->spriteVariantIndex = tile->type->GetRandomSpriteIndex();
 }
 
-/* TODO: Implement this + review if this system is correct, because there are tile references that may need to be updated 
+/* TODO: Implement this + review if this system is correct, because there are tile references that may need to be updated
  * Thinking about it now... wouldnt it be better if I just swap the entire structs? */
 void World::_swapTiles(Tile *tile1, Tile *tile2)
 {
@@ -103,7 +103,7 @@ void World::_swapTiles(Tile *tile1, Tile *tile2)
 
 bool World::_isInBounds(const Vec3 &pos) const
 {
-    bool res = 
+    bool res =
         (pos.x() < dimensions.width() && pos.x() >= 0)
         && (pos.y() < dimensions.height() && pos.y() >= 0)
         && (pos.z() < dimensions.depth() && pos.z() >= 0);
@@ -115,7 +115,7 @@ const Vec2& World::GetTileSprite(const Vec3 &pos) const
     Tile *t;
     Creature *c;
     std::tie(t, c) = _getTileAndCreature(pos);
-    
+
     if (c != nullptr && t->type->GetID() == "EMPTY") {
         return c->GetType().GetSpritePos();
     }
@@ -199,7 +199,7 @@ void World::GenerateTestBiome()
     for (int y = 0; y < dimensions.height(); y++) {
         for (int x = 0; x < dimensions.width(); x++) {
             flatIndex = GeometryUtils::Flatten2DCoords(Vec2(x, y), dimensions);
-            unsigned short inverseDepth = static_cast<unsigned short>(
+            auto inverseDepth = static_cast<unsigned short>(
                 ArithmeticsUtils::Scale(
                     noiseData[flatIndex],
                     -1.0f, 1.0f, 0.0f, static_cast<float>(dimensions.depth())
@@ -211,7 +211,7 @@ void World::GenerateTestBiome()
                     tileType = tileRegistry->GetTypeById("ROCK");
                 } else {
                     if (z > SOIL_LAYER_DEPTH) {
-                        tileType = (z == SOIL_LAYER_DEPTH + 1) 
+                        tileType = (z == SOIL_LAYER_DEPTH + 1)
                             ? tileRegistry->GetTypeById("GRASS")
                             : tileRegistry->GetTypeById("SOIL");
                     } else {
@@ -226,7 +226,7 @@ void World::GenerateTestBiome()
             }
         }
     }
-    
+
     /* 3. Spawn creatures from a cumulative-weighted chance pool */
     creatureManager->ClearCreatures();
 
@@ -245,7 +245,7 @@ void World::GenerateTestBiome()
     }
 
     int totalWeight = spawnChancePool.back().second;
-    const int noSpawnWeight = static_cast<int>(totalWeight / Settings::SPAWN_CHANCE - totalWeight); 
+    const int noSpawnWeight = static_cast<int>(totalWeight / Settings::SPAWN_CHANCE - totalWeight);
     totalWeight += noSpawnWeight;
 
     for (int y = 0; y < dimensions.height(); y++) {

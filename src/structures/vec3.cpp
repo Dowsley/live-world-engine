@@ -11,7 +11,7 @@ Vec3::Vec3()
 }
 
 
-Vec3::Vec3(Vec2 v, int z)
+Vec3::Vec3(const Vec2& v, int z)
 {
     e[0] = v.x;
     e[1] = v.y;
@@ -43,7 +43,7 @@ std::string Vec3::ToString() const
     return std::to_string(e[0]) + " " + std::to_string(e[1]) + " " + std::to_string(e[2]);
 }
 
-Vec3 Vec3::operator-() const { return Vec3(-e[0], -e[1], -e[2]); }
+Vec3 Vec3::operator-() const { return {-e[0], -e[1], -e[2]}; }
 int Vec3::operator[](int i) const { return e[i]; }
 int& Vec3::operator[](int i) { return e[i]; }
 
@@ -83,12 +83,12 @@ Vec3& Vec3::operator/=(const int t)
     return *this *= 1/t;
 }
 
-Vec3 operator+(const Vec3 &u, const Vec3 &v) { return Vec3(u[0] + v[0], u[1] + v[1], u[2] + v[2]); }
-Vec3 operator+(const Vec3 &u, int val) { return Vec3(u[0] + val, u[1] + val, u[2] + val); } 
-Vec3 operator+(int val, const Vec3 &u) { return u + val; } 
-Vec3 operator-(const Vec3 &u, const Vec3 &v) { return Vec3(u[0] - v[0], u[1] - v[1], u[2] - v[2]); }
-Vec3 operator*(const Vec3 &u, const Vec3 &v) { return Vec3(u[0] * v[0], u[1] * v[1], u[2] * v[2]); }
-Vec3 operator*(int t, const Vec3 &v) { return Vec3(t*v[0], t*v[1], t*v[2]); }
+Vec3 operator+(const Vec3 &u, const Vec3 &v) { return {u[0] + v[0], u[1] + v[1], u[2] + v[2]}; }
+Vec3 operator+(const Vec3 &u, int val) { return {u[0] + val, u[1] + val, u[2] + val}; }
+Vec3 operator+(int val, const Vec3 &u) { return u + val; }
+Vec3 operator-(const Vec3 &u, const Vec3 &v) { return {u[0] - v[0], u[1] - v[1], u[2] - v[2]}; }
+Vec3 operator*(const Vec3 &u, const Vec3 &v) { return {u[0] * v[0], u[1] * v[1], u[2] * v[2]}; }
+Vec3 operator*(int t, const Vec3 &v) { return {t*v[0], t*v[1], t*v[2]}; }
 Vec3 operator*(const Vec3 &v, int t) { return t * v; }
 Vec3 operator/(Vec3 v, int t) { return (1/t) * v; }
 std::ostream& operator<<(std::ostream &out, const Vec3 &v) { return out << "Vec3(" << v[0] << ' ' << v[1] << ' ' << v[2] << ")"; }
