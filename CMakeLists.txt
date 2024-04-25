@@ -58,3 +58,6 @@ target_link_libraries(live_world_engine stdc++fs)
 
 file(COPY assets DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
 file(COPY data DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
+
+set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -O0")
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -O0")
