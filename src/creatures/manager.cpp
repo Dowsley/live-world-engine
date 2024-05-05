@@ -32,7 +32,7 @@ Creature* CreatureManager::InstanceCreature(const std::string &typeID, const Vec
         throw std::runtime_error("Type not implemented: " + typeID);
     }
 
-    auto *newCreature = new Creature(*type, pos);
+    auto *newCreature = new Creature(*type, pos, worldRef);
     items[index] = newCreature;
 
     return newCreature;
@@ -49,9 +49,33 @@ void CreatureManager::RemoveCreatureAt(const Vec3 &pos)
 
 void CreatureManager::UpdateCreatures()
 {
-    for(auto & pair : items) {
-        pair.second->Update();
+    std::unordered_map<int, Creature*> updatedItems;
+
+    for(auto& pair : items) {
+        Creature *creature = pair.second;
+        std::optional<Vec3> posOpt = creature->Update();
+
+        if (!posOpt.has_value()) {
+            updatedItems[pair.first] = creature;  // No movement, keep creature in its current position
+            continue;
+        }
+
+        Vec3 newPos = posOpt.value();
+        if (!worldRef->IsInBounds(newPos) || !worldRef->IsPositionWalkable(newPos)) {
+            updatedItems[pair.first] = creature;  // Invalid move, keep creature in its current position
+            continue;
+        }
+        int newIndex = GeometryUtils::Flatten3DCoords(newPos, worldRef->GetDimensions());
+        if (updatedItems.find(newIndex) != updatedItems.end()) {
+            updatedItems[pair.first] = creature;  // Position already taken in this update cycle, keep creature in its current position
+            continue;
+        }
+
+        creature->SetPosition(newPos);
+        updatedItems[newIndex] = creature;
     }
+
+    items.swap(updatedItems);
 }
 
 void CreatureManager::TraverseCreatures(std::function<void(Creature*)> callback)

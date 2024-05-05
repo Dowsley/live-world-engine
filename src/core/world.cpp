@@ -74,7 +74,7 @@ std::tuple<Tile*, Creature*> World::_getTileAndCreature(const Vec3 &pos) const
 
 Tile* World::_getTile(const Vec3 &pos) const
 {
-    if (!_isInBounds(pos)) {
+    if (!IsInBounds(pos)) {
         return nullptr;
     }
     int flatIndex = GeometryUtils::Flatten3DCoords(pos, dimensions);
@@ -101,7 +101,7 @@ void World::_swapTiles(Tile *tile1, Tile *tile2)
     // std::swap(tile1->defaultBackColorIndex, tile2->defaultBackColorIndex);
 }
 
-bool World::_isInBounds(const Vec3 &pos) const
+bool World::IsInBounds(const Vec3 &pos) const
 {
     bool res =
         (pos.x() < dimensions.width() && pos.x() >= 0)

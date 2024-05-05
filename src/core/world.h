@@ -30,7 +30,6 @@ private:
     [[nodiscard]] Tile* _getTile(const Vec3 &pos) const;
     void _setTile(const Vec3 &pos, TileType *type);
     void _swapTiles(Tile *tile1, Tile *tile2);
-    [[nodiscard]] bool _isInBounds(const Vec3 &pos) const;
 
 public:
     explicit World(Vec3 dimensions);
@@ -43,6 +42,7 @@ public:
     [[nodiscard]] bool IsPositionEmpty(const Vec3 &pos) const;
     [[nodiscard]] bool IsThereCreatureAt(const Vec3 &pos) const;
     [[nodiscard]] bool IsPositionWalkable(const Vec3 &pos) const;
+    [[nodiscard]] bool IsInBounds(const Vec3 &pos) const;
     [[nodiscard]] std::list<Vec3> GetPath(const Vec3 &start, const Vec3 &end) const;
 
     [[nodiscard]] const Vec2& GetTileSprite(const Vec3 &pos) const;

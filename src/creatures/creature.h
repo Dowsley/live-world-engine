@@ -5,6 +5,8 @@
 
 #include "../structures/index.h"
 
+class World;
+
 //TODO: Make component-based creatures
 class CreatureType {
 public:
@@ -35,9 +37,10 @@ class Creature {
 private:
     const CreatureType &type;
     Vec3 pos;
+    World *worldRef;
 
 public:
-    Creature(const CreatureType &type, Vec3 pos);
+    Creature(const CreatureType &type, Vec3 pos, World *worldRef);
 
     [[nodiscard]] [[nodiscard]] const CreatureType& GetType() const;
     [[nodiscard]] [[nodiscard]] const Vec3& GetPosition() const;
