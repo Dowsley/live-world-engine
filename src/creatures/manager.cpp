@@ -1,16 +1,40 @@
 #include "manager.h"
 
 #include <utility>
-#include "../core/world.h"
 
-CreatureManager::CreatureManager(World *world) : ManagerBase<Creature>(world)
-{
+#include "../core/world.h"
+#include "geometry.h"
+
+CreatureManager::CreatureManager(World *world) : ManagerBase<Creature>(world) {
     registry.Initialize();
 }
 
-CreatureManager::~CreatureManager()
-{
+CreatureManager::~CreatureManager() {
     ClearItems();
+}
+
+Creature* CreatureManager::GetItemAt(const Vec3 &pos) const {
+    int index = GeometryUtils::Flatten3DCoords(pos, worldRef->GetDimensions());
+    auto it = items.find(index);
+    return (it != items.end()) ? it->second : nullptr;
+}
+
+void CreatureManager::TraverseItems(std::function<void(Creature*)> callback) {
+    for (auto& item : items) {
+        callback(item.second);
+    }
+}
+
+int CreatureManager::GetTotalItemCount() const {
+    return items.size();
+}
+
+void CreatureManager::ClearItems() {
+    for (auto& item : items) {
+        delete item.second;
+        item.second = nullptr;
+    }
+    items.clear();
 }
 
 const CreatureType* CreatureManager::GetTypeById(const std::string &id) const
@@ -76,11 +100,6 @@ void CreatureManager::UpdateCreatures()
     }
 
     items.swap(updatedItems);
-}
-
-void CreatureManager::TraverseCreatures(std::function<void(Creature*)> callback)
-{
-    TraverseItems(std::move(callback));
 }
 
 void CreatureManager::ClearCreatures() {

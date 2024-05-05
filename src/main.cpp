@@ -13,7 +13,7 @@ int main(int argc, char const *argv[])
     game.Construct(
         Settings::TILE_SIZE.x * 26,
         Settings::TILE_SIZE.y * 17,
-        4, 4
+        4, 4, true
         );
     game.Start();
 
