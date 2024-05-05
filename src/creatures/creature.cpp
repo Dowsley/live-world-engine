@@ -1,4 +1,5 @@
 #include "creature.h"
+#include "pathfinding.h"
 
 /* ---- CREATURE TYPE ---- */
 const std::string& CreatureType::GetID() const { return id; }
@@ -43,15 +44,46 @@ CreatureType* CreatureType::SetSpawnChance(int spawnChance) {
 Creature::Creature(const CreatureType &type, Vec3 pos, World *worldRef)
     : type(type), pos(pos), worldRef(worldRef) {};
 
-std::optional<Vec3> Creature::Update()
-{
-    int randomX = 1;
-    int randomY = 1;
-    if (randomX != 0 && randomY != 0) {
-        return Vec3(GetPosition().x() + randomX, GetPosition().y() + randomY, GetPosition().z());
+std::optional<Vec3> Creature::Update() {
+    if (path.empty()) { // If there is no current path
+        const int radius = 10; // Radius of 10 meters
+        std::random_device rd;
+        std::mt19937 gen(rd());
+        std::uniform_int_distribution<> dist(-radius, radius);
+
+        // Attempt to find a valid target position within a maximum of 100 tries
+        Vec3 target;
+        bool validTargetFound = false;
+        for (int i = 0; i < 100 && !validTargetFound; ++i) {
+            int dx = dist(gen);
+            int dy = dist(gen);
+            target = Vec3(pos.x() + dx, pos.y() + dy, pos.z());
+
+            // Check if the selected position is both walkable and empty
+            if (worldRef->IsPositionWalkable(target) && worldRef->IsPositionEmpty(target)) {
+                validTargetFound = true;
+            }
+        }
+
+        if (!validTargetFound) {
+            return std::nullopt; // No valid target found after multiple tries
+        }
+
+        // Get path to the new target position
+        path = Pathfinding::FindPath(worldRef, pos, target);
     }
-    return std::nullopt;
+
+    // Follow the path
+    if (!path.empty()) {
+        Vec3 nextStep = path.front();
+        path.pop_front();
+        SetPosition(nextStep); // Update creature's position
+        return nextStep;
+    }
+
+    return std::nullopt; // No movement if path is somehow empty
 }
+
 const CreatureType& Creature::GetType() const { return type; }
 const Vec3& Creature::GetPosition() const { return pos; }
 void Creature::SetPosition(Vec3 pos) { this->pos = pos; }

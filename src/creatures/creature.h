@@ -38,6 +38,7 @@ private:
     const CreatureType &type;
     Vec3 pos;
     World *worldRef;
+    std::list<Vec3> path;
 
 public:
     Creature(const CreatureType &type, Vec3 pos, World *worldRef);

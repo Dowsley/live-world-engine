@@ -22,11 +22,8 @@
   <component name="ChangeListManager">
     <list default="true" id="ffc73336-de0e-41e2-b857-b9784ba06f69" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/core/world.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/core/world.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/core/world.h" beforeDir="false" afterPath="$PROJECT_DIR$/src/core/world.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/creatures/creature.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/creatures/creature.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/creatures/creature.h" beforeDir="false" afterPath="$PROJECT_DIR$/src/creatures/creature.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/creatures/manager.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/creatures/manager.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/engine" beforeDir="false" afterPath="$PROJECT_DIR$/src/engine" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/engine/olcPixelGameEngine.h" beforeDir="false" afterPath="$PROJECT_DIR$/src/engine/olcPixelGameEngine.h" afterDir="false" />
     </list>
@@ -119,7 +116,7 @@
       <workItem from="1713892407661" duration="4974000" />
       <workItem from="1713916789944" duration="404000" />
       <workItem from="1713917222065" duration="3296000" />
-      <workItem from="1714868544958" duration="5261000" />
+      <workItem from="1714868544958" duration="5802000" />
     </task>
     <servers />
   </component>
