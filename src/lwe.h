@@ -5,9 +5,9 @@
 #include <string>
 
 #if _WIN32
-	#define REL_PATH_FOR_OS "assets\\tileset\\urizen.png"
+	#define REL_PATH_FOR_OS "assets\\tileset\\urizen_onebit_tileset__v1d0_colored.png"
 #else
-	#define REL_PATH_FOR_OS "assets/tileset/urizen.png"
+	#define REL_PATH_FOR_OS "assets/tileset/urizen_onebit_tileset__v1d0_colored.png"
 #endif
 
 #include "engine/olcPixelGameEngine.h"
@@ -49,7 +49,7 @@ private:
         bool pointerBlink = true;
         Color color = olc::YELLOW;
         float accumulatedTime = 0.0f;
-        const float BLINK_INTERVAl = 0.35f; 
+        const float BLINK_INTERVAl = 0.35f;
         struct MoveInput moveInput;
         Vec3 start;
         Vec3 end;

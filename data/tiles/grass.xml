@@ -2,9 +2,9 @@
     <DESCRIPTION>Lush, green grass. Smells good.</DESCRIPTION>
     <NAME singular="grass" plural="grasses" general="grass" />
     <MAX_HEALTH>100</MAX_HEALTH>
-    <SPRITE x="14" y="4" />
-    <SPRITE x="15" y="4" />
-    <SPRITE x="15" y="2" />
+    <SPRITE x="3" y="9" />
+    <SPRITE x="4" y="9" />
+    <SPRITE x="5" y="9" />
     <COLOR r="53" g="178" b="58"/>
     <SOLID />
 </TILE>

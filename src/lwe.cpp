@@ -99,7 +99,7 @@ void LiveWorldEngine::_drawTile(const Vec2 &pos, const Color &color, const Vec2 
         for (int j = 0; j < Settings::TILE_SIZE.x; j++) {
             screenPos = Vec2((x * Settings::TILE_SIZE.x) + j, (y * Settings::TILE_SIZE.y) + i);
             ref = tileSet.GetPixel(j + realSpritePos.x, i + realSpritePos.y);
-            if (ref == Settings::FORE_PLACEHOLDER) {
+            if (ref != Settings::BACK_PLACEHOLDER) {
                 Draw(screenPos, color);
             }
             else {

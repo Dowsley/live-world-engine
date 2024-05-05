@@ -2,7 +2,7 @@
     <DESCRIPTION>A tiny shelled ocean creature with many long legs. It has two large pincers on its front limbs.</DESCRIPTION>
     <NAME singular="crab" plural="crabs" general="crab" />
     <SPRITE>
-        <POSITION x="7" y="13"/>
+        <POSITION x="7" y="18"/>
         <COLOR r="241" g="0" b="0"/>
     </SPRITE>
     <SPAWN_CHANCE>20</SPAWN_CHANCE>

@@ -2,7 +2,7 @@
     <DESCRIPTION>Strike the Earth!</DESCRIPTION>
     <NAME singular="soil" plural="soils" general="soil" />
     <MAX_HEALTH>300</MAX_HEALTH>
-    <SPRITE x="9" y="32" />
+    <SPRITE x="25" y="0" />
     <COLOR r="40" g="20" b="0" />
     <SOLID />
 </TILE>
