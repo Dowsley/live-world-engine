@@ -8,12 +8,12 @@
 //TODO: Make component-based creatures
 class CreatureType {
 public:
-    const std::string& GetID() const;
-    const std::string& GetDescription() const;
-    const std::string& GetName() const;
-    const Vec2& GetSpritePos() const;
-    const Color& GetSpriteColor() const;
-    int GetSpawnChance() const;
+    [[nodiscard]] const std::string& GetID() const;
+    [[nodiscard]] const std::string& GetDescription() const;
+    [[nodiscard]] const std::string& GetName() const;
+    [[nodiscard]] const Vec2& GetSpritePos() const;
+    [[nodiscard]] const Color& GetSpriteColor() const;
+    [[nodiscard]] int GetSpawnChance() const;
 
     CreatureType* SetID(const std::string &id);
     CreatureType* SetDescription(const std::string &description);
@@ -39,8 +39,8 @@ private:
 public:
     Creature(const CreatureType &type, Vec3 pos);
 
-    const CreatureType& GetType() const;
-    const Vec3& GetPosition() const;
+    [[nodiscard]] [[nodiscard]] const CreatureType& GetType() const;
+    [[nodiscard]] [[nodiscard]] const Vec3& GetPosition() const;
     void SetPosition(Vec3 pos);
     std::optional<Vec3> Update();
 };

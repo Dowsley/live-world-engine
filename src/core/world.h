@@ -26,30 +26,30 @@ private:
     std::unique_ptr<TileRegistry> tileRegistry;
     std::unique_ptr<TileInstanceManager> tileInstanceManager;
 
-    std::tuple<Tile*, Creature*> _getTileAndCreature(const Vec3 &pos) const;
-    Tile* _getTile(const Vec3 &pos) const;
+    [[nodiscard]] std::tuple<Tile*, Creature*> _getTileAndCreature(const Vec3 &pos) const;
+    [[nodiscard]] Tile* _getTile(const Vec3 &pos) const;
     void _setTile(const Vec3 &pos, TileType *type);
     void _swapTiles(Tile *tile1, Tile *tile2);
-    bool _isInBounds(const Vec3 &pos) const;
+    [[nodiscard]] bool _isInBounds(const Vec3 &pos) const;
 
 public:
-    World(Vec3 dimensions);
+    explicit World(Vec3 dimensions);
     ~World();
 
-    int GetHeight() const;
-    int GetWidth() const;
-    int GetDepth() const;
-    const Vec3& GetDimensions() const;
-    bool IsPositionEmpty(const Vec3 &pos) const;
-    bool IsThereCreatureAt(const Vec3 &pos) const;
-    bool IsPositionWalkable(const Vec3 &pos) const;
-    std::list<Vec3> GetPath(const Vec3 &start, const Vec3 &end) const;
+    [[nodiscard]] int GetHeight() const;
+    [[nodiscard]] int GetWidth() const;
+    [[nodiscard]] int GetDepth() const;
+    [[nodiscard]] const Vec3& GetDimensions() const;
+    [[nodiscard]] bool IsPositionEmpty(const Vec3 &pos) const;
+    [[nodiscard]] bool IsThereCreatureAt(const Vec3 &pos) const;
+    [[nodiscard]] bool IsPositionWalkable(const Vec3 &pos) const;
+    [[nodiscard]] std::list<Vec3> GetPath(const Vec3 &start, const Vec3 &end) const;
 
-    const Vec2& GetTileSprite(const Vec3 &pos) const;
-    const Color& GetTileColor(const Vec3 &pos) const;
-    TileType* GetTypeForTileAt(const Vec3 &pos) const;
-    std::string GetTypeIDForTileAt(const Vec3 &pos) const;
-    std::string GetTypeIDForCreatureAt(const Vec3 &pos) const;
+    [[nodiscard]] const Vec2& GetTileSprite(const Vec3 &pos) const;
+    [[nodiscard]] const Color& GetTileColor(const Vec3 &pos) const;
+    [[nodiscard]] TileType* GetTypeForTileAt(const Vec3 &pos) const;
+    [[nodiscard]] std::string GetTypeIDForTileAt(const Vec3 &pos) const;
+    [[nodiscard]] std::string GetTypeIDForCreatureAt(const Vec3 &pos) const;
 
     void LoadData();
     void Update();

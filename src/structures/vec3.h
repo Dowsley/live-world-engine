@@ -12,21 +12,21 @@ class Vec3 final
         Vec3(int x, int y, int z);
 
         // No, I'm not gonna respect standard names here. I want it to be short.
-        int x() const;
-        int y() const;
-        int z() const;
-        int width() const;
-        int height() const;
-        int depth() const;
+        [[nodiscard]] int x() const;
+        [[nodiscard]] int y() const;
+        [[nodiscard]] int z() const;
+        [[nodiscard]] int width() const;
+        [[nodiscard]] int height() const;
+        [[nodiscard]] int depth() const;
 
 
         // here I will
-        int GetFlattenedSize() const;
+        [[nodiscard]] int GetFlattenedSize() const;
         void SetX(int x);
         void SetY(int y);
         void SetZ(int z);
 
-        std::string ToString() const;
+        [[nodiscard]] std::string ToString() const;
 
         Vec3 operator-() const;
         int operator[](int i) const;

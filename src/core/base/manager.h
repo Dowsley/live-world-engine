@@ -32,7 +32,7 @@ public:
         }
     }
 
-    int GetTotalItemCount() const {
+    [[nodiscard]] int GetTotalItemCount() const {
         return items.size();
     }
 

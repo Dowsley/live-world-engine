@@ -33,15 +33,15 @@ private:
 public:
     static TileType *UNINITIALIZED;
 
-    const std::string& GetID() const;
-    const std::string& GetDescription() const;
-    const std::string& GetName() const;
-    const std::vector<SpriteVariant>& GetSpriteVariants() const;
-    unsigned int GetMaxHealth() const;
-    bool GetIsSolid() const;
+    [[nodiscard]] const std::string& GetID() const;
+    [[nodiscard]] const std::string& GetDescription() const;
+    [[nodiscard]] const std::string& GetName() const;
+    [[nodiscard]] const std::vector<SpriteVariant>& GetSpriteVariants() const;
+    [[nodiscard]] unsigned int GetMaxHealth() const;
+    [[nodiscard]] bool GetIsSolid() const;
 
-    const SpriteVariant& GetSprite(int index) const;
-    int GetRandomSpriteIndex() const;
+    [[nodiscard]] const SpriteVariant& GetSprite(int index) const;
+    [[nodiscard]] int GetRandomSpriteIndex() const;
 
     TileType* SetID(const std::string &id);
     TileType* SetDescription(const std::string &description);
