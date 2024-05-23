@@ -41,10 +41,10 @@ CreatureType* CreatureType::SetSpawnChance(int spawnChance) {
 }
 
 /* ---- CREATURE ---- */
-Creature::Creature(const CreatureType &type, Vec3 pos, World *worldRef)
-    : type(type), pos(pos), worldRef(worldRef) {};
+Creature::Creature(const CreatureType &type, Vec3 pos)
+    : type(type), pos(pos) {};
 
-std::optional<Vec3> Creature::Update() {
+std::optional<Vec3> Creature::Update(const World &world) {
     if (path.empty()) { // If there is no current path
         const int radius = 10; // Radius of 10 meters
         std::random_device rd;
@@ -60,7 +60,7 @@ std::optional<Vec3> Creature::Update() {
             target = Vec3(pos.x() + dx, pos.y() + dy, pos.z());
 
             // Check if the selected position is both walkable and empty
-            if (worldRef->IsPositionWalkable(target) && worldRef->IsPositionEmpty(target)) {
+            if (world.IsPositionWalkable(target) && world.IsPositionEmpty(target)) {
                 validTargetFound = true;
             }
         }
@@ -70,7 +70,7 @@ std::optional<Vec3> Creature::Update() {
         }
 
         // Get path to the new target position
-        path = Pathfinding::FindPath(worldRef, pos, target);
+        path = Pathfinding::FindPath(world, pos, target);
     }
 
     // Follow the path

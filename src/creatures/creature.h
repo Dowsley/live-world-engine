@@ -37,14 +37,13 @@ class Creature {
 private:
     const CreatureType &type;
     Vec3 pos;
-    World *worldRef;
     std::list<Vec3> path;
 
 public:
-    Creature(const CreatureType &type, Vec3 pos, World *worldRef);
+    Creature(const CreatureType &type, Vec3 pos);
 
     [[nodiscard]] [[nodiscard]] const CreatureType& GetType() const;
     [[nodiscard]] [[nodiscard]] const Vec3& GetPosition() const;
     void SetPosition(Vec3 pos);
-    std::optional<Vec3> Update();
+    std::optional<Vec3> Update(const World &world);
 };

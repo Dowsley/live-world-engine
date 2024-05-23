@@ -29,7 +29,7 @@ int World::GetDepth() const { return dimensions.depth(); }
 const Vec3& World::GetDimensions() const { return dimensions; }
 std::list<Vec3> World::GetPath(const Vec3 &start, const Vec3 &end) const
 {
-    return Pathfinding::FindPath(this, start, end);
+    return Pathfinding::FindPath(*this, start, end);
 }
 bool World::IsPositionEmpty(const Vec3 &pos) const
 {
@@ -163,7 +163,7 @@ void World::LoadData()
 
 void World::Update()
 {
-    creatureManager->UpdateCreatures();
+    creatureManager->UpdateCreatures(*this);
 }
 
 void World::Generate()

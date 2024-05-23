@@ -56,7 +56,7 @@ Creature* CreatureManager::InstanceCreature(const std::string &typeID, const Vec
         throw std::runtime_error("Type not implemented: " + typeID);
     }
 
-    auto *newCreature = new Creature(*type, pos, worldRef);
+    auto *newCreature = new Creature(*type, pos);
     items[index] = newCreature;
 
     return newCreature;
@@ -71,13 +71,13 @@ void CreatureManager::RemoveCreatureAt(const Vec3 &pos)
     }
 }
 
-void CreatureManager::UpdateCreatures()
+void CreatureManager::UpdateCreatures(const World &world)
 {
     std::unordered_map<int, Creature*> updatedItems;
 
     for(auto& pair : items) {
         Creature *creature = pair.second;
-        std::optional<Vec3> posOpt = creature->Update();
+        std::optional<Vec3> posOpt = creature->Update(world);
 
         if (!posOpt.has_value()) {
             updatedItems[pair.first] = creature;  // No movement, keep creature in its current position

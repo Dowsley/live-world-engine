@@ -22,14 +22,15 @@
   <component name="ChangeListManager">
     <list default="true" id="ffc73336-de0e-41e2-b857-b9784ba06f69" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/core/base/manager.h" beforeDir="false" afterPath="$PROJECT_DIR$/src/core/base/manager.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/core/pathfinding.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/core/pathfinding.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/core/pathfinding.h" beforeDir="false" afterPath="$PROJECT_DIR$/src/core/pathfinding.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/core/world.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/core/world.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/creatures/creature.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/creatures/creature.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/creatures/creature.h" beforeDir="false" afterPath="$PROJECT_DIR$/src/creatures/creature.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/creatures/manager.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/creatures/manager.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/creatures/manager.h" beforeDir="false" afterPath="$PROJECT_DIR$/src/creatures/manager.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/engine" beforeDir="false" afterPath="$PROJECT_DIR$/src/engine" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/engine/olcPixelGameEngine.h" beforeDir="false" afterPath="$PROJECT_DIR$/src/engine/olcPixelGameEngine.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/tiles/manager.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/tiles/manager.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/tiles/manager.h" beforeDir="false" afterPath="$PROJECT_DIR$/src/tiles/manager.h" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -94,9 +95,9 @@
     </key>
   </component>
   <component name="RunManager">
-    <configuration default="true" type="CLionExternalRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true">
+    <configuration default="true" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true">
       <method v="2">
-        <option name="CLION.EXTERNAL.BUILD" enabled="true" />
+        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
       </method>
     </configuration>
     <configuration name="live_world_engine" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="live_world_engine" TARGET_NAME="live_world_engine" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="live_world_engine" RUN_TARGET_NAME="live_world_engine">

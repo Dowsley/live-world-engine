@@ -20,18 +20,18 @@ PFNode::PFNode(PFNode *parent, Vec3 position, float gCost, float hCost)
 {}
 float PFNode::fCost() const { return gCost + hCost; }
 
-bool Pathfinding::_isValid(const World *world, const Vec3 &pos)
+bool Pathfinding::_isValid(const World &world, const Vec3 &pos)
 {
-    bool valid = world->IsPositionWalkable(pos);
+    bool valid = world.IsPositionWalkable(pos);
     return valid;
 }
 
-float Pathfinding::_heuristic(const World *world, const Vec3 &a, const Vec3 &b)
+float Pathfinding::_heuristic(const World &world, const Vec3 &a, const Vec3 &b)
 {
     return std::abs(a.x() - b.x()) + std::abs(a.y() - b.y()) + std::abs(a.z() - b.z());
 }
 
-std::list<Vec3> Pathfinding::FindPath(const World *world, const Vec3 &start, const Vec3 &end, bool debug)
+std::list<Vec3> Pathfinding::FindPath(const World &world, const Vec3 &start, const Vec3 &end, bool debug)
 {
     if (!_isValid(world, end)) {
         if (debug) std::cout << "End point is invalid." << std::endl;
