@@ -6,4 +6,5 @@
         <COLOR r="255" g="170" b="34" />
     </SPRITE>
     <SPAWN_CHANCE>10</SPAWN_CHANCE>
+    <DIET type="CARNIVORE" />
 </CREATURE>

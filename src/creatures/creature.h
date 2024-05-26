@@ -7,6 +7,11 @@
 
 class World;
 
+enum DietType {
+    CARNIVORE,
+    HERBIVORE
+};
+
 //TODO: Make component-based creatures
 class CreatureType {
 public:
@@ -16,6 +21,7 @@ public:
     [[nodiscard]] const Vec2& GetSpritePos() const;
     [[nodiscard]] const Color& GetSpriteColor() const;
     [[nodiscard]] int GetSpawnChance() const;
+    [[nodiscard]] DietType GetDietType() const;
 
     CreatureType* SetID(const std::string &id);
     CreatureType* SetDescription(const std::string &description);
@@ -23,6 +29,7 @@ public:
     CreatureType* SetSpritePos(const Vec2 &pos);
     CreatureType* SetSpriteColor(const Color &color);
     CreatureType* SetSpawnChance(int chance);
+    CreatureType* SetDietType(DietType dietType);
 
 private:
     std::string id;
@@ -31,6 +38,7 @@ private:
     Vec2 spritePos;
     Color spriteColor;
     int spawnChance;
+    DietType dietType;
 };
 
 class Creature {

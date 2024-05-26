@@ -256,9 +256,9 @@ void LiveWorldEngine::_simulate(float fElapsedTime)
 bool LiveWorldEngine::_updateUI(float fElapsedTime)
 {
     viewMode.accumulatedTime += fElapsedTime;
-    if (viewMode.accumulatedTime > viewMode.BLINK_INTERVAl) {
+    if (viewMode.accumulatedTime > viewMode.BLINK_INTERVAL) {
         viewMode.pointerBlink = !viewMode.pointerBlink;
-        viewMode.accumulatedTime -= viewMode.BLINK_INTERVAl;
+        viewMode.accumulatedTime -= viewMode.BLINK_INTERVAL;
     }
 
     return true;

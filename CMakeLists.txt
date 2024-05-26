@@ -56,8 +56,17 @@ target_link_libraries(live_world_engine
 
 target_link_libraries(live_world_engine stdc++fs)
 
-file(COPY assets DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
-file(COPY data DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
+add_custom_command(
+        TARGET live_world_engine PRE_BUILD
+        COMMAND ${CMAKE_COMMAND} -E remove_directory $<TARGET_FILE_DIR:live_world_engine>/assets
+        COMMAND ${CMAKE_COMMAND} -E copy_directory ${CMAKE_SOURCE_DIR}/assets $<TARGET_FILE_DIR:live_world_engine>/assets
+)
+
+add_custom_command(
+        TARGET live_world_engine PRE_BUILD
+        COMMAND ${CMAKE_COMMAND} -E remove_directory $<TARGET_FILE_DIR:live_world_engine>/data
+        COMMAND ${CMAKE_COMMAND} -E copy_directory ${CMAKE_SOURCE_DIR}/data $<TARGET_FILE_DIR:live_world_engine>/data
+)
 
 set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -O0")
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -O0")

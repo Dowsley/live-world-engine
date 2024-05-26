@@ -44,12 +44,12 @@ private:
 
     struct {
         Vec2 pointerPos;
-        Vec2 pointerSpritePos = Vec2(18, 49);
+        Vec2 pointerSpritePos = Vec2(96, 49);
         bool active = false;
         bool pointerBlink = true;
         Color color = olc::YELLOW;
         float accumulatedTime = 0.0f;
-        const float BLINK_INTERVAl = 0.35f;
+        const float BLINK_INTERVAL = 0.35f;
         struct MoveInput moveInput;
         Vec3 start;
         Vec3 end;

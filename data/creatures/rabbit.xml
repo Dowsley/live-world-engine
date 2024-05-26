@@ -1,0 +1,10 @@
+<CREATURE id="RABBIT">
+    <DESCRIPTION>A tiny, jumpy herbivore.</DESCRIPTION>
+    <NAME singular="rabbit" plural="rabbits" general="rabbit" />
+    <SPRITE>
+        <POSITION x="3" y="20"/>
+        <COLOR r="220" g="220" b="220"/>
+    </SPRITE>
+    <SPAWN_CHANCE>20</SPAWN_CHANCE>
+    <DIET type="HERBIVORE" />
+</CREATURE>

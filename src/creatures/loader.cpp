@@ -38,5 +38,11 @@ CreatureType* CreatureLoader::_loadSpecific(const std::string &creatureFile) {
             )
     );
 
+    /* Behaviour */
+    tinyxml2::XMLElement *dietElem = creatureElem->FirstChildElement("DIET");
+    std::string dietTypeStr = dietElem->Attribute("type");
+    creatureType
+            ->SetDietType(dietTypeStr == "CARNIVORE" ? DietType::CARNIVORE : DietType::HERBIVORE);
+
     return creatureType;
 }
