@@ -21,18 +21,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="ffc73336-de0e-41e2-b857-b9784ba06f69" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/data/creatures/rabbit.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/CMakeLists.txt" beforeDir="false" afterPath="$PROJECT_DIR$/CMakeLists.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/creatures/crab.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/creatures/snake.xml" beforeDir="false" afterPath="$PROJECT_DIR$/data/creatures/snake.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/creatures/creature.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/creatures/creature.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/creatures/creature.h" beforeDir="false" afterPath="$PROJECT_DIR$/src/creatures/creature.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/creatures/loader.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/creatures/loader.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/engine" beforeDir="false" afterPath="$PROJECT_DIR$/src/engine" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/engine/olcPixelGameEngine.h" beforeDir="false" afterPath="$PROJECT_DIR$/src/engine/olcPixelGameEngine.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/lwe.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/lwe.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/lwe.h" beforeDir="false" afterPath="$PROJECT_DIR$/src/lwe.h" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -44,7 +36,7 @@
   </component>
   <component name="ExecutionTargetManager" SELECTED_TARGET="CMakeBuildProfile:Debug" />
   <component name="Git.Settings">
-    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/src/engine" />
   </component>
   <component name="NamedScopeManager">
     <scope name="Exclude Pixel game engine from search" pattern="!file[live-world-engine]:src/engine//*&amp;&amp;!ext:*/&amp;&amp;!file[live-world-engine]:src/lib//*" />
@@ -97,9 +89,9 @@
     </key>
   </component>
   <component name="RunManager">
-    <configuration default="true" type="CLionExternalRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true">
+    <configuration default="true" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true">
       <method v="2">
-        <option name="CLION.EXTERNAL.BUILD" enabled="true" />
+        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
       </method>
     </configuration>
     <configuration name="live_world_engine" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="live_world_engine" TARGET_NAME="live_world_engine" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="live_world_engine" RUN_TARGET_NAME="live_world_engine">
@@ -127,6 +119,9 @@
       <workItem from="1716504271915" duration="80000" />
       <workItem from="1716504354735" duration="5974000" />
       <workItem from="1716567854671" duration="5180000" />
+      <workItem from="1718237255525" duration="556000" />
+      <workItem from="1718237832683" duration="94000" />
+      <workItem from="1718237985414" duration="548000" />
     </task>
     <servers />
   </component>

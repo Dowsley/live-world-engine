@@ -4,11 +4,6 @@ project(live_world_engine)
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-find_package(X11 REQUIRED)
-find_package(OpenGL REQUIRED)
-find_package(PNG REQUIRED)
-find_package(Threads REQUIRED)
-
 include_directories(
         src
         src/core
@@ -47,14 +42,32 @@ add_executable(live_world_engine
         src/creatures/loader.cpp
 )
 
-target_link_libraries(live_world_engine
-        ${X11_LIBRARIES}
-        ${OPENGL_LIBRARIES}
-        ${CMAKE_THREAD_LIBS_INIT}
-        ${PNG_LIBRARY}
-)
+if (WIN32)
+    target_link_libraries(live_world_engine
+            user32
+            gdi32
+            opengl32
+            gdiplus
+            Shlwapi
+            dwmapi
+            stdc++fs
+    )
+else()
+    find_package(X11 REQUIRED)
+    find_package(OpenGL REQUIRED)
+    find_package(Threads REQUIRED)
+    find_package(PNG REQUIRED)
+    find_package(ZLIB REQUIRED)
 
-target_link_libraries(live_world_engine stdc++fs)
+    target_link_libraries(live_world_engine
+            ${X11_LIBRARIES}
+            ${OPENGL_LIBRARIES}
+            ${CMAKE_THREAD_LIBS_INIT}
+            ${PNG_LIBRARY}
+            ${ZLIB_LIBRARIES}
+            stdc++fs
+    )
+endif()
 
 add_custom_command(
         TARGET live_world_engine PRE_BUILD
