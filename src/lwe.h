@@ -1,7 +1,5 @@
 #pragma once
 
-#define OLC_PGE_APPLICATION
-
 #include <string>
 
 #if _WIN32

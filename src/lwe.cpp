@@ -1,3 +1,5 @@
+#define OLC_IMAGE_STB
+#define OLC_PGE_APPLICATION
 #include "lwe.h"
 
 LiveWorldEngine::LiveWorldEngine() {

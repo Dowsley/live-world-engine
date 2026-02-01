@@ -52,12 +52,36 @@ if (WIN32)
             dwmapi
             stdc++fs
     )
+elseif(APPLE)
+    # macOS uses GLUT (native, no X11 required)
+    # Using stb_image instead of libpng for image loading
+    find_package(OpenGL REQUIRED)
+    find_package(GLUT REQUIRED)
+    find_package(Threads REQUIRED)
+
+    target_include_directories(live_world_engine PRIVATE
+            ${OPENGL_INCLUDE_DIR}
+            ${GLUT_INCLUDE_DIR}
+    )
+
+    target_link_libraries(live_world_engine
+            ${OPENGL_LIBRARIES}
+            ${GLUT_LIBRARIES}
+            ${CMAKE_THREAD_LIBS_INIT}
+    )
 else()
+    # Linux uses X11
     find_package(X11 REQUIRED)
     find_package(OpenGL REQUIRED)
     find_package(Threads REQUIRED)
     find_package(PNG REQUIRED)
     find_package(ZLIB REQUIRED)
+
+    target_include_directories(live_world_engine PRIVATE
+            ${X11_INCLUDE_DIR}
+            ${OPENGL_INCLUDE_DIR}
+            ${PNG_INCLUDE_DIRS}
+    )
 
     target_link_libraries(live_world_engine
             ${X11_LIBRARIES}
@@ -65,7 +89,6 @@ else()
             ${CMAKE_THREAD_LIBS_INIT}
             ${PNG_LIBRARY}
             ${ZLIB_LIBRARIES}
-            stdc++fs
     )
 endif()
 
