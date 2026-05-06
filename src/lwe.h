@@ -3,12 +3,12 @@
 #include <string>
 
 #if _WIN32
-	#define REL_PATH_FOR_OS "assets\\tileset\\urizen_onebit_tileset__v1d0_colored.png"
+    #define REL_PATH_FOR_OS "assets\\tileset\\urizen_onebit_tileset__v1d0_colored.png"
 #else
-	#define REL_PATH_FOR_OS "assets/tileset/urizen_onebit_tileset__v1d0_colored.png"
+    #define REL_PATH_FOR_OS "assets/tileset/urizen_onebit_tileset__v1d0_colored.png"
 #endif
 
-#include "engine/olcPixelGameEngine.h"
+#include "platform/pixel_engine.h"
 
 #include "core/index.h"
 #include "tiles/index.h"
@@ -17,14 +17,14 @@
 #include "structures/index.h"
 #include "lib/index.h"
 
-class LiveWorldEngine : public olc::PixelGameEngine
+class LiveWorldEngine : public pge::PixelGameEngine
 {
 public:
     LiveWorldEngine();
 
 private:
     // Note: If the game is mostly black and blue, then the path to the tileset is wrong.
-    olc::Sprite tileSet{REL_PATH_FOR_OS};
+    pge::Sprite tileSet{REL_PATH_FOR_OS};
     World world{Settings::WORLD_DIMENSIONS};
 
     struct {
@@ -45,7 +45,7 @@ private:
         Vec2 pointerSpritePos = Vec2(96, 49);
         bool active = false;
         bool pointerBlink = true;
-        Color color = olc::YELLOW;
+        Color color = pge::YELLOW;
         float accumulatedTime = 0.0f;
         const float BLINK_INTERVAL = 0.35f;
         struct MoveInput moveInput;

@@ -1,5 +1,3 @@
-#define OLC_IMAGE_STB
-#define OLC_PGE_APPLICATION
 #include "lwe.h"
 
 LiveWorldEngine::LiveWorldEngine() {
@@ -12,7 +10,7 @@ LiveWorldEngine::LiveWorldEngine() {
 
 void LiveWorldEngine::_drawWorld()
 {
-    Clear(olc::BLACK);
+    Clear(pge::BLACK);
     for (int y = 0; y < (ScreenHeight() / Settings::TILE_SIZE.y); y++) {
         for (int x = 0; x < (ScreenWidth() / Settings::TILE_SIZE.x); x++) {
             int mapX = x + (int) camera.posX;
@@ -55,8 +53,8 @@ void LiveWorldEngine::_drawWorld()
     }
     std::string str = "Layer: ";
     str.append(std::to_string(currDepth));
-    DrawString(Vec2(0, 0), str, olc::WHITE, 1);
-    DrawString(Vec2(0, 10), paused ? "Paused" : "Active", olc::WHITE, 1);
+    DrawString(Vec2(0, 0), str, pge::WHITE, 1);
+    DrawString(Vec2(0, 10), paused ? "Paused" : "Active", pge::WHITE, 1);
 
     if (viewMode.active) {
         Vec3 viewPosMap = Vec3(
@@ -69,7 +67,7 @@ void LiveWorldEngine::_drawWorld()
         DrawString(
             Vec2(0, 20),
             viewPosMap.ToString() + ": T: '" + tileID + "', C: '" + creatureID + "'",
-            olc::WHITE, 1
+            pge::WHITE, 1
         );
         str = "PATH: ";
         if (viewMode.tracePath == 0) {
@@ -83,7 +81,7 @@ void LiveWorldEngine::_drawWorld()
         DrawString(
             Vec2(0, 30),
             str,
-            olc::WHITE, 1
+            pge::WHITE, 1
         );
     }
 }
@@ -116,52 +114,52 @@ void LiveWorldEngine::_handleInputs()
     camera.speedMultiplier = 1;
 
     // Press 'M' key to regenerate world
-    if (GetKey(olc::Key::M).bReleased) {
+    if (GetKey(pge::Key::M).bReleased) {
         world.Generate();
     }
 
     // Hold 'Z' key to move camera faster
-    if (GetKey(olc::Key::Z).bHeld) {
+    if (GetKey(pge::Key::Z).bHeld) {
         camera.speedMultiplier = 4;
     }
 
     // Press 'X' key to descend depth
-    if (GetKey(olc::Key::X).bReleased) {
+    if (GetKey(pge::Key::X).bReleased) {
         if (currDepth != Settings::WORLD_DIMENSIONS.depth() - 1) {
             currDepth += 1;
         }
     }
 
     // Press 'C' key to ascend depth
-    if (GetKey(olc::Key::C).bReleased) {
+    if (GetKey(pge::Key::C).bReleased) {
         if (currDepth != 0) {
             currDepth -= 1;
         }
     }
 
     // Press 'SPACE' key to toggle pause simulation
-    if (GetKey(olc::Key::SPACE).bReleased) {
+    if (GetKey(pge::Key::SPACE).bReleased) {
         paused = !paused;
     }
 
     // Press 'K' key to toggle view mode
-    if (GetKey(olc::Key::K).bReleased) {
+    if (GetKey(pge::Key::K).bReleased) {
         viewMode.active = !viewMode.active;
     }
 
     // Camera movement
-    moveInput.left = GetKey(olc::Key::LEFT).bHeld;
-    moveInput.right = GetKey(olc::Key::RIGHT).bHeld;
-    moveInput.up = GetKey(olc::Key::UP).bHeld;
-    moveInput.down = GetKey(olc::Key::DOWN).bHeld;
+    moveInput.left = GetKey(pge::Key::LEFT).bHeld;
+    moveInput.right = GetKey(pge::Key::RIGHT).bHeld;
+    moveInput.up = GetKey(pge::Key::UP).bHeld;
+    moveInput.down = GetKey(pge::Key::DOWN).bHeld;
 
     // View Mode
-    viewMode.moveInput.left = GetKey(olc::Key::LEFT).bReleased;
-    viewMode.moveInput.right = GetKey(olc::Key::RIGHT).bReleased;
-    viewMode.moveInput.up = GetKey(olc::Key::UP).bReleased;
-    viewMode.moveInput.down = GetKey(olc::Key::DOWN).bReleased;
+    viewMode.moveInput.left = GetKey(pge::Key::LEFT).bReleased;
+    viewMode.moveInput.right = GetKey(pge::Key::RIGHT).bReleased;
+    viewMode.moveInput.up = GetKey(pge::Key::UP).bReleased;
+    viewMode.moveInput.down = GetKey(pge::Key::DOWN).bReleased;
 
-    if (GetKey(olc::Key::ENTER).bReleased && viewMode.active) {
+    if (GetKey(pge::Key::ENTER).bReleased && viewMode.active) {
         if (viewMode.tracePath == 0) {
             viewMode.start = Vec3(
                 viewMode.pointerPos.x + (int) camera.posX,
@@ -186,7 +184,7 @@ void LiveWorldEngine::_handleInputs()
             }
         }
     }
-    if (GetKey(olc::Key::ESCAPE).bReleased && viewMode.tracePath) {
+    if (GetKey(pge::Key::ESCAPE).bReleased && viewMode.tracePath) {
         viewMode.tracePath = 0;
     }
 }

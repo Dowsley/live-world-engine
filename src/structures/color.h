@@ -1,5 +1,5 @@
 #pragma once
 
-#include "../engine/olcPixelGameEngine.h"
+#include "../platform/pixel_engine.h"
 
-using Color = olc::Pixel;
+using Color = pge::Color;

@@ -6,7 +6,6 @@
 
 #include "../core/pathfinding.h"
 
-#include "../engine/olcPixelGameEngine.h"
 #include "../structures/index.h"
 #include "../creatures/manager.h"
 #include "../tiles/manager.h"

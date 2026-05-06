@@ -1,11 +1,17 @@
 # IDEs
 .vscode
+.idea
 
 # Misc
-\.DS_Store
+.DS_Store
 
 # Build
-cmake-build-debug
+build/
+cmake-build-*/
 
-# Engine
-src/engine
+# vcpkg
+vcpkg_installed/
+
+# Force-track justfile despite global ignore
+!justfile
+

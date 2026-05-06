@@ -1,5 +1,5 @@
 #pragma once
 
-#include "../engine/olcPixelGameEngine.h"
+#include "../platform/pixel_engine.h"
 
-using Vec2 = olc::vi2d;
+using Vec2 = pge::vi2d;

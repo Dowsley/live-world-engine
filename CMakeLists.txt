@@ -1,22 +1,13 @@
-cmake_minimum_required(VERSION 3.28)
-project(live_world_engine)
+cmake_minimum_required(VERSION 3.21)
+project(live_world_engine LANGUAGES CXX)
 
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
+set(CMAKE_CXX_EXTENSIONS OFF)
 
-include_directories(
-        src
-        src/core
-        src/core/base
-        src/creatures
-        src/engine
-        src/engine/extensions
-        src/engine/utilities
-        src/lib
-        src/structures
-        src/tiles
-        src/utils
-)
+find_package(SDL2 CONFIG REQUIRED)
+find_package(SDL2_image CONFIG REQUIRED)
+find_package(SDL2_ttf CONFIG REQUIRED)
 
 add_executable(live_world_engine
         src/core/pathfinding.cpp
@@ -25,11 +16,14 @@ add_executable(live_world_engine
         src/creatures/creature.cpp
         src/creatures/manager.cpp
         src/creatures/registry.cpp
+        src/creatures/loader.cpp
+        src/platform/pixel_engine.cpp
         src/lib/noise.cpp
         src/lib/tinyxml2.cpp
         src/structures/color.cpp
         src/structures/vec2.cpp
         src/structures/vec3.cpp
+        src/tiles/loader.cpp
         src/tiles/manager.cpp
         src/tiles/registry.cpp
         src/tiles/tile.cpp
@@ -38,71 +32,35 @@ add_executable(live_world_engine
         src/utils/logging.cpp
         src/lwe.cpp
         src/main.cpp
-        src/tiles/loader.cpp
-        src/creatures/loader.cpp
 )
 
-if (WIN32)
-    target_link_libraries(live_world_engine
-            user32
-            gdi32
-            opengl32
-            gdiplus
-            Shlwapi
-            dwmapi
-            stdc++fs
-    )
-elseif(APPLE)
-    # macOS uses GLUT (native, no X11 required)
-    # Using stb_image instead of libpng for image loading
-    find_package(OpenGL REQUIRED)
-    find_package(GLUT REQUIRED)
-    find_package(Threads REQUIRED)
+target_include_directories(live_world_engine PRIVATE
+        src
+        src/core
+        src/core/base
+        src/creatures
+        src/platform
+        src/lib
+        src/structures
+        src/tiles
+        src/utils
+)
 
-    target_include_directories(live_world_engine PRIVATE
-            ${OPENGL_INCLUDE_DIR}
-            ${GLUT_INCLUDE_DIR}
-    )
-
-    target_link_libraries(live_world_engine
-            ${OPENGL_LIBRARIES}
-            ${GLUT_LIBRARIES}
-            ${CMAKE_THREAD_LIBS_INIT}
-    )
-else()
-    # Linux uses X11
-    find_package(X11 REQUIRED)
-    find_package(OpenGL REQUIRED)
-    find_package(Threads REQUIRED)
-    find_package(PNG REQUIRED)
-    find_package(ZLIB REQUIRED)
-
-    target_include_directories(live_world_engine PRIVATE
-            ${X11_INCLUDE_DIR}
-            ${OPENGL_INCLUDE_DIR}
-            ${PNG_INCLUDE_DIRS}
-    )
-
-    target_link_libraries(live_world_engine
-            ${X11_LIBRARIES}
-            ${OPENGL_LIBRARIES}
-            ${CMAKE_THREAD_LIBS_INIT}
-            ${PNG_LIBRARY}
-            ${ZLIB_LIBRARIES}
-    )
-endif()
+target_link_libraries(live_world_engine PRIVATE
+        $<TARGET_NAME_IF_EXISTS:SDL2::SDL2main>
+        $<IF:$<TARGET_EXISTS:SDL2::SDL2>,SDL2::SDL2,SDL2::SDL2-static>
+        $<IF:$<TARGET_EXISTS:SDL2_image::SDL2_image>,SDL2_image::SDL2_image,SDL2_image::SDL2_image-static>
+        $<IF:$<TARGET_EXISTS:SDL2_ttf::SDL2_ttf>,SDL2_ttf::SDL2_ttf,SDL2_ttf::SDL2_ttf-static>
+)
 
 add_custom_command(
-        TARGET live_world_engine PRE_BUILD
-        COMMAND ${CMAKE_COMMAND} -E remove_directory $<TARGET_FILE_DIR:live_world_engine>/assets
+        TARGET live_world_engine POST_BUILD
+        COMMAND ${CMAKE_COMMAND} -E rm -rf $<TARGET_FILE_DIR:live_world_engine>/assets
         COMMAND ${CMAKE_COMMAND} -E copy_directory ${CMAKE_SOURCE_DIR}/assets $<TARGET_FILE_DIR:live_world_engine>/assets
 )
 
 add_custom_command(
-        TARGET live_world_engine PRE_BUILD
-        COMMAND ${CMAKE_COMMAND} -E remove_directory $<TARGET_FILE_DIR:live_world_engine>/data
+        TARGET live_world_engine POST_BUILD
+        COMMAND ${CMAKE_COMMAND} -E rm -rf $<TARGET_FILE_DIR:live_world_engine>/data
         COMMAND ${CMAKE_COMMAND} -E copy_directory ${CMAKE_SOURCE_DIR}/data $<TARGET_FILE_DIR:live_world_engine>/data
 )
-
-set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -O0")
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -O0")
