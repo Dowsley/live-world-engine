@@ -1,4 +1,4 @@
-#include "creature.h"
-#include "manager.h"
-#include "registry.h"
-#include "loader.h"
+#include "creatures/creature.h"
+#include "creatures/manager.h"
+#include "creatures/registry.h"
+#include "creatures/loader.h"

@@ -1,9 +1,9 @@
-#include "manager.h"
+#include "creatures/manager.h"
 
 #include <utility>
 
-#include "../core/world.h"
-#include "geometry.h"
+#include "core/world.h"
+#include "utils/geometry.h"
 
 CreatureManager::CreatureManager(World *world) : ManagerBase<Creature>(world) {
     registry.Initialize();

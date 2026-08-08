@@ -35,17 +35,7 @@ add_executable(live_world_engine
         src/main.cpp
 )
 
-target_include_directories(live_world_engine PRIVATE
-        src
-        src/core
-        src/core/base
-        src/creatures
-        src/platform
-        src/lib
-        src/structures
-        src/tiles
-        src/utils
-)
+target_include_directories(live_world_engine PRIVATE src)
 
 target_link_libraries(live_world_engine PRIVATE
         $<TARGET_NAME_IF_EXISTS:SDL2::SDL2main>

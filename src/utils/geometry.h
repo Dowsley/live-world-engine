@@ -1,7 +1,7 @@
 #pragma once
 
-#include "../structures/vec2.h"
-#include "../structures/vec3.h"
+#include "structures/vec2.h"
+#include "structures/vec3.h"
 
 namespace GeometryUtils
 {

@@ -1,3 +1,3 @@
-#include "color.h"
-#include "vec2.h"
-#include "vec3.h"
+#include "structures/color.h"
+#include "structures/vec2.h"
+#include "structures/vec3.h"

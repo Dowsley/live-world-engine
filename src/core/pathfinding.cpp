@@ -1,7 +1,7 @@
 #include <iostream>
 #include <unordered_set>
 
-#include "pathfinding.h"
+#include "core/pathfinding.h"
 
 struct Vec3Hasher {
     std::size_t operator()(const Vec3 &v) const {

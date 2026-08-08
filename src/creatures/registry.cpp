@@ -1,4 +1,4 @@
-#include "registry.h"
+#include "creatures/registry.h"
 
 std::vector<CreatureType*> CreatureRegistry::_loadSpecific() {
     return loader.LoadAll();

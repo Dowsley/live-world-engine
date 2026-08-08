@@ -1,6 +1,6 @@
 #pragma once
 
-#include "../structures/color.h"
+#include "structures/color.h"
 
 namespace LoggingUtils
 {

@@ -1,7 +1,7 @@
 #pragma once
 
-#include "../core/base/manager.h"
-#include "tile.h"
+#include "core/base/manager.h"
+#include "tiles/tile.h"
 
 #include <unordered_map>
 

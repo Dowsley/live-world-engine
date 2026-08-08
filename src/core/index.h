@@ -1,4 +1,4 @@
-#include "world.h"
-#include "settings.h"
-#include "base/index.h"
-#include "pathfinding.h"
+#include "core/world.h"
+#include "core/settings.h"
+#include "core/base/index.h"
+#include "core/pathfinding.h"

@@ -1,3 +1,3 @@
-#include "loader.h"
-#include "registry.h"
-#include "manager.h"
+#include "core/base/loader.h"
+#include "core/base/registry.h"
+#include "core/base/manager.h"

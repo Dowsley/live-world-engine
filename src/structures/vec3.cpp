@@ -1,4 +1,4 @@
-#include "vec3.h"
+#include "structures/vec3.h"
 
 #include <cmath>
 #include <string>

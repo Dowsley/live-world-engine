@@ -2,7 +2,7 @@
 
 #include <fstream>
 
-#include "vec2.h"
+#include "structures/vec2.h"
 
 class Vec3 final
 {

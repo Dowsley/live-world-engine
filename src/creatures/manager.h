@@ -1,9 +1,9 @@
 #pragma once
 
-#include "../core/base/manager.h"
-#include "../core/settings.h"
-#include "creature.h"
-#include "registry.h"
+#include "core/base/manager.h"
+#include "core/settings.h"
+#include "creatures/creature.h"
+#include "creatures/registry.h"
 #include <unordered_map>
 
 class CreatureManager : public ManagerBase<Creature> {

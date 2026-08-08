@@ -4,7 +4,7 @@
 #include <list>
 #include <optional>
 
-#include "../structures/index.h"
+#include "structures/index.h"
 
 class World;
 

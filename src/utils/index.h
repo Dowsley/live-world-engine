@@ -1,3 +1,3 @@
-#include "arithmetics.h"
-#include "logging.h"
-#include "geometry.h"
+#include "utils/arithmetics.h"
+#include "utils/logging.h"
+#include "utils/geometry.h"

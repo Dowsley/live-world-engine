@@ -1,7 +1,7 @@
 #pragma once
 
 #include <functional>
-#include "../../structures/vec3.h"
+#include "structures/vec3.h"
 
 class World;
 

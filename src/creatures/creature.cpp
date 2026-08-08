@@ -1,5 +1,5 @@
-#include "creature.h"
-#include "pathfinding.h"
+#include "creatures/creature.h"
+#include "core/pathfinding.h"
 
 /* ---- CREATURE TYPE ---- */
 const std::string& CreatureType::GetID() const { return id; }

@@ -1,6 +1,6 @@
 #include <cstdio>
 
-#include "logging.h"
+#include "utils/logging.h"
 
 void LoggingUtils::LogColor(const Color &p)
 {

@@ -4,8 +4,8 @@
 #include <vector>
 #include <random>
 
-#include "../structures/color.h"
-#include "../structures/vec2.h"
+#include "structures/color.h"
+#include "structures/vec2.h"
 
 class TileType;
 struct Tile;

@@ -1,6 +1,6 @@
-#include "../lib/tinyxml2.h"
+#include "lib/tinyxml2.h"
 
-#include "loader.h"
+#include "tiles/loader.h"
 
 using namespace tinyxml2;
 

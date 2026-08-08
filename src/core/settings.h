@@ -8,7 +8,7 @@
         #define TILE_REGISTRY_PATH_V "data/tiles"
 #endif
 
-#include "../structures/index.h"
+#include "structures/index.h"
 
 namespace Settings {
     const Vec3 WORLD_DIMENSIONS = { 512, 512, 50 };

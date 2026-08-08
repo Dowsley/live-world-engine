@@ -9,8 +9,8 @@
 #include <cmath>
 #include <algorithm>
 
-#include "../structures/vec3.h"
-#include "world.h"
+#include "structures/vec3.h"
+#include "core/world.h"
 
 class World;
 class CreatureManager;

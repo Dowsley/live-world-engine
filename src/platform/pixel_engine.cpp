@@ -1,4 +1,4 @@
-#include "pixel_engine.h"
+#include "platform/pixel_engine.h"
 
 #include <SDL.h>
 #include <SDL_image.h>

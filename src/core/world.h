@@ -2,14 +2,14 @@
 
 #include <tuple>
 
-#include "settings.h"
+#include "core/settings.h"
 
-#include "../core/pathfinding.h"
+#include "core/pathfinding.h"
 
-#include "../structures/index.h"
-#include "../creatures/manager.h"
-#include "../tiles/manager.h"
-#include "../tiles/registry.h"
+#include "structures/index.h"
+#include "creatures/manager.h"
+#include "tiles/manager.h"
+#include "tiles/registry.h"
 
 class TileType;
 struct Tile;

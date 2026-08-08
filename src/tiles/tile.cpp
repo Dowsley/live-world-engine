@@ -1,4 +1,4 @@
-#include "tile.h"
+#include "tiles/tile.h"
 
 /* Tile Type */
 

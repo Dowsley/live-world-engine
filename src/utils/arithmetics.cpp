@@ -1,4 +1,4 @@
-#include "arithmetics.h"
+#include "utils/arithmetics.h"
 
 double ArithmeticsUtils::Scale(double num, double inMin, double inMax, double outMin, double outMax)
 {

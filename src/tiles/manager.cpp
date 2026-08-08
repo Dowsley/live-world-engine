@@ -1,7 +1,7 @@
-#include "manager.h"
+#include "tiles/manager.h"
 
-#include "../core/world.h"
-#include "geometry.h"
+#include "core/world.h"
+#include "utils/geometry.h"
 
 TileInstanceManager::TileInstanceManager(World *world) : ManagerBase<TileInstance>(world) {}
 

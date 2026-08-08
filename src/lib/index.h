@@ -1,2 +1,2 @@
-#include "tinyxml2.h"
-#include "noise.cpp"
+#include "lib/tinyxml2.h"
+#include "lib/noise.cpp"

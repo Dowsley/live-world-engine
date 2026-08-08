@@ -2,8 +2,8 @@
 
 #include <string>
 
-#include "../core/base/loader.h"
-#include "creature.h"
+#include "core/base/loader.h"
+#include "creatures/creature.h"
 
 class CreatureLoader : public BaseLoader<CreatureType> {
 public:

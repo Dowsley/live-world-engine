@@ -2,8 +2,8 @@
 
 #include <string>
 
-#include "../core/base/loader.h"
-#include "tile.h"
+#include "core/base/loader.h"
+#include "tiles/tile.h"
 
 class TileLoader : public BaseLoader<TileType> {
 public:

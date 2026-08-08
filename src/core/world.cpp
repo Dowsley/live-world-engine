@@ -1,11 +1,11 @@
-#include "world.h"
+#include "core/world.h"
 
 #include <utility>
 
-#include "../creatures/creature.h"
-#include "../utils/arithmetics.h"
-#include "../utils/geometry.h"
-#include "../lib/noise.cpp"
+#include "creatures/creature.h"
+#include "utils/arithmetics.h"
+#include "utils/geometry.h"
+#include "lib/noise.cpp"
 
 World::World(Vec3 dimensions)
 : dimensions(dimensions)

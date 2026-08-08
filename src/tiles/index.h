@@ -1,4 +1,4 @@
-#include "loader.h"
-#include "manager.h"
-#include "registry.h"
-#include "tile.h"
+#include "tiles/loader.h"
+#include "tiles/manager.h"
+#include "tiles/registry.h"
+#include "tiles/tile.h"

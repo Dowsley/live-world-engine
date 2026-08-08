@@ -1,4 +1,4 @@
-#include "geometry.h"
+#include "utils/geometry.h"
 
 int GeometryUtils::Flatten3DCoords(const Vec3 &pos, const Vec3 &dimensions)
 {
