@@ -9,6 +9,7 @@ set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 find_package(SDL2 CONFIG REQUIRED)
 find_package(SDL2_image CONFIG REQUIRED)
 find_package(SDL2_ttf CONFIG REQUIRED)
+find_package(tinyxml2 CONFIG REQUIRED)
 
 add_executable(live_world_engine
         src/core/pathfinding.cpp
@@ -20,7 +21,6 @@ add_executable(live_world_engine
         src/creatures/loader.cpp
         src/platform/pixel_engine.cpp
         src/lib/noise.cpp
-        src/lib/tinyxml2.cpp
         src/structures/color.cpp
         src/structures/vec2.cpp
         src/structures/vec3.cpp
@@ -42,6 +42,7 @@ target_link_libraries(live_world_engine PRIVATE
         $<IF:$<TARGET_EXISTS:SDL2::SDL2>,SDL2::SDL2,SDL2::SDL2-static>
         $<IF:$<TARGET_EXISTS:SDL2_image::SDL2_image>,SDL2_image::SDL2_image,SDL2_image::SDL2_image-static>
         $<IF:$<TARGET_EXISTS:SDL2_ttf::SDL2_ttf>,SDL2_ttf::SDL2_ttf,SDL2_ttf::SDL2_ttf-static>
+        tinyxml2::tinyxml2
 )
 
 add_custom_command(

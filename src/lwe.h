@@ -15,7 +15,6 @@
 #include "creatures/index.h"
 #include "utils/index.h"
 #include "structures/index.h"
-#include "lib/index.h"
 
 class LiveWorldEngine : public pge::PixelGameEngine
 {

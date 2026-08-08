@@ -3,7 +3,6 @@
 #include "creatures/index.h"
 #include "utils/index.h"
 #include "structures/index.h"
-#include "lib/index.h"
 #include "lwe.h"
 
 int main(int argc, char const *argv[])
