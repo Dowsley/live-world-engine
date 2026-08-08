@@ -17,7 +17,7 @@ public:
 
     Creature* GetItemAt(const Vec3 &pos) const override;
     void TraverseItems(std::function<void(Creature*)> callback) override;
-    [[nodiscard]] int GetTotalItemCount() const override;
+    int GetTotalItemCount() const override;
     void ClearItems() override;
 
     const CreatureType* GetTypeById(const std::string &id) const;

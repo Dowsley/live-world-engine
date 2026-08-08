@@ -12,28 +12,9 @@ find_package(SDL2_ttf CONFIG REQUIRED)
 find_package(tinyxml2 CONFIG REQUIRED)
 find_path(FASTNOISELITE_INCLUDE_DIRS "FastNoiseLite.h" REQUIRED)
 
-add_executable(live_world_engine
-        src/core/pathfinding.cpp
-        src/core/settings.cpp
-        src/core/world.cpp
-        src/creatures/creature.cpp
-        src/creatures/manager.cpp
-        src/creatures/registry.cpp
-        src/creatures/loader.cpp
-        src/platform/pixel_engine.cpp
-        src/structures/color.cpp
-        src/structures/vec2.cpp
-        src/structures/vec3.cpp
-        src/tiles/loader.cpp
-        src/tiles/manager.cpp
-        src/tiles/registry.cpp
-        src/tiles/tile.cpp
-        src/utils/arithmetics.cpp
-        src/utils/geometry.cpp
-        src/utils/logging.cpp
-        src/lwe.cpp
-        src/main.cpp
-)
+file(GLOB_RECURSE SOURCES CONFIGURE_DEPENDS ${CMAKE_SOURCE_DIR}/src/*.cpp)
+
+add_executable(live_world_engine ${SOURCES})
 
 target_include_directories(live_world_engine PRIVATE src ${FASTNOISELITE_INCLUDE_DIRS})
 

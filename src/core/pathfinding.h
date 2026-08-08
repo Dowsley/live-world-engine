@@ -24,7 +24,7 @@ public:
 
     PFNode() = default;
     PFNode(PFNode *parent, Vec3 position, float gCost, float hCost);
-    [[nodiscard]] float fCost() const;
+    float fCost() const;
 };
 
 class Pathfinding {

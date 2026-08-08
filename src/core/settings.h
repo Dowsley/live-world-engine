@@ -5,7 +5,7 @@
     #define TILE_REGISTRY_PATH_V "data\\tiles"
 #else
     #define CREATURE_REGISTRY_PATH_V "data/creatures"
-        #define TILE_REGISTRY_PATH_V "data/tiles"
+    #define TILE_REGISTRY_PATH_V "data/tiles"
 #endif
 
 #include "structures/index.h"

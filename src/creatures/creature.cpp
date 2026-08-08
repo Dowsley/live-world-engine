@@ -48,7 +48,7 @@ CreatureType* CreatureType::SetDietType(DietType dietType) {
 
 /* ---- CREATURE ---- */
 Creature::Creature(const CreatureType &type, Vec3 pos)
-    : type(type), pos(pos) {};
+    : type(type), pos(pos), rng(std::random_device{}()) {}; // TODO: non-deterministic
 
 std::optional<Vec3> Creature::Update(const World &world) {
     if (path.empty()) { // If there is no current path
@@ -61,7 +61,8 @@ std::optional<Vec3> Creature::Update(const World &world) {
                 for (int j = -LINE_OF_SIGHT_RADIUS; j <= LINE_OF_SIGHT_RADIUS && !validTargetFound; ++j) {
                     for (int k = -LINE_OF_SIGHT_RADIUS; k <= LINE_OF_SIGHT_RADIUS && !validTargetFound; ++k) {
                         // Skip checking the starting position itself
-                        if (i == 0 && j == 0 && k == 0) continue;
+                        if (i == 0 && j == 0 && k == 0)
+                            continue;
 
                         target.SetX(pos.x() + i);
                         target.SetY(pos.y() + j);
@@ -84,7 +85,8 @@ std::optional<Vec3> Creature::Update(const World &world) {
             for (int i = -1; i <= 1 && !validTargetFound; ++i) {
                 for (int j = -1; j <= 1 && !validTargetFound; ++j) {
                     for (int k = -1; k <= 1 && !validTargetFound; ++k) {
-                        if (i == 0 && j == 0 && k == 0) continue;
+                        if (i == 0 && j == 0 && k == 0)
+                            continue;
                         newTarget.SetX(target.x() + i);
                         newTarget.SetY(target.y() + j);
                         newTarget.SetZ(target.z() + k);
@@ -96,16 +98,12 @@ std::optional<Vec3> Creature::Update(const World &world) {
             }
             path = Pathfinding::FindPath(world, pos, newTarget);
         } else {
-            std::random_device rd;
-            std::mt19937 gen(rd());
-            std::uniform_int_distribution<> dist(-LINE_OF_SIGHT_RADIUS, LINE_OF_SIGHT_RADIUS);
-
             // Attempt to find a valid target position within a maximum of 100 tries
             Vec3 target;
             bool validTargetFound = false;
             for (int i = 0; i < 100 && !validTargetFound; ++i) {
-                int dx = dist(gen);
-                int dy = dist(gen);
+                int dx = rng.RandRangeInt(-LINE_OF_SIGHT_RADIUS, LINE_OF_SIGHT_RADIUS);
+                int dy = rng.RandRangeInt(-LINE_OF_SIGHT_RADIUS, LINE_OF_SIGHT_RADIUS);
                 target = Vec3(pos.x() + dx, pos.y() + dy, pos.z());
 
                 // Check if the selected position is both walkable and empty
