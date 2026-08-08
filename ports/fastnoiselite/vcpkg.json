@@ -1,0 +1,7 @@
+{
+  "name": "fastnoiselite",
+  "version": "1.1.1",
+  "description": "Fast portable noise library with OpenSimplex2, Perlin, Cellular and Value noise plus fractal and domain warp",
+  "homepage": "https://github.com/Auburn/FastNoiseLite",
+  "license": "MIT"
+}

@@ -10,6 +10,7 @@ find_package(SDL2 CONFIG REQUIRED)
 find_package(SDL2_image CONFIG REQUIRED)
 find_package(SDL2_ttf CONFIG REQUIRED)
 find_package(tinyxml2 CONFIG REQUIRED)
+find_path(FASTNOISELITE_INCLUDE_DIRS "FastNoiseLite.h" REQUIRED)
 
 add_executable(live_world_engine
         src/core/pathfinding.cpp
@@ -20,7 +21,6 @@ add_executable(live_world_engine
         src/creatures/registry.cpp
         src/creatures/loader.cpp
         src/platform/pixel_engine.cpp
-        src/lib/noise.cpp
         src/structures/color.cpp
         src/structures/vec2.cpp
         src/structures/vec3.cpp
@@ -35,7 +35,7 @@ add_executable(live_world_engine
         src/main.cpp
 )
 
-target_include_directories(live_world_engine PRIVATE src)
+target_include_directories(live_world_engine PRIVATE src ${FASTNOISELITE_INCLUDE_DIRS})
 
 target_link_libraries(live_world_engine PRIVATE
         $<TARGET_NAME_IF_EXISTS:SDL2::SDL2main>
