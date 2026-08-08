@@ -12,6 +12,10 @@ cmake-build-*/
 # vcpkg
 vcpkg_installed/
 
+# clangd index and compile database
+.cache/
+compile_commands.json
+
 # Force-track justfile despite global ignore
 !justfile
 
